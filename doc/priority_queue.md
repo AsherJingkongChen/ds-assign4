@@ -24,10 +24,10 @@ rzplc(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13322.htm
 bimhpb(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13330.html>binomial_heap_base<_Tp, _Comp></a>);
 
 subgraph std
-  spq -->|being| heap;
   spq .->|using| make;
   spq .->|using| push;
   spq .->|using| pop;
+  spq -->|being| heap;
 end
 
 subgraph __gnu_pbds
