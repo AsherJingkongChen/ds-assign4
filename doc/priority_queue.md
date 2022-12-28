@@ -16,14 +16,14 @@ thinhp(thin_heap<_Tp, _Comp>);
 gcbase(__gnu_pbds::detail::container_base_dispatch<_Tp, _Comp, , _Tag>);
 lcnsh(__gnu_pbds::detail::left_child_next_sibling_heap);
 
-gpq .-> heap;
-spq .-> heap;
+gpq -->|is| heap;
+spq -->|is| heap;
 
-spq --> make;
-spq --> push;
-spq --> pop;
+spq .->|uses| make;
+spq .->|uses| push;
+spq .->|uses| pop;
 
-gpq --> gcbase;
+gpq -->|is| gcbase;
 binhp ..-> gcbase;
 binhp --> lcnsh;
 bimhp ..-> gcbase;
