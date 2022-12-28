@@ -2,6 +2,7 @@
 
 ```mermaid
 graph RL;
+heap(**Heaps**);
 gpq(__gnu_pbds::priority_queue<_Tp, _Comp, _Tag>);
 spq(std::priority_queue<_Tp, _Seq, _Comp>);
 make(std::make_heap);
@@ -14,6 +15,9 @@ rbimhp(rc_binomial_heap<_Tp, _Comp>);
 thinhp(thin_heap<_Tp, _Comp>);
 gcbase(__gnu_pbds::detail::container_base_dispatch<_Tp, _Comp, , _Tag>);
 lcnsh(__gnu_pbds::detail::left_child_next_sibling_heap);
+
+gpq .-> heap;
+spq .-> heap;
 
 spq --> make;
 spq --> push;
