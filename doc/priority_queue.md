@@ -16,7 +16,8 @@ thinhp(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13702.ht
 
 gpq(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a12902.html>priority_queue<_Tp, _Comp, _Tag></a>);
 gcbdtp(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13070.html>container_base_dispatch<_Tp, _Comp, , _Tag>::type</a>);
-lcnsh(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13482.html>left_child_next_sibling_heap</a>);
+lcnsh(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13482.html>left_child_next_sibling_heap<_Tp, _Comp, _Sp></a>);
+rzplc(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13322.html>resize_policy<_Sp></a>)
 
 subgraph std
   spq -->|being| heap;
@@ -35,6 +36,12 @@ subgraph __gnu_pbds
     gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13150.html#adecf3a56bd35a5ca376d0492e7123a7b>binding to</a>| pahp;
     gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13158.html#a7d1df51ac2b0c2e893e450bf7fe9e379>binding to</a>| rbimhp;
     gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13166.html#a9810405868a4fa2e115def4f7da71b66>binding to</a>| thinhp;
+
+    binhp -->|| rzplc;
+    bimhp -->|| lcnsh;
+    rbimhp -->|| bimhp;
+    pahp --> || lcnsh;
+    thinhp -->|| lcnsh;
   end
 end
 ```
