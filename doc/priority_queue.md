@@ -24,15 +24,11 @@ spq .->|uses| push;
 spq .->|uses| pop;
 
 gpq -->|is| gcbase;
+
 binhp ..-> gcbase;
-binhp --> lcnsh;
 bimhp ..-> gcbase;
-bimhp --> lcnsh;
 rbimhp ..-> gcbase;
-rbimhp --> lcnsh;
 pahp ..-> gcbase;
-pahp --> lcnsh;
 thinhp ..-> gcbase;
-thinhp --> lcnsh;
 ```
 
