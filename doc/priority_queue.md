@@ -2,7 +2,10 @@
 
 ```mermaid
 graph RL;
-heap((Heap));
+subgraph concept
+  heap((Heap));
+end
+
 spq(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a08762.html>priority_queue<_Tp, _Seq, _Comp></a>);
 make(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a01614.html#ga2a685c934e85086e5ac372026e8064f6>make_heap</a>);
 push(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a01614.html#gab628ce505c9574f8929a0fa49ed514b3>push_heap</a>);
