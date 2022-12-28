@@ -18,10 +18,10 @@ gpq(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a12902.html>
 gcbdtp(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13070.html>__gnu_pbds::detail::container_base_dispatch<_Tp, _Comp, , _Tag>::type</a>);
 lcnsh(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13482.html>__gnu_pbds::detail::left_child_next_sibling_heap</a>);
 
-spq -->|being| heap;
 spq .->|using| make;
 spq .->|using| push;
 spq .->|using| pop;
+spq -->|being| heap;
 
 gpq --->|being| heap;
 gpq -->|being| gcbdtp;
