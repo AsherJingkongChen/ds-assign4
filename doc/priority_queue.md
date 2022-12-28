@@ -27,10 +27,10 @@ spq .->|uses| pop;
 
 gpq -->|is| gcbd;
 
-gcbd .->|specializes| binhp
-gcbd .->|specializes| bimhp
-gcbd .->|specializes| rbimhp
-gcbd .->|specializes| pahp
-gcbd .->|specializes| thinhp
+gcbd .->|binds| binhp
+gcbd .->|binds| bimhp
+gcbd .->|binds| rbimhp
+gcbd .->|binds| pahp
+gcbd .->|binds| thinhp
 ```
 
