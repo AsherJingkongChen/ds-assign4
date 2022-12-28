@@ -35,7 +35,6 @@ pahp --> lcnsh;
 thinhp ..-> gcbase;
 thinhp --> lcnsh;
 
-click make "";
 click push "https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a01614.html#ga0a57ba46981d46e0f3ebd4703d0ad18b";
 click pop "https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a01614.html#gab628ce505c9574f8929a0fa49ed514b3";
 click gpq "https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a12902.html";
