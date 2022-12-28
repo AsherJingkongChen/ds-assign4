@@ -1,11 +1,10 @@
 # Priority Queue
 
 ```mermaid
-<script>mermaid.initialize({startOnLoad:true,securityLevel:'loose'});</script>
 graph RL;
 heap(Heap);
 gpq(__gnu_pbds::priority_queue<_Tp, _Comp, _Tag>);
-spq(std::priority_queue<_Tp, _Seq, _Comp>);
+spq(<a href="https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a08762.html">std::priority_queue<_Tp, _Seq, _Comp></a>);
 make(std::make_heap);
 push(std::push_heap);
 pop(std::pop_heap);
