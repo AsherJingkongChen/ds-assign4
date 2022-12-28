@@ -1,3 +1,4 @@
+<script>mermaid.initialize({startOnLoad:true,securityLevel:'loose'});</script>
 # Priority Queue
 
 ```mermaid
