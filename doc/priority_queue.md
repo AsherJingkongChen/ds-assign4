@@ -5,7 +5,7 @@ graph RL;
 heap(Heap);
 gpq(__gnu_pbds::priority_queue<_Tp, _Comp, _Tag>);
 spq(<a href=//gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a08762.html>std::priority_queue<_Tp, _Seq, _Comp></a>);
-make(std::make_heap);
+make(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a01614.html#ga2a685c934e85086e5ac372026e8064f6>std::make_heap</a>);
 push(std::push_heap);
 pop(std::pop_heap);
 binhp(binary_heap<_Tp, _Comp>);
@@ -35,8 +35,7 @@ pahp --> lcnsh;
 thinhp ..-> gcbase;
 thinhp --> lcnsh;
 
-click spq "https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a08762.html";
-click make "https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a01614.html#ga2a685c934e85086e5ac372026e8064f6";
+click make "";
 click push "https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a01614.html#ga0a57ba46981d46e0f3ebd4703d0ad18b";
 click pop "https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a01614.html#gab628ce505c9574f8929a0fa49ed514b3";
 click gpq "https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a12902.html";
