@@ -1,7 +1,7 @@
-<script>mermaid.initialize({startOnLoad:true,securityLevel:'loose'});</script>
 # Priority Queue
 
 ```mermaid
+<script>mermaid.initialize({startOnLoad:true,securityLevel:'loose'});</script>
 graph RL;
 heap(Heap);
 gpq(__gnu_pbds::priority_queue<_Tp, _Comp, _Tag>);
