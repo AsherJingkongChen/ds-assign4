@@ -41,6 +41,12 @@ click push "https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a01614.html#
 click pop "https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a01614.html#gab628ce505c9574f8929a0fa49ed514b3";
 click gpq "https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a12902.html";
 click gcbase "https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13070.html";
+click lcnsh "https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13482.html";
+click binhp "https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13654.html";
+click bimhp "https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13326.html";
+click rbimhp "https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13654.html";
+click pahp "https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13550.html";
+click thinhp "https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13702.html";
 
 ```
 
