@@ -18,7 +18,7 @@ gpq(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a12902.html>
 gcbdtp(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13070.html>container_base_dispatch<_Tp, _Comp, , _Tag>::type</a>);
 lcnsh(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13482.html>left_child_next_sibling_heap<_Tp, _Comp></a>);
 rzplc(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13322.html>resize_policy</a>);
-binhpb(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13330.html>binomial_heap_base<_Tp, _Comp></a>);
+bimhpb(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13330.html>binomial_heap_base<_Tp, _Comp></a>);
 
 subgraph std
   spq -->|being| heap;
