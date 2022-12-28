@@ -4,7 +4,7 @@
 graph RL;
 heap(Heap);
 gpq(__gnu_pbds::priority_queue<_Tp, _Comp, _Tag>);
-spq(<a href="//gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a08762.html">std::priority_queue<_Tp, _Seq, _Comp></a>);
+spq(<a href=//gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a08762.html>std::priority_queue<_Tp, _Seq, _Comp></a>);
 make(std::make_heap);
 push(std::push_heap);
 pop(std::pop_heap);
