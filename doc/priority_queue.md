@@ -2,7 +2,7 @@
 
 ```mermaid
 graph RL;
-heap(**Heaps**);
+heap(Heap);
 gpq(__gnu_pbds::priority_queue<_Tp, _Comp, _Tag>);
 spq(std::priority_queue<_Tp, _Seq, _Comp>);
 make(std::make_heap);
