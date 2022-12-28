@@ -18,7 +18,7 @@ gpq(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a12902.html>
 gcbd(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13070.html>__gnu_pbds::detail::container_base_dispatch<_Tp, _Comp, , _Tag>::type</a>);
 lcnsh(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13482.html>__gnu_pbds::detail::left_child_next_sibling_heap</a>);
 
-spq -->|is| heap;
+spq --->|is| heap;
 gpq -->|is| heap;
 
 spq .->|uses| make;
@@ -27,7 +27,7 @@ spq .->|uses| pop;
 
 gpq -->|is| gcbd;
 
-gcbd .->|binds| binhp
+gcbd .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a01241_source.html#l00101>binds</a>| binhp
 gcbd .->|binds| bimhp
 gcbd .->|binds| rbimhp
 gcbd .->|binds| pahp
