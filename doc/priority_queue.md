@@ -25,10 +25,10 @@ spq .->|uses| pop;
 
 gpq -->|is| gcbase;
 
-binhp .-> gcbase;
-bimhp .-> gcbase;
-rbimhp .-> gcbase;
-pahp .-> gcbase;
-thinhp .-> gcbase;
+gcbase .-> binhp
+gcbase .-> bimhp
+gcbase .-> rbimhp
+gcbase .-> pahp
+gcbase .-> thinhp
 ```
 
