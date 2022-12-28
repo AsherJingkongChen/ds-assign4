@@ -15,22 +15,21 @@ rbimhp(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13654.ht
 thinhp(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13702.html>thin_heap<_Tp, _Comp></a>);
 
 gpq(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a12902.html>__gnu_pbds::priority_queue<_Tp, _Comp, _Tag></a>);
-gcbd(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13070.html>__gnu_pbds::detail::container_base_dispatch<_Tp, _Comp, , _Tag>::type</a>);
+gcbdtp(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13070.html>__gnu_pbds::detail::container_base_dispatch<_Tp, _Comp, , _Tag>::type</a>);
 lcnsh(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13482.html>__gnu_pbds::detail::left_child_next_sibling_heap</a>);
 
-spq --->|is| heap;
-gpq -->|is| heap;
-
+spq -->|is| heap;
 spq .->|uses| make;
 spq .->|uses| push;
 spq .->|uses| pop;
 
-gpq -->|is| gcbd;
+gpq --->|is| heap;
+gpq -->|is| gcbdtp;
 
-gcbd .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a01241_source.html#l00101>binds</a>| binhp
-gcbd .->|binds| bimhp
-gcbd .->|binds| rbimhp
-gcbd .->|binds| pahp
-gcbd .->|binds| thinhp
+gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13162.html#adbbd8131d9a4cdc53e280a34f161dd3c>binds</a>| binhp
+gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13154.html#ab4cecfd9b1ed21229fe049cabebe321c>binds</a>| bimhp
+gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13150.html#adecf3a56bd35a5ca376d0492e7123a7b>binds</a>| pahp
+gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13158.html#a7d1df51ac2b0c2e893e450bf7fe9e379>binds</a>| rbimhp
+gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13166.html#a9810405868a4fa2e115def4f7da71b66>binds</a>| thinhp
 ```
 
