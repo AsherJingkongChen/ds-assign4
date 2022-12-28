@@ -26,10 +26,12 @@ spq -->|being| heap;
 gpq --->|being| heap;
 gpq -->|being| gcbdtp;
 
-gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13162.html#adbbd8131d9a4cdc53e280a34f161dd3c>binding to</a>| binhp
-gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13154.html#ab4cecfd9b1ed21229fe049cabebe321c>binding to</a>| bimhp
-gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13150.html#adecf3a56bd35a5ca376d0492e7123a7b>binding to</a>| pahp
-gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13158.html#a7d1df51ac2b0c2e893e450bf7fe9e379>binding to</a>| rbimhp
-gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13166.html#a9810405868a4fa2e115def4f7da71b66>binding to</a>| thinhp
+subgraph __gnu_pbds::detail
+  gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13162.html#adbbd8131d9a4cdc53e280a34f161dd3c>binding to</a>| binhp;
+  gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13154.html#ab4cecfd9b1ed21229fe049cabebe321c>binding to</a>| bimhp;
+  gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13150.html#adecf3a56bd35a5ca376d0492e7123a7b>binding to</a>| pahp;
+  gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13158.html#a7d1df51ac2b0c2e893e450bf7fe9e379>binding to</a>| rbimhp;
+  gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13166.html#a9810405868a4fa2e115def4f7da71b66>binding to</a>| thinhp;
+end
 ```
 
