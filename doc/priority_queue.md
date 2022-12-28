@@ -18,18 +18,18 @@ gpq(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a12902.html>
 gcbdtp(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13070.html>__gnu_pbds::detail::container_base_dispatch<_Tp, _Comp, , _Tag>::type</a>);
 lcnsh(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13482.html>__gnu_pbds::detail::left_child_next_sibling_heap</a>);
 
-spq -->|is| heap;
-spq .->|uses| make;
-spq .->|uses| push;
-spq .->|uses| pop;
+spq -->|being| heap;
+spq .->|using| make;
+spq .->|using| push;
+spq .->|using| pop;
 
-gpq --->|is| heap;
-gpq -->|is| gcbdtp;
+gpq --->|being| heap;
+gpq -->|being| gcbdtp;
 
-gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13162.html#adbbd8131d9a4cdc53e280a34f161dd3c>binds</a>| binhp
-gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13154.html#ab4cecfd9b1ed21229fe049cabebe321c>binds</a>| bimhp
-gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13150.html#adecf3a56bd35a5ca376d0492e7123a7b>binds</a>| pahp
-gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13158.html#a7d1df51ac2b0c2e893e450bf7fe9e379>binds</a>| rbimhp
-gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13166.html#a9810405868a4fa2e115def4f7da71b66>binds</a>| thinhp
+gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13162.html#adbbd8131d9a4cdc53e280a34f161dd3c>binding to</a>| binhp
+gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13154.html#ab4cecfd9b1ed21229fe049cabebe321c>binding to</a>| bimhp
+gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13150.html#adecf3a56bd35a5ca376d0492e7123a7b>binding to</a>| pahp
+gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13158.html#a7d1df51ac2b0c2e893e450bf7fe9e379>binding to</a>| rbimhp
+gcbdtp .->|<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13166.html#a9810405868a4fa2e115def4f7da71b66>binding to</a>| thinhp
 ```
 
