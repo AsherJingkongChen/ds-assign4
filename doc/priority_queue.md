@@ -2,7 +2,7 @@
 
 ```mermaid
 graph RL;
-heap(Heap);
+heap((Heap));
 gpq(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a12902.html>__gnu_pbds::priority_queue<_Tp, _Comp, _Tag></a>);
 spq(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a08762.html>std::priority_queue<_Tp, _Seq, _Comp></a>);
 make(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a01614.html#ga2a685c934e85086e5ac372026e8064f6>std::make_heap</a>);
@@ -16,8 +16,8 @@ thinhp(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13702.ht
 gcbase(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13070.html>__gnu_pbds::detail::container_base_dispatch<_Tp, _Comp, , _Tag></a>);
 lcnsh(<a href=https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13482.html>__gnu_pbds::detail::left_child_next_sibling_heap</a>);
 
-gpq -->|is| heap;
 spq -->|is| heap;
+gpq -->|is| heap;
 
 spq .->|uses| make;
 spq .->|uses| push;
@@ -25,10 +25,10 @@ spq .->|uses| pop;
 
 gpq -->|is| gcbase;
 
-binhp ..-> gcbase;
-bimhp ..-> gcbase;
-rbimhp ..-> gcbase;
-pahp ..-> gcbase;
-thinhp ..-> gcbase;
+binhp .-> gcbase;
+bimhp .-> gcbase;
+rbimhp .-> gcbase;
+pahp .-> gcbase;
+thinhp .-> gcbase;
 ```
 
