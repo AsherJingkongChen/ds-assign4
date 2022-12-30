@@ -1,7 +1,7 @@
 // [SVG_Header_Library]
 //
-#ifndef SVG_ELEMENT
-#define SVG_ELEMENT
+#ifndef SVG_ELEMENT_POLICY
+#define SVG_ELEMENT_POLICY
 
 #include <string>
 #include <vector>
@@ -9,9 +9,9 @@
 
 namespace svg {
 
-class element {
+class element_policy {
 public:
-  typedef std::unique_ptr<element> object_type;
+  typedef std::unique_ptr<element_policy> object_type;
 
 public:
   virtual int indent() const = 0;
@@ -60,9 +60,9 @@ private:
   }
 
 public:
-  virtual ~element() {}
+  virtual ~element_policy() {}
 };
 
 } // namespace svg
 
-#endif // SVG_ELEMENT
+#endif // SVG_ELEMENT_POLICY
