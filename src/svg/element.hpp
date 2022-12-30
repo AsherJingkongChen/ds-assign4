@@ -17,7 +17,7 @@ public:
   virtual int indent() const = 0;
   virtual bool is_self_closing() const = 0;
   virtual std::string tag() const = 0;
-  virtual std::string attributes() const = 0;
+  virtual std::string attributes() const = 0; // TODO: std::vector<attribute_pair>
   virtual std::string &text() = 0;
   virtual std::string const &text() const = 0;
   virtual std::vector<object_type> &children() = 0;
