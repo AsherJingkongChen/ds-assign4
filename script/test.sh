@@ -13,8 +13,7 @@ if [ $# -eq 0 ]; then
     ./$bin && 
       (time ./$bin) 2>&1 > /dev/null | \
       grep "real" | \
-      sed "s|real	|\.\/$bin: |g" \
-    && rm $bin;
+      sed "s|real	|\.\/$bin: |g";
   done
 
 else
@@ -24,10 +23,10 @@ else
   done
 
   for bin in $@; do
-    ./$bin.out && 
-      (time ./$bin.out) 2>&1 > /dev/null | \
+    bin="$bin.out";
+    ./$bin && 
+      (time ./$bin) 2>&1 > /dev/null | \
       grep "real" | \
-      sed "s|real	|\.\/$bin\.out: |g" \
-    && rm $bin.out;
+      sed "s|real	|\.\/$bin: |g";
   done
 fi

@@ -36,7 +36,7 @@
 #define SVG_SVG
 
 #include "element_policy.hpp"
-#include "svg_element.hpp"
+#include "element_svg.hpp"
 
 namespace svg {
 
