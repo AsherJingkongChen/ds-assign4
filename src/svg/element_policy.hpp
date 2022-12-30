@@ -6,13 +6,14 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <iostream>
 #include "attribute.hpp"
 
 namespace svg {
 
 class element_policy;
 
-typedef std::shared_ptr<element_policy> element_ptr;
+typedef std::shared_ptr<element_policy> element_policy_ptr;
 
 class element_policy {
 public:
@@ -65,7 +66,8 @@ private:
   }
 
 public:
-  virtual ~element_policy() {}
+  virtual ~element_policy() {
+  }
 
   element_policy():
     tag(),
@@ -107,7 +109,7 @@ public:
 public:
   std::string tag;
   std::string text;
-  std::vector<element_ptr> children;
+  std::vector<element_policy_ptr> children;
   int indent;
 };
 

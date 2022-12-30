@@ -35,8 +35,29 @@
 #ifndef SVG_SVG
 #define SVG_SVG
 
-#include "element_policy.hpp"
 #include "element_svg.hpp"
+
+namespace svg {
+
+namespace tag {
+  struct svg {};
+  struct tag {};
+  struct line {};
+}
+
+// typedef std::shared_ptr<element_policy> element_policy_ptr;
+template<typename _Tag>
+struct element {};
+
+template<>
+struct element<tag::svg> {
+  static constexpr element_policy_ptr init() {
+    return element_policy_ptr(new element_svg);
+  }
+};
+
+} // namespace svg
+
 
 namespace svg {
 

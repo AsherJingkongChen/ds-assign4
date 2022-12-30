@@ -15,6 +15,16 @@ public:
     return key + "=\"" + value + "\"";
   }
 
+  attribute &operator=(std::string const &value) {
+    this->value = value;
+    return *this;
+  }
+
+  attribute &operator=(std::string &&value) noexcept {
+    this->value = std::move(value);
+    return *this;
+  }
+
 public:
   attribute(
     std::string const &key):
