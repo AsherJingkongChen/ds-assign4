@@ -1,13 +1,13 @@
 // [SVG_Header_Library]
 //
-#ifndef SVG_ELEMENT_SVG
-#define SVG_ELEMENT_SVG
+#ifndef SVG_SVG_ELEMENT
+#define SVG_SVG_ELEMENT
 
-#include "element.hpp"
+#include "element_policy.hpp"
 
 namespace svg {
 
-class element_svg: public element {
+class svg_element: public element_policy {
 public:
   bool is_self_closing() const override {
     return false;
@@ -32,4 +32,4 @@ public:
 
 } // namespace svg
 
-#endif // SVG_ELEMENT_SVG
+#endif // SVG_SVG_ELEMENT
