@@ -1,7 +1,7 @@
-// [SVG_Header_Library]
+// [XML_Header_Library]
 //
-#ifndef SVG_ELEMENT_POLICY
-#define SVG_ELEMENT_POLICY
+#ifndef XML_ELEMENT_POLICY
+#define XML_ELEMENT_POLICY
 
 #include <string>
 #include <vector>
@@ -9,22 +9,25 @@
 #include <iostream>
 #include "attribute.hpp"
 
-namespace svg {
+namespace xml {
+
+static inline int xml_indent = 2;
 
 class element_policy;
-
 typedef std::shared_ptr<element_policy> element_policy_ptr;
 
 class element_policy {
 public:
-  virtual std::vector<attribute> attributes() const = 0;
+  virtual std::vector<attribute> attributes() const {
+    return {};
+  }
 
   operator std::string() const {
     return to_string();
   }
 
   std::string to_string() const {
-    return _to_string(-indent);
+    return _to_string(0);
   }
 
 private:
@@ -34,11 +37,9 @@ private:
       children.empty();
   }
 
-  std::string _to_string(int base_indent) const {
-    base_indent += indent;
-
+  std::string _to_string(int indent) const {
     std::string result(
-      std::string(base_indent, ' ') + 
+      std::string(indent, ' ') + 
       "<" + tag
     );
 
@@ -52,14 +53,15 @@ private:
 
     result += 
       ">\n" + 
-      std::string(base_indent, ' ') + 
+      std::string(indent + xml_indent, ' ') + 
       text + "\n";
     
     for (auto &e: children) {
-      result += e->_to_string(base_indent);
+      result += e->_to_string(indent + xml_indent);
     }
+
     result +=
-      std::string(base_indent, ' ') + 
+      std::string(indent, ' ') + 
       "</" + tag + ">\n";
 
     return result;
@@ -72,29 +74,25 @@ public:
   element_policy():
     tag(),
     text(),
-    children(),
-    indent(2) {
+    children() {
   }
 
   element_policy(element_policy const &source):
     tag(source.tag),
     text(source.text),
-    children(source.children),
-    indent(source.indent) {
+    children(source.children) {
   }
 
   element_policy(element_policy &&source) noexcept:
     tag(std::move(source.tag)),
     text(std::move(source.text)),
-    children(std::move(source.children)),
-    indent(std::move(source.indent)) {
+    children(std::move(source.children)) {
   }
 
   element_policy &operator=(element_policy const &other) {
     tag = other.tag;
     text = other.text;
     children = other.children;
-    indent = other.indent;
     return *this;
   }
 
@@ -102,7 +100,6 @@ public:
     tag = std::move(other.tag);
     text = std::move(other.text);
     children = std::move(other.children);
-    indent = std::move(other.indent);
     return *this;
   }
 
@@ -110,9 +107,8 @@ public:
   std::string tag;
   std::string text;
   std::vector<element_policy_ptr> children;
-  int indent;
 };
 
-} // namespace svg
+} // namespace xml
 
-#endif // SVG_ELEMENT_POLICY
+#endif // XML_ELEMENT_POLICY

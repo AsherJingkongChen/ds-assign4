@@ -1,4 +1,4 @@
-// [SVG_Header_Library]
+// [XML_Header_Library]
 //
 // MIT License
 //
@@ -29,37 +29,47 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR 
 // THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-// SVG Format is referenced from:
+// References:
+// https://developer.mozilla.org/en-US/docs/Web/XML
 // https://developer.mozilla.org/en-US/docs/Web/SVG
 //
-#ifndef SVG_SVG
-#define SVG_SVG
+#ifndef XML_XML
+#define XML_XML
 
+#include "element_policy.hpp"
 #include "element_svg.hpp"
 
-namespace svg {
+namespace xml {
 
 namespace tag {
   struct svg {};
-  struct tag {};
   struct line {};
 }
 
-// typedef std::shared_ptr<element_policy> element_policy_ptr;
+// element builders and accessors
+//
 template<typename _Tag>
-struct element {};
+struct element {
+};
 
 template<>
 struct element<tag::svg> {
-  static constexpr element_policy_ptr init() {
+  static element_policy_ptr get() {
     return element_policy_ptr(new element_svg);
+  }
+  
+  static element_svg_ptr get(element_policy_ptr const &p) {
+    return
+      std::dynamic_pointer_cast<
+        element_svg_ptr::element_type
+      >(p);
   }
 };
 
-} // namespace svg
+} // namespace xml
 
 
-namespace svg {
+namespace xml {
 
 std::string xml_declaration(
     std::string const &version = "1.0",
@@ -73,6 +83,6 @@ std::string xml_declaration(
       "standalone=\"" + standalone + "\"?>\n";
 }
 
-} // namespace svg
+} // namespace xml
 
-#endif // SVG_SVG
+#endif // XML_XML

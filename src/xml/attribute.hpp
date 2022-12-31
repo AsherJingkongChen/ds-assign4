@@ -1,9 +1,11 @@
-#ifndef SVG_ATTRIBUTE
-#define SVG_ATTRIBUTE
+// [XML_Header_Library]
+//
+#ifndef XML_ATTRIBUTE
+#define XML_ATTRIBUTE
 
 #include <string>
 
-namespace svg {
+namespace xml {
 
 class attribute {
 public:
@@ -68,6 +70,6 @@ public:
   std::string value;
 };
 
-} // namespace svg
+} // namespace xml
 
-#endif // SVG_ATTRIBUTE
+#endif // XML_ATTRIBUTE
