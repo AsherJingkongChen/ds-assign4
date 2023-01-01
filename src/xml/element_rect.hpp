@@ -3,14 +3,15 @@
 #ifndef XML_ELEMENT_RECT
 #define XML_ELEMENT_RECT
 
-#include "element_policy.hpp"
+#include "element_trait.hpp"
 
 namespace xml {
 
 class element_rect;
 typedef std::shared_ptr<element_rect> element_rect_ptr;
 
-class element_rect: public element_policy {
+class element_rect: public element_trait {
+
 public:
   attribute x;
   attribute y;
@@ -21,31 +22,33 @@ public:
 
 public:
   std::vector<attribute> attributes() const override {
-    return {
-      x,
-      y,
-      rx,
-      ry,
-      height,
-      width
-    };
+    auto result = element_trait::attributes();
+    result.insert(
+      result.begin(), {
+        x,
+        y,
+        rx,
+        ry,
+        height,
+        width
+      }
+    );
+    return result;
   }
 
 public:
   element_rect():
-      element_policy(),
-      x("x"),
-      y("y"),
-      rx("rx"),
-      ry("ry"),
-      height("height"),
-      width("width") {
-
-    tag = "rect";
+    element_trait("rect"),
+    x("x"),
+    y("y"),
+    rx("rx"),
+    ry("ry"),
+    height("height"),
+    width("width") {
   }
 
   element_rect(element_rect const &source):
-    element_policy(source),
+    element_trait(source),
     x(source.x),
     y(source.y),
     rx(source.rx),
@@ -55,7 +58,7 @@ public:
   }
 
   element_rect(element_rect &&source) noexcept:
-    element_policy(std::move(source)),
+    element_trait(std::move(source)),
     x(std::move(source.x)),
     y(std::move(source.y)),
     rx(std::move(source.rx)),
@@ -65,7 +68,7 @@ public:
   }
 
   element_rect &operator=(element_rect const &other) {
-    element_policy::operator=(other);
+    element_trait::operator=(other);
     x = other.x;
     y = other.y;
     rx = other.rx;
@@ -76,7 +79,7 @@ public:
   }
 
   element_rect &operator=(element_rect &&other) noexcept {
-    element_policy::operator=(std::move(other));
+    element_trait::operator=(std::move(other));
     x = std::move(other.x);
     y = std::move(other.y);
     rx = std::move(other.rx);

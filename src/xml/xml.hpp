@@ -36,18 +36,24 @@
 #ifndef XML_XML
 #define XML_XML
 
-#include "element_policy.hpp"
+#include "element_circle.hpp"
+#include "element_line.hpp"
+#include "element_trait.hpp"
+#include "element_rect.hpp"
 #include "element_svg.hpp"
+#include "element_text.hpp"
 
 namespace xml {
 
 namespace tag {
-  struct svg {};
-  struct line {};
-  struct text {};
-  struct rect {};
+
   struct circle {};
-}
+  struct line {};
+  struct rect {};
+  struct svg {};
+  struct text {};
+
+} // namespace tag
 
 // element builders and accessors
 //
@@ -56,15 +62,86 @@ struct element {
 };
 
 template<>
-struct element<tag::svg> {
-  static element_policy_ptr get() {
-    return element_policy_ptr(new element_svg);
+struct element<tag::circle> {
+  static element_trait_ptr get() {
+    return 
+      element_trait_ptr(
+        std::make_shared<element_circle>()
+      );
   }
   
-  static element_svg_ptr get(element_policy_ptr const &p) {
+  static element_circle_ptr get(element_trait_ptr const &p) {
+    return
+      std::dynamic_pointer_cast<
+        element_circle_ptr::element_type
+      >(p);
+  }
+};
+
+template<>
+struct element<tag::line> {
+  static element_trait_ptr get() {
+    return 
+      element_trait_ptr(
+        std::make_shared<element_line>()
+      );
+  }
+  
+  static element_line_ptr get(element_trait_ptr const &p) {
+    return
+      std::dynamic_pointer_cast<
+        element_line_ptr::element_type
+      >(p);
+  }
+};
+
+template<>
+struct element<tag::rect> {
+  static element_trait_ptr get() {
+    return 
+      element_trait_ptr(
+        std::make_shared<element_rect>()
+      );
+  }
+  
+  static element_rect_ptr get(element_trait_ptr const &p) {
+    return
+      std::dynamic_pointer_cast<
+        element_rect_ptr::element_type
+      >(p);
+  }
+};
+
+template<>
+struct element<tag::svg> {
+  static element_trait_ptr get() {
+    return 
+      element_trait_ptr(
+        std::make_shared<element_svg>()
+      );
+  }
+  
+  static element_svg_ptr get(element_trait_ptr const &p) {
     return
       std::dynamic_pointer_cast<
         element_svg_ptr::element_type
+      >(p);
+  }
+};
+
+template<>
+struct element<tag::text> {
+  static element_trait_ptr get() {
+    return 
+      element_trait_ptr(
+        std::make_shared<element_text>()
+      );
+  }
+  
+  static element_text_ptr get(element_trait_ptr const &p) {
+    return
+      std::dynamic_pointer_cast<
+        element_text_ptr::element_type
       >(p);
   }
 };
@@ -74,7 +151,7 @@ struct element<tag::svg> {
 
 namespace xml {
 
-std::string xml_declaration(
+std::string declaration(
     std::string const &version = "1.0",
     std::string const &encoding = "UTF-8",
     std::string const &standalone = "no") {
