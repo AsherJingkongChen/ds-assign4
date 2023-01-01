@@ -69,7 +69,7 @@ struct element<tag::circle> {
         std::make_shared<element_circle>()
       );
   }
-  
+
   static element_circle_ptr get(element_trait_ptr const &p) {
     return
       std::dynamic_pointer_cast<
@@ -86,7 +86,7 @@ struct element<tag::line> {
         std::make_shared<element_line>()
       );
   }
-  
+
   static element_line_ptr get(element_trait_ptr const &p) {
     return
       std::dynamic_pointer_cast<
@@ -103,7 +103,7 @@ struct element<tag::rect> {
         std::make_shared<element_rect>()
       );
   }
-  
+
   static element_rect_ptr get(element_trait_ptr const &p) {
     return
       std::dynamic_pointer_cast<
@@ -120,7 +120,7 @@ struct element<tag::svg> {
         std::make_shared<element_svg>()
       );
   }
-  
+
   static element_svg_ptr get(element_trait_ptr const &p) {
     return
       std::dynamic_pointer_cast<
@@ -137,7 +137,7 @@ struct element<tag::text> {
         std::make_shared<element_text>()
       );
   }
-  
+
   static element_text_ptr get(element_trait_ptr const &p) {
     return
       std::dynamic_pointer_cast<
