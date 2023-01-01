@@ -36,8 +36,6 @@
 
 namespace geo {
 
-
-
 } // namespace geo
 
 #endif // GEO_GEO

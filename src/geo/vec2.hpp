@@ -1,89 +1,50 @@
 // [GEO_Header_Library]
 //
+// References:
+// https://en.cppreference.com/w/cpp/numeric/complex
+//
 #ifndef GEO_VEC2
 #define GEO_VEC2
 
-#include <utility>
-#include <numeric>
 #include <cmath>
+#include <complex>
+#include <string>
 
 namespace geo {
 
-struct vec2 {
-public:
-  float x;
-  float y;
+typedef std::complex<float> vec2;
 
-public:
-  vec2 operator+(vec2 const &other) const {
-    return {x + other.x, y + other.y};
-  }
+constexpr float pi_mul_2() {
+  return M_PI * 2;
+}
 
-  vec2 &operator+=(vec2 const &other) {
-    return *this = (*this + other);
-  }
+vec2 polar(float magnitude, float rotation) {
+  return std::polar(magnitude, rotation * pi_mul_2());
+}
 
-  vec2 operator-() const {
-    return {-x, -y};
-  }
+float x(vec2 const &other) {
+  return other.real();
+}
 
-  vec2 operator-(vec2 const &other) const {
-    return *this + (-other);
-  }
+float y(vec2 const &other) {
+  return other.imag();
+}
 
-  vec2 &operator-=(vec2 const &other) {
-    return *this = (*this - other);
-  }
+float &x(vec2 &other) {
+  return reinterpret_cast<float(&)[2]>(other)[0];
+}
 
-  vec2 operator+(float rad) const {
-    return {
-      x * std::cos(rad) - y * std::sin(rad),
-      x * std::sin(rad) + y * std::cos(rad),
-    };
-  }
+float &y(vec2 &other) {
+  return reinterpret_cast<float(&)[2]>(other)[1];
+}
 
-  vec2 &operator+=(float rad) {
-    return *this = (*this + rad);
-  }
+std::string x_str(vec2 const &other) {
+  return std::to_string(other.real());
+}
 
-  vec2 operator-(float rad) const {
-    return *this + (-rad);
-  }
-
-  vec2 &operator-=(float rad) {
-    return *this = (*this - rad);
-  }
-
-  vec2 rotated(vec2 const &anchor, float rad) const {
-    return anchor + ((*this - anchor) + rad);
-  }
-
-  vec2 &rotate(vec2 const &anchor, float rad) {
-    return *this = rotated(anchor, rad);
-  }
-
-public:
-  vec2():
-    x(),
-    y() {
-  }
-
-  vec2(float x, float y):
-    x(x),
-    y(y) {
-  }
-
-  vec2(vec2 const &source):
-    x(source.x),
-    y(source.y) {
-  }
-
-  vec2 &operator=(vec2 const &other) {
-    x = other.x;
-    y = other.y;
-    return *this;
-  }
-};
+std::string y_str(vec2 const &other) {
+  return std::to_string(other.imag());
+}
 
 } // namespace geo
 
