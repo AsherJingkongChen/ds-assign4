@@ -12,65 +12,79 @@ typedef std::shared_ptr<element_rect> element_rect_ptr;
 
 class element_rect: public element_policy {
 public:
+  attribute x;
+  attribute y;
+  attribute rx;
+  attribute ry;
+  attribute height;
+  attribute width;
+
+public:
   std::vector<attribute> attributes() const override {
     return {
-      width,
+      x,
+      y,
+      rx,
+      ry,
       height,
-      version,
-      xmlns
+      width
     };
   }
 
 public:
   element_rect():
       element_policy(),
-      width("width"),
+      x("x"),
+      y("y"),
+      rx("rx"),
+      ry("ry"),
       height("height"),
-      version("version", "1.1"),
-      xmlns("xmlns", "http://www.w3.org/2000/svg") {
+      width("width") {
 
-    tag = "svg";
+    tag = "rect";
   }
 
   element_rect(element_rect const &source):
     element_policy(source),
-    width(source.width),
+    x(source.x),
+    y(source.y),
+    rx(source.rx),
+    ry(source.ry),
     height(source.height),
-    version(source.version),
-    xmlns(source.xmlns) {
+    width(source.width) {
   }
 
   element_rect(element_rect &&source) noexcept:
     element_policy(std::move(source)),
-    width(std::move(source.width)),
+    x(std::move(source.x)),
+    y(std::move(source.y)),
+    rx(std::move(source.rx)),
+    ry(std::move(source.ry)),
     height(std::move(source.height)),
-    version(std::move(source.version)),
-    xmlns(std::move(source.xmlns)) {
+    width(std::move(source.width)) {
   }
 
   element_rect &operator=(element_rect const &other) {
     element_policy::operator=(other);
-    width = other.width;
+    x = other.x;
+    y = other.y;
+    rx = other.rx;
+    ry = other.ry;
     height = other.height;
-    version = other.version;
-    xmlns = other.xmlns;
+    width = other.width;
     return *this;
   }
 
   element_rect &operator=(element_rect &&other) noexcept {
     element_policy::operator=(std::move(other));
-    width = std::move(other.width);
+    x = std::move(other.x);
+    y = std::move(other.y);
+    rx = std::move(other.rx);
+    ry = std::move(other.ry);
     height = std::move(other.height);
-    version = std::move(other.version);
-    xmlns = std::move(other.xmlns);
+    width = std::move(other.width);
     return *this;
   }
-
-public:
-  attribute width;
-  attribute height;
-  attribute version;
-  attribute xmlns;
 };
 
 } // namespace xml

@@ -9,6 +9,14 @@ namespace xml {
 
 class attribute {
 public:
+  std::string key;
+  std::string value;
+
+public:
+  bool empty() const {
+    return value.empty();
+  }
+
   operator std::string() const {
     return to_string();
   }
@@ -64,10 +72,6 @@ public:
     value = std::move(other.value);
     return *this;
   }
-
-public:
-  std::string key;
-  std::string value;
 };
 
 } // namespace xml

@@ -12,6 +12,12 @@ typedef std::shared_ptr<element_svg> element_svg_ptr;
 
 class element_svg: public element_policy {
 public:
+  attribute width;
+  attribute height;
+  attribute version;
+  attribute xmlns;
+
+public:
   std::vector<attribute> attributes() const override {
     return {
       width,
@@ -65,12 +71,6 @@ public:
     xmlns = std::move(other.xmlns);
     return *this;
   }
-
-public:
-  attribute width;
-  attribute height;
-  attribute version;
-  attribute xmlns;
 };
 
 } // namespace xml

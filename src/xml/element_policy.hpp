@@ -18,6 +18,11 @@ typedef std::shared_ptr<element_policy> element_policy_ptr;
 
 class element_policy {
 public:
+  std::string tag;
+  std::string text;
+  std::vector<element_policy_ptr> children;
+
+public:
   virtual std::vector<attribute> attributes() const {
     return {};
   }
@@ -31,7 +36,7 @@ public:
   }
 
 private:
-  bool is_self_closing() const {
+  bool self_closing() const {
     return
       text.empty() &&
       children.empty();
@@ -44,10 +49,12 @@ private:
     );
 
     for (auto &a: attributes()) {
-      result += " " + a.to_string();
+      if (not a.empty()) {
+        result += " " + a.to_string();
+      }
     }
 
-    if (is_self_closing()) {
+    if (self_closing()) {
       return result + "/>\n";
     }
 
@@ -102,11 +109,6 @@ public:
     children = std::move(other.children);
     return *this;
   }
-
-public:
-  std::string tag;
-  std::string text;
-  std::vector<element_policy_ptr> children;
 };
 
 } // namespace xml

@@ -7,7 +7,9 @@ int main() {
   auto s = element<tag::svg>::get();
   element<tag::svg>::get(s)->width = "20";
   element<tag::svg>::get(s)->height = "20";
-  s = element<tag::svg>::get();
+  {
+    auto _ = element<tag::svg>::get(s);
+  }
   element<tag::svg>::get(s)->width = "25";
   element<tag::svg>::get(s)->height = "25";
   std::cout << xml_declaration() << s->to_string();

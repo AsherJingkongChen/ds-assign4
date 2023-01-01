@@ -44,6 +44,9 @@ namespace xml {
 namespace tag {
   struct svg {};
   struct line {};
+  struct text {};
+  struct rect {};
+  struct circle {};
 }
 
 // element builders and accessors
