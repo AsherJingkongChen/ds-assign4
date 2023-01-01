@@ -1,5 +1,6 @@
 #include "../../src/xml/xml.hpp"
 #include <iostream>
+#include <fstream>
 
 using namespace xml::tag;
 
@@ -35,5 +36,6 @@ int main() {
 
   svg1->text = "hello world!\n";
 
-  std::cout << xml::declaration() << std::string(*svg1);
+  std::ofstream fout("test/xml/result_2_circle_and_1_line.cpp.out.xml");
+  fout << xml::declaration() << std::string(*svg1);
 }

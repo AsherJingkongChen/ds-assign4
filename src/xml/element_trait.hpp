@@ -23,6 +23,9 @@ private:
 public:
   std::string text;
   std::vector<element_trait_ptr> children;
+
+  // common presentation attributes
+  //
   attribute fill;
   attribute stroke;
   attribute stroke_linecap;

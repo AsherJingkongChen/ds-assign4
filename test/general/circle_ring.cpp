@@ -1,21 +1,28 @@
 #include "../../src/geo/geo.hpp"
 #include "../../src/xml/xml.hpp"
+#include <fstream>
 
 using namespace xml::tag;
 
 int main() {
   auto root = xml::element<svg>::get();
   auto center = geo::vec2(50, 50);
+  auto count = 10;
+  auto radius = 5.0F;
   xml::element<svg>::get(root)->width = geo::x_str(center * 2.0F);
   xml::element<svg>::get(root)->height = geo::y_str(center * 2.0F);
-  for (int i = 0; i < 10; i++) {
+  root->fill = "black";
+  root->stroke = "";
+  root->stroke_width = "0";
+
+  for (int i = 0; i < count; i++) {
     auto a_circle = xml::element<circle>::get();
     xml::element<circle>::get(a_circle)->cx = 
       geo::x_str(
         center + 
         geo::polar(
-          geo::x(center) - 6.0F,
-          i / 10.0F
+          geo::x(center) - radius,
+          i / float(count)
         )
       );
 
@@ -23,15 +30,17 @@ int main() {
       geo::y_str(
         center + 
         geo::polar(
-          geo::y(center) - 6.0F,
-          i / 10.0F
+          geo::y(center) - radius,
+          i / float(count)
         )
       );
 
-    xml::element<circle>::get(a_circle)->r = "5";
+    xml::element<circle>::get(a_circle)->r = 
+      std::to_string(radius);
 
     root->children.push_back(a_circle);
   }
 
-  std::cout << xml::declaration() << root->to_string();
+  std::ofstream fout("test/general/10_circle.cpp.out.xml");
+  fout << xml::declaration() << root->to_string();
 }
