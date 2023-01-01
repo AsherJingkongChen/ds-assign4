@@ -6,9 +6,9 @@ using namespace xml::tag;
 
 int main() {
   auto root = xml::element<svg>::get();
-  const auto count = 10;
-  const auto edge_length_2 = 50.0F;
-  const auto radius = 5.0F;
+  const auto count = 1000;
+  const auto edge_length_2 = 1000.0F;
+  const auto radius = edge_length_2 / count;
   const auto stroke_width = radius / 10.0F;
   const auto center = geo::vec2(edge_length_2, edge_length_2);
 
@@ -80,6 +80,7 @@ int main() {
     xml::element<text>::get(a_text)->y = geo::y_str(a_text_p);
     xml::element<text>::get(a_text)->font_size = std::to_string(radius / 1.6F);
     xml::element<text>::get(a_text)->font_family = "monospace";
+    xml::element<text>::get(a_text)->font_weight = "bold";
     xml::element<text>::get(a_text)->text_anchor = "middle";
 
     a_text->fill = "black";
@@ -90,6 +91,6 @@ int main() {
   }
 
 
-  std::ofstream fout("test/general/circle_ring.cpp.out.xml");
+  std::ofstream fout("test/general/circle_ring.out.svg");
   fout << xml::declaration() << root->to_string();
 }

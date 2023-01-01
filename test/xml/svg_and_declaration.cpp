@@ -1,16 +1,10 @@
 #include "../../src/xml/xml.hpp"
-#include <iostream>
+#include <fstream>
 
 using namespace xml::tag;
 
 int main() {
   auto s = xml::element<svg>::get();
-  xml::element<svg>::get(s)->width = "20";
-  xml::element<svg>::get(s)->height = "20";
-  {
-    auto t = xml::element<svg>::get(s);
-    xml::element<svg>::get(t)->width = "25";
-    xml::element<svg>::get(t)->height = "25";
-  }
-  std::cout << xml::declaration() << s->to_string();
+  std::ofstream fout("test/xml/svg_and_declaration.out.svg");
+  fout << xml::declaration() << s->to_string();
 }

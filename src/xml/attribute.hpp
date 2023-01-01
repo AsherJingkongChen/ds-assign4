@@ -25,14 +25,14 @@ public:
     return key + "=\"" + value + "\"";
   }
 
-  attribute &operator=(std::string const &value) {
+  std::string &operator=(std::string const &value) {
     this->value = value;
-    return *this;
+    return this->value;
   }
 
-  attribute &operator=(std::string &&value) noexcept {
+  std::string &operator=(std::string &&value) noexcept {
     this->value = std::move(value);
-    return *this;
+    return this->value;
   }
 
 public:

@@ -18,6 +18,16 @@ public:
   attribute version;
   attribute xmlns;
 
+  attribute viewbox() const {
+    if (width.empty() && height.empty()) {
+      return attribute("viewBox");
+    }
+    return attribute(
+      "viewBox", 
+      "0 0 " + width.value + " " + height.value
+    );
+  }
+
 public:
   std::vector<attribute> attributes() const override {
     auto result = element_trait::attributes();
@@ -25,6 +35,7 @@ public:
       result.begin(), {
         width,
         height,
+        viewbox(),
         version,
         xmlns
       }
@@ -40,9 +51,9 @@ public:
       version("version", "1.1"),
       xmlns("xmlns", "http://www.w3.org/2000/svg") {
 
-    element_trait::fill = "none";
-    element_trait::stroke = "black";
-    element_trait::stroke_linecap = "round";
+    fill = "none";
+    stroke = "black";
+    stroke_linecap = "round";
   }
 
   element_svg(element_svg const &source):
