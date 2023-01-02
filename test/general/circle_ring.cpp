@@ -40,12 +40,12 @@ int main() {
     };
 
     geo::y(a_line_p[0]) = 
-      sidelen_2 + 
-      yx_ratio * (geo::y(a_line_p[0]) - sidelen_2);
+      geo::y(center) + 
+      yx_ratio * (geo::y(a_line_p[0]) - geo::y(center));
 
     geo::y(a_line_p[1]) = 
-      sidelen_2 + 
-      yx_ratio * (geo::y(a_line_p[1]) - sidelen_2);
+      geo::y(center) + 
+      yx_ratio * (geo::y(a_line_p[1]) - geo::y(center));
 
     xml::element<line>::get(a_line)->x1 = geo::x_str(a_line_p[0]);
     xml::element<line>::get(a_line)->x2 = geo::x_str(a_line_p[1]);
@@ -68,8 +68,8 @@ int main() {
       );
 
     geo::y(a_circle_p) = 
-      sidelen_2 + 
-      yx_ratio * (geo::y(a_circle_p) - sidelen_2);
+      geo::y(center) + 
+      yx_ratio * (geo::y(a_circle_p) - geo::y(center));
 
     xml::element<circle>::get(a_circle)->cx = geo::x_str(a_circle_p);
     xml::element<circle>::get(a_circle)->cy = geo::y_str(a_circle_p);
@@ -91,8 +91,8 @@ int main() {
       );
 
     geo::y(a_text_p) = 
-      sidelen_2 + 
-      yx_ratio * (geo::y(a_text_p) - sidelen_2);
+      geo::y(center) + 
+      yx_ratio * (geo::y(a_text_p) - geo::y(center));
 
     xml::element<text>::get(a_text)->x = geo::x_str(a_text_p);
     xml::element<text>::get(a_text)->y = geo::y_str(a_text_p);
