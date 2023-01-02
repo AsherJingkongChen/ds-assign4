@@ -7,7 +7,7 @@ using namespace xml::tag;
 int main() {
   auto root = xml::element<svg>::get();
   const auto count = 1000;
-  const auto sidelen_2 = 2500.0F;
+  const auto sidelen_2 = 1000.0F;
   const auto radius = sidelen_2 / count;
   const auto stroke_width = radius / 10.0F;
   const auto yx_ratio = 0.4F;
