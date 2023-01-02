@@ -108,7 +108,6 @@ int main() {
     root->children.push_back(a_text);
   }
 
-
   std::ofstream fout("test/general/circle_ring.out.svg");
   fout << xml::declaration() << root->to_string();
 }

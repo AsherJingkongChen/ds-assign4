@@ -1,5 +1,8 @@
 // [GEO_Header_Library]
 //
+// Note:
+// this is an adapter header for standard C++ library
+//
 #ifndef GEO_VEC2
 #define GEO_VEC2
 

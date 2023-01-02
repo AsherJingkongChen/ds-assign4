@@ -55,7 +55,10 @@ namespace tag {
 
 } // namespace tag
 
-// element builders and selectors
+// xml element builders and selectors:
+//
+// auto e = xml::element< xml::tag::svg >::get();
+// xml::element< xml::tag::svg >(e)->version = "1.1";
 //
 template<typename _Tag>
 struct element {};
@@ -144,11 +147,6 @@ struct element<tag::text> {
       >(p);
   }
 };
-
-} // namespace xml
-
-
-namespace xml {
 
 std::string declaration(
     std::string const &version = "1.0",
