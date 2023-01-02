@@ -13,8 +13,6 @@ int main() {
     al.connect(i + 1, 1 + (i + 1) % count, 1);
   }
 
-  gh::vertex_list<bool> visited;
-
   std::ofstream fout_text("test/graph/adjlist.out.log");
 
   for (auto &p: al) {
