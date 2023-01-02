@@ -1,6 +1,13 @@
 #include <ext/pb_ds/priority_queue.hpp>
 #include <iostream>
 
+template<typename _Tp>
+struct myless {
+  bool operator()(_Tp const &a, _Tp const &b) const {
+    return a < b;
+  }
+};
+
 // example
 //
 // binary_heap_tag
@@ -12,7 +19,7 @@
 int main() {
   __gnu_pbds::priority_queue<
     int, 
-    std::less<int>, 
+    myless<int>, 
     __gnu_pbds::binary_heap_tag
   >
   pq;
