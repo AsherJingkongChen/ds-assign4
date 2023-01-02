@@ -8,8 +8,10 @@
 namespace xml {
 
 class attribute {
-public:
+private:
   std::string key;
+
+public:
   std::string value;
 
 public:
