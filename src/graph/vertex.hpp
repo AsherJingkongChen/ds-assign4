@@ -29,23 +29,64 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR 
 // THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-#ifndef GRAPH_GRAPH
-#define GRAPH_GRAPH
+#ifndef GRAPH_VERTEX
+#define GRAPH_VERTEX
 
-#include <unordered_map>
-#include <unordered_set>
-#include "edge.hpp"
-#include "vertex.hpp"
+#include <utility>
 
 namespace graph {
 
-typedef
-  std::unordered_map<
-    index_type,
-    std::unordered_set<edge>
-  >
-  adjacent_list;
+template<typename _Tp>
+class vertex {
+public:
+  typedef _Tp           value_type;
+  typedef _Tp const &   const_reference;
+  typedef _Tp &         reference;
+
+public:
+  value_type  data;
+  bool        visited;
+
+public:
+  vertex():
+    data(),
+    visited(false) {
+  }
+
+  vertex(const_reference data):
+    data(data),
+    visited(false) {
+  }
+
+  vertex(value_type &&data):
+    data(std::move(data)),
+    visited(false) {
+  }
+
+  vertex(vertex const &source):
+    data(source.data),
+    visited(source.visited) {
+  }
+
+  vertex(vertex &&source) noexcept:
+    data(std::move(source.data)),
+    visited(std::move(source.visited)) {
+  }
+
+  vertex &operator=(vertex const &other) {
+    data = other.data;
+    visited = other.visited;
+    return *this;
+  }
+
+  vertex &operator=(vertex &&other) noexcept {
+    data = std::move(other.data);
+    visited = std::move(other.visited);
+    return *this;
+  }
+
+};
 
 } // namespace graph
 
-#endif // GRAPH_GRAPH
+#endif // GRAPH_VERTEX
