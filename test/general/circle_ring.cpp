@@ -11,7 +11,7 @@ int main() {
   const auto radius = sidelen_2 / count;
   const auto stroke_width = radius / 10.0F;
   const auto center = geo::vec2(sidelen_2, sidelen_2);
-  const auto yx_ratio = 0.5F;
+  const auto yx_ratio = 0.4F;
 
   xml::element<svg>::get(root)->width =
     xml::element<svg>::get(root)->height = 
