@@ -10,12 +10,13 @@ int main() {
   const auto sidelen_2 = 2500.0F;
   const auto radius = sidelen_2 / count;
   const auto stroke_width = radius / 10.0F;
-  const auto center = geo::vec2(sidelen_2, sidelen_2);
   const auto yx_ratio = 0.4F;
+  const auto center = geo::vec2(sidelen_2, sidelen_2 * yx_ratio);
 
-  xml::element<svg>::get(root)->width =
-    xml::element<svg>::get(root)->height = 
-    std::to_string(sidelen_2 * 2.0F);
+  xml::element<svg>::get(root)->width = 
+    std::to_string(geo::x(center) * 2.0F);
+  xml::element<svg>::get(root)->height = 
+    std::to_string(geo::y(center) * 2.0F);
 
   root->fill = "white";
   root->stroke_width = std::to_string(stroke_width);
