@@ -7,14 +7,15 @@ using namespace xml::tag;
 int main() {
   auto root = xml::element<svg>::get();
   const auto count = 1000;
-  const auto edge_length_2 = 2000.0F;
-  const auto radius = edge_length_2 / count;
+  const auto sidelen_2 = 2500.0F;
+  const auto radius = sidelen_2 / count;
   const auto stroke_width = radius / 10.0F;
-  const auto center = geo::vec2(edge_length_2, edge_length_2);
+  const auto center = geo::vec2(sidelen_2, sidelen_2);
+  const auto yx_ratio = 0.6F;
 
   xml::element<svg>::get(root)->width =
     xml::element<svg>::get(root)->height = 
-    std::to_string(edge_length_2 * 2.0F);
+    std::to_string(sidelen_2 * 2.0F);
 
   root->fill = "white";
   root->stroke_width = std::to_string(stroke_width);
@@ -27,15 +28,23 @@ int main() {
     geo::vec2 a_line_p[2] = {
       center +
       geo::polar(
-        edge_length_2 - radius - stroke_width,
+        sidelen_2 - radius - stroke_width,
         i / float(count)
       ),
       center +
       geo::polar(
-        edge_length_2 - radius - stroke_width,
+        sidelen_2 - radius - stroke_width,
         (i + 1) / float(count)
       )
     };
+
+    geo::y(a_line_p[0]) = 
+      sidelen_2 + 
+      yx_ratio * (geo::y(a_line_p[0]) - sidelen_2);
+
+    geo::y(a_line_p[1]) = 
+      sidelen_2 + 
+      yx_ratio * (geo::y(a_line_p[1]) - sidelen_2);
 
     xml::element<line>::get(a_line)->x1 = geo::x_str(a_line_p[0]);
     xml::element<line>::get(a_line)->x2 = geo::x_str(a_line_p[1]);
@@ -53,9 +62,13 @@ int main() {
     auto a_circle_p = 
       center +
       geo::polar(
-        edge_length_2 - radius - stroke_width,
+        sidelen_2 - radius - stroke_width,
         i / float(count)
       );
+
+    geo::y(a_circle_p) = 
+      sidelen_2 + 
+      yx_ratio * (geo::y(a_circle_p) - sidelen_2);
 
     xml::element<circle>::get(a_circle)->cx = geo::x_str(a_circle_p);
     xml::element<circle>::get(a_circle)->cy = geo::y_str(a_circle_p);
@@ -72,9 +85,13 @@ int main() {
     auto a_text_p = 
       center +
       geo::polar(
-        edge_length_2 - radius - stroke_width,
+        sidelen_2 - radius - stroke_width,
         i / float(count)
       );
+
+    geo::y(a_text_p) = 
+      sidelen_2 + 
+      yx_ratio * (geo::y(a_text_p) - sidelen_2);
 
     xml::element<text>::get(a_text)->x = geo::x_str(a_text_p);
     xml::element<text>::get(a_text)->y = geo::y_str(a_text_p);

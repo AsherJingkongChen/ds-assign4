@@ -32,23 +32,33 @@
 #ifndef GRAPH_GRAPH
 #define GRAPH_GRAPH
 
+#include <cstdint>
 #include <unordered_map>
-#include "def.hpp"
-#include "edge.hpp"
-#include "vertex.hpp"
 
-namespace graph {
+// graph:
+// <vertex index type, edge weight type>
+//
+template<
+  typename _Ip = uint32_t, 
+  typename _Wp = uint32_t
+>
+struct graph {
 
-typedef
-  std::unordered_map<
-    index_type,
-    std::unordered_map<
-      index_type,
-      weight_type
-    >
-  >
-  adjacent_list;
+typedef _Ip index_type;
+typedef _Wp weight_type;
 
-} // namespace graph
+// vertex list: 
+// <vertex index, custom value>
+//
+template<typename value_type>
+using vertex_list = 
+  std::unordered_map<index_type, value_type>;
+
+// adjacency list: 
+// <start vertex index, <end vertex index, edge weight>>
+//
+typedef vertex_list<vertex_list<weight_type>> adj_list;
+
+};
 
 #endif // GRAPH_GRAPH

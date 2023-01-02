@@ -29,13 +29,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR 
 // THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
+// References:
+// https://en.cppreference.com/w/cpp/numeric/complex
+//
 #ifndef GEO_GEO
 #define GEO_GEO
 
 #include "vec2.hpp"
 
 namespace geo {
-
 } // namespace geo
 
 #endif // GEO_GEO

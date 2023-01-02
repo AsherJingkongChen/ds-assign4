@@ -55,11 +55,10 @@ namespace tag {
 
 } // namespace tag
 
-// element builders and accessors
+// element builders and selectors
 //
 template<typename _Tag>
-struct element {
-};
+struct element {};
 
 template<>
 struct element<tag::circle> {

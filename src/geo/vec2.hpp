@@ -1,8 +1,5 @@
 // [GEO_Header_Library]
 //
-// References:
-// https://en.cppreference.com/w/cpp/numeric/complex
-//
 #ifndef GEO_VEC2
 #define GEO_VEC2
 
@@ -18,6 +15,8 @@ constexpr float pi_mul_2() {
   return M_PI * 2;
 }
 
+// 1 rotation = 2 PI radians
+//
 vec2 polar(float magnitude, float rotation) {
   return std::polar(magnitude, rotation * pi_mul_2());
 }
