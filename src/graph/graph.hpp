@@ -33,7 +33,7 @@
 #define GRAPH_GRAPH
 
 #include <unordered_map>
-#include <unordered_set>
+#include "def.hpp"
 #include "edge.hpp"
 #include "vertex.hpp"
 
@@ -42,7 +42,10 @@ namespace graph {
 typedef
   std::unordered_map<
     index_type,
-    std::unordered_set<edge>
+    std::unordered_map<
+      index_type,
+      weight_type
+    >
   >
   adjacent_list;
 
