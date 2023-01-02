@@ -7,7 +7,7 @@ using namespace xml::tag;
 int main() {
   auto root = xml::element<svg>::get();
   const auto count = 1000;
-  const auto edge_length_2 = 1000.0F;
+  const auto edge_length_2 = 2000.0F;
   const auto radius = edge_length_2 / count;
   const auto stroke_width = radius / 10.0F;
   const auto center = geo::vec2(edge_length_2, edge_length_2);
