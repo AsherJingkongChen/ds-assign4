@@ -30,7 +30,7 @@
 // THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 // References:
-// [std::complex](https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a01572.html)
+//   [std::complex](https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a01572.html)
 //
 #ifndef MATH_MATH
 #define MATH_MATH

@@ -30,9 +30,10 @@
 // THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 // References:
-// [std::unordered_map](https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a08926.html)
-// [std::priority_queue](https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a08762.html)
-// [Dijkstra's algorithm](https://www3.cs.stonybrook.edu/~rezaul/papers/TR-07-54.pdf)
+//   [std::unordered_map](https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a08926.html)
+//   [std::priority_queue](https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a08762.html)
+//   [Dijkstra's algorithm with and without decrease key](https://www3.cs.stonybrook.edu/~rezaul/papers/TR-07-54.pdf)
+//   [Dijkstra's algorithm introduction](http://nmamano.com/blog/dijkstra/dijkstra.html)
 //
 #ifndef GRAPH_GRAPH
 #define GRAPH_GRAPH
@@ -182,8 +183,10 @@ std::ostream &operator<<(
   return (out << other.first << ' ' << other.second);
 }
 
+// definition headers
+//
 #include "edges.hpp"
 #include "assign.hpp"
-#include "shortest_path.hpp"
+#include "shortest_paths.hpp"
 
 #endif // GRAPH_GRAPH

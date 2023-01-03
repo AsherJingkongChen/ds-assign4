@@ -30,8 +30,8 @@
 // THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 // References:
-// [XML Format](https://developer.mozilla.org/en-US/docs/Web/XML)
-// [SVG Format](https://developer.mozilla.org/en-US/docs/Web/SVG)
+//   [XML Format](https://developer.mozilla.org/en-US/docs/Web/XML)
+//   [SVG Format](https://developer.mozilla.org/en-US/docs/Web/SVG)
 //
 #ifndef XML_XML
 #define XML_XML

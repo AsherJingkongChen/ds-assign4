@@ -13,9 +13,9 @@ template<
 typename simple_graph<_Ip, _Wp, _Tag>::edge_list 
 simple_graph<_Ip, _Wp, _Tag>::edges() const {
   edge_list result;
-  for (auto &p: *this) {
-    for (auto &q: p.second) {
-      result.emplace_back(p.first, q.first, q.second);
+  for (auto &p1: *this) {
+    for (auto &p2: p1.second) {
+      result.emplace_back(p1.first, p2.first, p2.second);
     }
   }
   return result;
