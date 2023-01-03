@@ -50,11 +50,7 @@ constexpr float pi() {
 // 1 rotation = 2 PI radians
 //
 vec2 polar(float magnitude, float rotation) {
-  return
-    std::polar(
-      magnitude,
-      rotation * 2 * pi()
-    );
+  return std::polar(magnitude, rotation * 2 * pi());
 }
 
 } // namespace math

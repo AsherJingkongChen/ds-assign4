@@ -29,8 +29,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR 
 // THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-// Note:
-// this is an adapter header for standard C++ library
+// References:
+// [std::unordered_map](https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a08926.html)
+// [std::priority_queue](https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a08762.html)
+// [Dijkstra's algorithm](https://www3.cs.stonybrook.edu/~rezaul/papers/TR-07-54.pdf)
 //
 #ifndef GRAPH_GRAPH
 #define GRAPH_GRAPH
@@ -38,75 +40,112 @@
 #include <cstdint>
 #include <utility>
 #include <iostream>
+#include <functional>
 #include <type_traits>
 #include <unordered_map>
 
-// graph:
-// <vertex index type, edge weight type>
+namespace graph {
+
+namespace tag {
+
+struct undirected {};
+struct directed {};
+
+} // namespace tag
+
+// simple_graph<Ip, Wp, Tag>:
+//   Ip  - node index type
+//   Wp  - edge weight type
+//   Tag - tag::undirected | tag::directed
+//
+// using adjacency list: 
+//   key 1 - start node index
+//   key 2 - end node index
+//   value - edge weight
+//
+// member types:
+//   1. index_type - Ip
+//   2. weight_type - Wp
+//   3. node_list<value_type>:
+//     key   - node index
+//     value - custom value type
 //
 template<
-  typename _Ip = uint32_t, 
-  typename _Wp = uint32_t
+  typename _Ip,
+  typename _Wp,
+  typename _Tag
 >
-struct graph {
+class simple_graph:
+  public 
+    std::unordered_map<
+      _Ip, std::unordered_map<_Ip, _Wp>
+    > {
+
+public:
+  typedef _Ip index_type;
+  typedef _Wp weight_type;
+
+  // node list:
+  // key   - node index
+  // value - custom value type
+  //
+  template<typename value_type>
+  using node_list = 
+    std::unordered_map<index_type, value_type>;
+
+public:
+  // assign weight to an edge which is linked
+  // from start to end in-place
+  //
+  // usage:
+  //   simple_graph<> sug;
+  //   sug.assign(3, 7, 4);
+  //   sug[3][7] == sug[7][3] == 4; // true
+  //   sug[3][7] = 10;
+  //   sug[3][7] == 10; // true
+  //   sug[7][3] == 10; // false
+  //
+  void assign(
+      index_type start, 
+      index_type end,
+      weight_type weight) {
+
+    assign(start, end, weight, _Tag());
+  }
+
+  // find single source shortest paths
+  // using Dijkstra's algorithm without decrease key
+  // using std::priority_queue (binary heap)
+  //
+  node_list<weight_type>
+  shortest_paths(index_type source) const;
+
+  // find single source shortest paths
+  // using Dijkstra's algorithm with decrease key
+  // using __gnu_pbds::::priority_queue (pairing heap)
+  //
+  // node_list<weight_type>
+  // shortest_paths(index_type source) const;
+
+private:
+  void assign(_Ip, _Ip, _Wp, tag::undirected);
+  void assign(_Ip, _Ip, _Wp, tag::directed);
+
+public:
+  using
+    std::unordered_map<
+      _Ip, std::unordered_map<_Ip, _Wp>
+    >
+    ::unordered_map;
+
   static_assert(
     std::is_unsigned<_Wp>::value, 
     "edge weight is currently "
     "only available as unsigned integer type"
   );
+};
 
-  typedef _Ip index_type;
-  typedef _Wp weight_type;
-
-  // vertex list: 
-  // <vertex index, custom value>
-  //
-  template<typename value_type>
-  using vertex_list = 
-    std::unordered_map<index_type, value_type>;
-
-  // adjacency list: 
-  // <start vertex index, <end vertex index, edge weight>>
-  //
-  class adj_list: 
-    public vertex_list<
-      vertex_list<weight_type>
-    > {
-
-  public:
-    adj_list &connect(
-        index_type start, 
-        index_type end,
-        weight_type weight) {
-
-      auto s = this->find(start);
-      auto e = this->find(end);
-
-      if (s == this->end()) {
-        this->insert({start, {{end, weight}}});
-
-      } else {
-        s->second[end] = weight;
-      }
-
-      if (e == this->end()) {
-        this->insert({end, {{start, weight}}});
-
-      } else {
-        e->second[start] = weight;
-      }
-
-      return *this;
-    }
-
-  public:
-    using
-      vertex_list<vertex_list<weight_type>>
-      ::vertex_list;
-
-  }; // class adj_list
-
-}; // struct graph
+} // namespace graph
 
 template<typename _Tp, typename _Up>
 std::istream &operator>>(
@@ -123,5 +162,8 @@ std::ostream &operator<<(
 
   return (out << other.first << ' ' << other.second);
 }
+
+#include "assign.hpp"
+#include "shortest_path.hpp"
 
 #endif // GRAPH_GRAPH

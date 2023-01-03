@@ -30,8 +30,8 @@
 // THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 // References:
-// https://developer.mozilla.org/en-US/docs/Web/XML
-// https://developer.mozilla.org/en-US/docs/Web/SVG
+// [XML Format](https://developer.mozilla.org/en-US/docs/Web/XML)
+// [SVG Format](https://developer.mozilla.org/en-US/docs/Web/SVG)
 //
 #ifndef XML_XML
 #define XML_XML
@@ -47,11 +47,11 @@ namespace xml {
 
 namespace tag {
 
-  struct circle {};
-  struct line {};
-  struct rect {};
-  struct svg {};
-  struct text {};
+struct circle {};
+struct line {};
+struct rect {};
+struct svg {};
+struct text {};
 
 } // namespace tag
 
