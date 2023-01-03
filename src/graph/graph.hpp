@@ -37,6 +37,8 @@
 #ifndef GRAPH_GRAPH
 #define GRAPH_GRAPH
 
+#include <tuple>
+#include <vector>
 #include <cstdint>
 #include <utility>
 #include <iostream>
@@ -69,6 +71,10 @@ struct directed {};
 //   3. node_list<value_type>:
 //     key   - node index
 //     value - custom value type
+//   4. edge_list:
+//     get<0> - start node index
+//     get<1> - end node index
+//     get<2> - edge weight
 //
 template<
   typename _Ip,
@@ -86,12 +92,25 @@ public:
   typedef _Wp weight_type;
 
   // node list:
-  // key   - node index
-  // value - custom value type
+  //   key   - node index
+  //   value - custom value type
   //
   template<typename value_type>
   using node_list = 
-    std::unordered_map<index_type, value_type>;
+    std::unordered_map<_Ip, value_type>;
+
+  // edge_list:
+  //   get<0> - start node index
+  //   get<1> - end node index
+  //   get<2> - edge weight
+  //
+  using edge_list =
+    std::vector<std::tuple<_Ip, _Ip, _Wp>>;
+
+public:
+  // copy all edges into an edge list
+  //
+  edge_list edges() const;
 
 public:
   // assign weight to an edge which is linked
@@ -163,6 +182,7 @@ std::ostream &operator<<(
   return (out << other.first << ' ' << other.second);
 }
 
+#include "edges.hpp"
 #include "assign.hpp"
 #include "shortest_path.hpp"
 

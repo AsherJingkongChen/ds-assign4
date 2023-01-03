@@ -55,13 +55,37 @@ struct text {};
 
 } // namespace tag
 
-// xml element builders and selectors:
+// xml element builders and selectors
 //
-// auto e = xml::element< xml::tag::svg >::get();
-// xml::element< xml::tag::svg >(e)->version = "1.1";
+// usage:
+//   auto e = xml::element< xml::tag::svg >::get();
+//   xml::element< xml::tag::svg >(e)->version = "1.1";
 //
-template<typename _Tag>
-struct element {};
+template<typename _Tag> struct element;
+template<> struct element<tag::circle>;
+template<> struct element<tag::line>;
+template<> struct element<tag::rect>;
+template<> struct element<tag::svg>;
+template<> struct element<tag::text>;
+
+// XML document declaration
+//
+std::string declaration(
+    std::string const &version = "1.0",
+    std::string const &encoding = "UTF-8",
+    std::string const &standalone = "no") {
+
+  return
+    "<?xml "
+      "version=\"" + version + "\" "
+      "encoding=\"" + encoding + "\" "
+      "standalone=\"" + standalone + "\"?>\n";
+}
+
+} // namespace xml
+
+
+namespace xml {
 
 template<>
 struct element<tag::circle> {
@@ -147,18 +171,6 @@ struct element<tag::text> {
       >(p);
   }
 };
-
-std::string declaration(
-    std::string const &version = "1.0",
-    std::string const &encoding = "UTF-8",
-    std::string const &standalone = "no") {
-
-  return
-    "<?xml "
-      "version=\"" + version + "\" "
-      "encoding=\"" + encoding + "\" "
-      "standalone=\"" + standalone + "\"?>\n";
-}
 
 } // namespace xml
 

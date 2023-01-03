@@ -37,9 +37,19 @@
 
 namespace math {
 
+// pi with float type
+//
+constexpr float pi();
+
+// specialized std::complex<float>
+//
 class vec2;
 
-constexpr float pi();
+// specialized std::polar
+//
+// note:
+//   1 rotation = 2 PI radians
+//
 vec2 polar(float magnitude, float rotation);
 
 } // namespace math
