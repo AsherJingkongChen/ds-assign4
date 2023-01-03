@@ -21,39 +21,37 @@ template<
 >
 typename simple_graph<_Ip, _Wp, _Tag>::node_list<_Wp>
 simple_graph<_Ip, _Wp, _Tag>::shortest_paths(_Ip source) const {
-  typename simple_graph<_Ip, _Wp, _Tag>
-  ::node_list<_Wp> dist;
-  typename simple_graph<_Ip, _Wp, _Tag>
-  ::node_list<bool> vis;
-
-  dist.reserve(this->size());
-  vis.reserve(this->size());
+  typename simple_graph<_Ip, _Wp, _Tag>::node_list<_Wp> d;
 
   for (auto &p1: *this) {
-    dist.emplace(p1.first, std::numer);
-
+    d[p1.first] = std::numeric_limits<_Wp>::max();
   }
 
-  // dist[source] = 0;
-  // std::priority_queue<
-  //   std::pair<int, int>, 
-  //   std::vector<std::pair<int, int>>, 
-  //   std::greater<std::pair<int, int>>
-  // > PQ{{}, {{0, source}}};
-  // while (not PQ.empty()) {
-  //   int u = PQ.top().second;
-  //   PQ.pop();
-  //   if (vis[u]) continue; // not first extraction
-  //   vis[u] = true;
-  //   for (auto &edge : G[u]) {
-  //     int v = edge.first, l = edge.second;
-  //     if (dist[u]+l < dist[v]) {
-  //       dist[v] = dist[u]+l;
-  //       PQ.push({dist[v], v});
-  //     }
-  //   }
-  // }
-  return (dist.begin(), dist.end());
+  using _WIp = std::pair<_Wp, _Ip>;
+  std::priority_queue<
+    _WIp,
+    std::vector<_WIp>,
+    std::greater<_WIp>
+  >
+  q({}, {_WIp(_Wp(), source)});
+
+  while (not q.empty()) {
+    _Wp l(q.top().first);
+    _Ip s(q.top().second);
+    q.pop();
+
+    if (not (d[s] < l)) {
+      d[s] = l;
+      for (auto &p2: this->at(s)) {
+        _Ip e(p2.first);
+        _Wp w(p2.second);
+        if (d[e] > l + w) {
+          q.emplace((d[e] = l + w), e);
+        }
+      }
+    }
+  }
+  return d;
 }
 
 } // namespace graph

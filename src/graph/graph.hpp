@@ -167,22 +167,6 @@ public:
 
 } // namespace graph
 
-template<typename _Tp, typename _Up>
-std::istream &operator>>(
-    std::istream &in,
-    std::pair<const _Tp, _Up> &other) {
-
-  return (in >> other.first >> other.second);
-}
-
-template<typename _Tp, typename _Up>
-std::ostream &operator<<(
-    std::ostream &out,
-    std::pair<const _Tp, _Up> const &other) {
-
-  return (out << other.first << ' ' << other.second);
-}
-
 // definition headers
 //
 #include "edges.hpp"
