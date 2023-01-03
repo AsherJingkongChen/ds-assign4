@@ -1,16 +1,13 @@
-// [GEO_Header_Library]
+// [MATH_Header_Library]
 //
-// Note:
-// this is an adapter header for standard C++ library
-//
-#ifndef GEO_VEC2
-#define GEO_VEC2
+#ifndef MATH_VEC2
+#define MATH_VEC2
 
 #include <cmath>
 #include <complex>
 #include <string>
 
-namespace geo {
+namespace math {
 
 typedef std::complex<float> vec2;
 
@@ -48,6 +45,6 @@ std::string y_str(vec2 const &other) {
   return std::to_string(other.imag());
 }
 
-} // namespace geo
+} // namespace math
 
-#endif // GEO_VEC2
+#endif // MATH_VEC2
