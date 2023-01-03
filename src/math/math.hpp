@@ -35,6 +35,12 @@
 #ifndef MATH_MATH
 #define MATH_MATH
 
+namespace math {
 
+class vec2;
+
+} // namespace math
+
+#include "vec2.hpp"
 
 #endif // MATH_MATH
