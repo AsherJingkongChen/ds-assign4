@@ -5,44 +5,56 @@
 
 #include <cmath>
 #include <complex>
+#include <numeric>
 #include <string>
 
 namespace math {
 
-typedef std::complex<float> vec2;
+class vec2: public std::complex<float> {
+public:
+  constexpr float x() const {
+    return this->real();
+  }
 
-constexpr float pi_mul_2() {
-  return M_PI * 2;
+  constexpr float y() const {
+    return this->imag();
+  }
+
+  float &x() {
+    return reinterpret_cast<float(&)[2]>(*this)[0];
+  }
+
+  float &y() {
+    return reinterpret_cast<float(&)[2]>(*this)[1];
+  }
+
+  std::string x_str() const {
+    return std::to_string(this->real());
+  }
+
+  std::string y_str() const {
+    return std::to_string(this->imag());
+  }
+
+  using std::complex<float>::complex;
+
+  constexpr vec2(std::complex<float> const &source):
+    std::complex<float>(source) {
+  }
+};
+
+constexpr float pi() {
+  return M_PI;
 }
 
 // 1 rotation = 2 PI radians
 //
 vec2 polar(float magnitude, float rotation) {
-  return std::polar(magnitude, rotation * pi_mul_2());
-}
-
-float x(vec2 const &other) {
-  return other.real();
-}
-
-float y(vec2 const &other) {
-  return other.imag();
-}
-
-float &x(vec2 &other) {
-  return reinterpret_cast<float(&)[2]>(other)[0];
-}
-
-float &y(vec2 &other) {
-  return reinterpret_cast<float(&)[2]>(other)[1];
-}
-
-std::string x_str(vec2 const &other) {
-  return std::to_string(other.real());
-}
-
-std::string y_str(vec2 const &other) {
-  return std::to_string(other.imag());
+  return
+    std::polar(
+      magnitude,
+      rotation * 2 * pi()
+    );
 }
 
 } // namespace math

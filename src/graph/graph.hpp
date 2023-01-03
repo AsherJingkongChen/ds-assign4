@@ -99,6 +99,7 @@ struct graph {
       return *this;
     }
 
+  public:
     using
       vertex_list<vertex_list<weight_type>>
       ::vertex_list;
