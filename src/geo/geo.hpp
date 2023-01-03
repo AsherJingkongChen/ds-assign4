@@ -1,4 +1,4 @@
-// [GEO_Header_Library]
+// [MATH_Header_Library]
 //
 // MIT License
 //
@@ -32,12 +32,12 @@
 // References:
 // https://en.cppreference.com/w/cpp/numeric/complex
 //
-#ifndef GEO_GEO
-#define GEO_GEO
+#ifndef MATH_MATH
+#define MATH_MATH
 
 #include "vec2.hpp"
 
-namespace geo {
-} // namespace geo
+namespace math {
+} // namespace math
 
-#endif // GEO_GEO
+#endif // MATH_MATH
