@@ -17,39 +17,39 @@ template<
   typename _Lp,
   typename _Tag
 >
-typename simple_graph<_Ip, _Lp, _Tag>::length_list
-simple_graph<_Ip, _Lp, _Tag>::sssp_lengths(_Ip source) const {
-  typename simple_graph<_Ip, _Lp, _Tag>::length_list d;
+typename simple_graph<_Ip, _Lp, _Tag>::part_edge_list
+simple_graph<_Ip, _Lp, _Tag>
+::sssp_lengths(index_type const &source) const {
+  part_edge_list r;
 
-  for (auto &p1: *this) {
-    d[p1.first] = std::numeric_limits<_Lp>::max();
+  for (auto &e: *this) {
+    r[e.source()].length() = 
+      std::numeric_limits<length_type>::max();
   }
 
-  using _LIp = std::pair<_Lp, _Ip>;
   std::priority_queue<
-    _LIp,
-    std::vector<_LIp>,
-    std::greater<_LIp>
+    part_edge_type,
+    std::vector<part_edge_type>,
+    std::greater<part_edge_type>
   >
-  q({}, {_LIp(_Lp(), source)});
+  q({}, {{source, length_type()}});
 
   while (not q.empty()) {
-    _Lp l(q.top().first);
-    _Ip s(q.top().second);
-    q.pop();
+    part_edge_type s(q.top()); q.pop();
 
-    if (not (d[s] < l)) {
-      d[s] = l;
-      for (auto &p2: this->at(s)) {
-        _Ip e(p2.first);
-        _Lp w(p2.second);
-        if (d[e] > l + w) {
-          q.emplace((d[e] = l + w), e);
+    if (not (s.length() > r[s.vertex()].length())) {
+      r[s.vertex()].length() = s.length();
+
+      for (part_edge_type t: this->at(s.vertex())) {
+        if (r[t.vertex()].length() > t.length() + s.length()) {
+          r[t.vertex()].length() = (t.length() += s.length());
+          r[t.vertex()].vertex() = s.vertex();
+          q.push(t);
         }
       }
     }
   }
-  return d;
+  return r;
 }
 
 } // namespace graph

@@ -39,7 +39,6 @@
 #define GRAPH_GRAPH
 
 #include <tuple>
-#include <vector>
 #include <cstdint>
 #include <utility>
 #include <functional>
@@ -60,22 +59,32 @@ struct directed {};
 //   Lp  - edge length type
 //   Tag - tag::undirected | tag::directed
 //
-// using adjacency list: 
-//   key 1 - start node index
-//   key 2 - end node index
+// as adjacency list: 
+//   key s - source node index
+//   key t - target node index
 //   value - edge length
 //
-// member types:
-//   1. index_type - Ip
-//   2. length_type - Lp
-//   3. node_list<value_type>:
+// member types: [TODO]
+//   index_type - Ip
+//
+//   length_type - Lp
+//
+//   node_list<Tp> - std::unordered_map<Ip, Tp>:
 //     key   - node index
-//     value - custom value type
-//   4. edge_list:
-//     get<0> - start node index
-//     get<1> - end node index
-//     get<2> - edge length
-//   5. length_list - node_list<length_type>
+//     value - Tp
+//
+//   length_list - node_list<length_type>
+//
+//   edge_type - specialized std::tuple<Ip, Ip, Lp>:
+//     source - source node index
+//     target - target node index
+//     length - edge length
+//
+//   part_edge_type - specialized std::pair<Ip, Lp>:
+//     vertex - vertex node index
+//     length - edge length
+//
+//   const_iterator, iterator - forward const_iterator
 //
 template<
   typename _Ip,
@@ -91,74 +100,81 @@ class simple_graph:
 public:
   typedef _Ip index_type;
   typedef _Lp length_type;
+  class edge_type;
+  class part_edge_type;
+  class const_iterator;
+  typedef const_iterator iterator;
 
-  // node list:
-  //   key   - node index
-  //   value - custom value type
-  //
-  template<typename value_type>
-  using node_list = 
-    std::unordered_map<_Ip, value_type>;
+  template<typename _Tp>
+  using node_list      = std::unordered_map<_Ip, _Tp>;
 
-  // edge_list:
-  //   get<0> - start node index
-  //   get<1> - end node index
-  //   get<2> - edge length
-  //
-  using edge_list =
-    std::vector<std::tuple<_Ip, _Ip, _Lp>>;
-
-  typedef node_list<_Lp> length_list;
+  using part_edge_list = node_list<part_edge_type>;
+  using base_type      = node_list<node_list<length_type>>;
 
 public:
-  // copy all edges into an edge list
-  //
-  edge_list edges() const;
+  const_iterator begin() const noexcept;
+  const_iterator end() const noexcept;
 
 public:
-  // assign length to an edge which is linked
-  // from start to end in-place
+  // returns an iterator to an existing edge
+  // which is linked from source to target or end()
+  // if no such edge exists
   //
-  // usage:
-  //   simple_graph<> sug;
-  //   sug.assign(3, 7, 4);
-  //   sug[3][7] == sug[7][3] == 4; // true
-  //   sug[3][7] = 10;
-  //   sug[3][7] == 10; // true
-  //   sug[7][3] == 10; // false
-  //
-  void assign(
-      index_type start, 
-      index_type end,
-      length_type length) {
+  const_iterator find(
+    index_type const &source, 
+    index_type const &target) const;
 
-    assign(start, end, length, _Tag());
+  // assigns length to an existing edge which is linked
+  // from source to target or insert a new edge 
+  // if it does not exist
+  //
+  // returns true if insertion happened or false if assigned
+  //
+  std::pair<const_iterator, bool> 
+  insert_or_assign(
+      index_type const &source, 
+      index_type const &target,
+      length_type const &length) {
+    
+    return insert_or_assign(source, target, length, _Tag());
   }
 
   // find single source shortest path lengths
   // using Dijkstra's algorithm without decrease key
   // using std::priority_queue (binary heap)
+  // initial lengths with std::numeric_limits<Lp>::max()
   //
-  length_list
-  sssp_lengths(index_type source) const;
+  // result type is based on std::unordered_map<Ip, std::pair<Ip, Lp>>
+  // each part_edge_type for [target index] is 
+  // a pair of predecent index and shortest path length
+  //
+  part_edge_list
+  sssp_lengths(index_type const &source) const;
 
   // find single source shortest paths
   // using Dijkstra's algorithm with decrease key
   // using __gnu_pbds::::priority_queue (pairing heap)
   //
-  // length_list
-  // sssp_lengths(index_type source) const;
+  //   length_list
+  //   sssp_lengths(index_type const &source) const;
 
 private:
-  void assign(_Ip, _Ip, _Lp, tag::undirected);
-  void assign(_Ip, _Ip, _Lp, tag::directed);
+  std::pair<const_iterator, bool> 
+  insert_or_assign(
+    index_type const &,
+    index_type const &,
+    length_type const &, 
+    tag::undirected);
+
+  std::pair<const_iterator, bool> 
+  insert_or_assign(
+    index_type const &,
+    index_type const &,
+    length_type const &, 
+    tag::directed);
 
 public:
-  using
-    std::unordered_map<
-      _Ip, std::unordered_map<_Ip, _Lp>
-    >
-    ::unordered_map;
+  using base_type::base_type;
 
   static_assert(
     std::is_unsigned<_Lp>::value, 
@@ -171,8 +187,10 @@ public:
 
 // definition headers
 //
-#include "edges.hpp"
-#include "assign.hpp"
+#include "edge_type.hpp"
+#include "iterator.hpp"
+#include "find.hpp"
+#include "insert_or_assign.hpp"
 #include "sssp_lengths.hpp"
 
 #endif // GRAPH_GRAPH

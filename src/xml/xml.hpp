@@ -56,6 +56,8 @@ struct text {};
 } // namespace tag
 
 // xml element builders and selectors
+//   get() - build
+//   get(e) - select
 //
 // usage:
 //   auto e = xml::element< xml::tag::svg >::get();

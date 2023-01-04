@@ -41,11 +41,15 @@ namespace math {
 //
 constexpr float pi();
 
+// vec2:
+//   x - real part
+//   y - imaginary part
+//
 // specialized std::complex<float>
 //
 class vec2;
 
-// specialized std::polar
+// specialized std::polar that returns vec2
 //
 // note:
 //   1 rotation = 2 PI radians
