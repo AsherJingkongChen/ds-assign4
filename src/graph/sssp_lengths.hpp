@@ -1,7 +1,7 @@
 // [GRAPH_Header_Library]
 //
-#ifndef GRAPH_SHORTEST_PATHS
-#define GRAPH_SHORTEST_PATHS
+#ifndef GRAPH_SSSP_LENGTHS
+#define GRAPH_SSSP_LENGTHS
 
 #include <queue>
 #include <numeric>
@@ -12,31 +12,29 @@
 
 namespace graph {
 
-// std::priority_queue, without decrease key
-//
 template<
   typename _Ip,
-  typename _Wp,
+  typename _Lp,
   typename _Tag
 >
-typename simple_graph<_Ip, _Wp, _Tag>::node_list<_Wp>
-simple_graph<_Ip, _Wp, _Tag>::shortest_paths(_Ip source) const {
-  typename simple_graph<_Ip, _Wp, _Tag>::node_list<_Wp> d;
+typename simple_graph<_Ip, _Lp, _Tag>::length_list
+simple_graph<_Ip, _Lp, _Tag>::sssp_lengths(_Ip source) const {
+  typename simple_graph<_Ip, _Lp, _Tag>::length_list d;
 
   for (auto &p1: *this) {
-    d[p1.first] = std::numeric_limits<_Wp>::max();
+    d[p1.first] = std::numeric_limits<_Lp>::max();
   }
 
-  using _WIp = std::pair<_Wp, _Ip>;
+  using _LIp = std::pair<_Lp, _Ip>;
   std::priority_queue<
-    _WIp,
-    std::vector<_WIp>,
-    std::greater<_WIp>
+    _LIp,
+    std::vector<_LIp>,
+    std::greater<_LIp>
   >
-  q({}, {_WIp(_Wp(), source)});
+  q({}, {_LIp(_Lp(), source)});
 
   while (not q.empty()) {
-    _Wp l(q.top().first);
+    _Lp l(q.top().first);
     _Ip s(q.top().second);
     q.pop();
 
@@ -44,7 +42,7 @@ simple_graph<_Ip, _Wp, _Tag>::shortest_paths(_Ip source) const {
       d[s] = l;
       for (auto &p2: this->at(s)) {
         _Ip e(p2.first);
-        _Wp w(p2.second);
+        _Lp w(p2.second);
         if (d[e] > l + w) {
           q.emplace((d[e] = l + w), e);
         }
@@ -56,4 +54,4 @@ simple_graph<_Ip, _Wp, _Tag>::shortest_paths(_Ip source) const {
 
 } // namespace graph
 
-#endif // GRAPH_SHORTEST_PATHS
+#endif // GRAPH_SSSP_LENGTHS

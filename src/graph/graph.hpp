@@ -42,7 +42,6 @@
 #include <vector>
 #include <cstdint>
 #include <utility>
-#include <iostream>
 #include <functional>
 #include <type_traits>
 #include <unordered_map>
@@ -56,41 +55,42 @@ struct directed {};
 
 } // namespace tag
 
-// simple_graph<Ip, Wp, Tag>:
+// simple_graph<Ip, Lp, Tag>:
 //   Ip  - node index type
-//   Wp  - edge weight type
+//   Lp  - edge length type
 //   Tag - tag::undirected | tag::directed
 //
 // using adjacency list: 
 //   key 1 - start node index
 //   key 2 - end node index
-//   value - edge weight
+//   value - edge length
 //
 // member types:
 //   1. index_type - Ip
-//   2. weight_type - Wp
+//   2. length_type - Lp
 //   3. node_list<value_type>:
 //     key   - node index
 //     value - custom value type
 //   4. edge_list:
 //     get<0> - start node index
 //     get<1> - end node index
-//     get<2> - edge weight
+//     get<2> - edge length
+//   5. length_list - node_list<length_type>
 //
 template<
   typename _Ip,
-  typename _Wp,
+  typename _Lp,
   typename _Tag
 >
 class simple_graph:
   public 
     std::unordered_map<
-      _Ip, std::unordered_map<_Ip, _Wp>
+      _Ip, std::unordered_map<_Ip, _Lp>
     > {
 
 public:
   typedef _Ip index_type;
-  typedef _Wp weight_type;
+  typedef _Lp length_type;
 
   // node list:
   //   key   - node index
@@ -103,10 +103,12 @@ public:
   // edge_list:
   //   get<0> - start node index
   //   get<1> - end node index
-  //   get<2> - edge weight
+  //   get<2> - edge length
   //
   using edge_list =
-    std::vector<std::tuple<_Ip, _Ip, _Wp>>;
+    std::vector<std::tuple<_Ip, _Ip, _Lp>>;
+
+  typedef node_list<_Lp> length_list;
 
 public:
   // copy all edges into an edge list
@@ -114,7 +116,7 @@ public:
   edge_list edges() const;
 
 public:
-  // assign weight to an edge which is linked
+  // assign length to an edge which is linked
   // from start to end in-place
   //
   // usage:
@@ -128,40 +130,40 @@ public:
   void assign(
       index_type start, 
       index_type end,
-      weight_type weight) {
+      length_type length) {
 
-    assign(start, end, weight, _Tag());
+    assign(start, end, length, _Tag());
   }
 
-  // find single source shortest paths
+  // find single source shortest path lengths
   // using Dijkstra's algorithm without decrease key
   // using std::priority_queue (binary heap)
   //
-  node_list<weight_type>
-  shortest_paths(index_type source) const;
+  length_list
+  sssp_lengths(index_type source) const;
 
   // find single source shortest paths
   // using Dijkstra's algorithm with decrease key
   // using __gnu_pbds::::priority_queue (pairing heap)
   //
-  // node_list<weight_type>
-  // shortest_paths(index_type source) const;
+  // length_list
+  // sssp_lengths(index_type source) const;
 
 private:
-  void assign(_Ip, _Ip, _Wp, tag::undirected);
-  void assign(_Ip, _Ip, _Wp, tag::directed);
+  void assign(_Ip, _Ip, _Lp, tag::undirected);
+  void assign(_Ip, _Ip, _Lp, tag::directed);
 
 public:
   using
     std::unordered_map<
-      _Ip, std::unordered_map<_Ip, _Wp>
+      _Ip, std::unordered_map<_Ip, _Lp>
     >
     ::unordered_map;
 
   static_assert(
-    std::is_unsigned<_Wp>::value, 
-    "edge weight is currently "
-    "only available as unsigned integer type"
+    std::is_unsigned<_Lp>::value, 
+    "edge length is currently "
+    "only available as unsigned type"
   );
 };
 
@@ -171,6 +173,6 @@ public:
 //
 #include "edges.hpp"
 #include "assign.hpp"
-#include "shortest_paths.hpp"
+#include "sssp_lengths.hpp"
 
 #endif // GRAPH_GRAPH

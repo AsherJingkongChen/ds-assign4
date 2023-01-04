@@ -7,11 +7,11 @@ namespace graph {
 
 template<
   typename _Ip,
-  typename _Wp,
+  typename _Lp,
   typename _Tag
 >
-typename simple_graph<_Ip, _Wp, _Tag>::edge_list 
-simple_graph<_Ip, _Wp, _Tag>::edges() const {
+typename simple_graph<_Ip, _Lp, _Tag>::edge_list 
+simple_graph<_Ip, _Lp, _Tag>::edges() const {
   edge_list result;
   for (auto &p1: *this) {
     for (auto &p2: p1.second) {

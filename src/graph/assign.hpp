@@ -7,31 +7,31 @@ namespace graph {
 
 template<
   typename _Ip,
-  typename _Wp,
+  typename _Lp,
   typename _Tag
 >
-void simple_graph<_Ip, _Wp, _Tag>::assign(
+void simple_graph<_Ip, _Lp, _Tag>::assign(
     _Ip start,
     _Ip end,
-    _Wp weight,
+    _Lp length,
     tag::undirected) {
 
-  (*this)[start][end] = weight;
-  (*this)[end][start] = weight;
+  (*this)[start][end] = length;
+  (*this)[end][start] = length;
 }
 
 template<
   typename _Ip,
-  typename _Wp,
+  typename _Lp,
   typename _Tag
 >
-void simple_graph<_Ip, _Wp, _Tag>::assign(
+void simple_graph<_Ip, _Lp, _Tag>::assign(
     _Ip start,
     _Ip end,
-    _Wp weight,
+    _Lp length,
     tag::directed) {
 
-  (*this)[start][end] = weight;
+  (*this)[start][end] = length;
 }
 
 } // namespace graph
