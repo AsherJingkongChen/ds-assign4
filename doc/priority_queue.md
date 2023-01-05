@@ -30,7 +30,7 @@ subgraph std
   spq -->|being| heap;
 end
 
-subgraph [__gnu_pbds](https://gcc.gnu.org/onlinedocs/libstdc++/ext/pb_ds/pq_design.html)
+subgraph <a href=https://gcc.gnu.org/onlinedocs/libstdc++/ext/pb_ds/pq_design.html>__gnu_pbds</a>
   gpq --->|being| heap;
   gpq -->|being| gcbdtp;
 
