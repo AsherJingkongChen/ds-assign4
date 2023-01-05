@@ -10,20 +10,20 @@ namespace graph {
 template<
   typename _Ip,
   typename _Lp,
-  typename _Tag
+  typename _DirTag
 >
 std::pair<
-  typename simple_graph<_Ip, _Lp, _Tag>
+  typename simple_graph<_Ip, _Lp, _DirTag>
   ::const_iterator, 
   bool
 >
-simple_graph<_Ip, _Lp, _Tag>::insert_or_assign(
+simple_graph<_Ip, _Lp, _DirTag>::_insert_or_assign(
     index_type const &source,
     index_type const &target,
     length_type const &length,
     tag::undirected) {
 
-  insert_or_assign(
+  _insert_or_assign(
     target,
     source,
     length,
@@ -31,7 +31,7 @@ simple_graph<_Ip, _Lp, _Tag>::insert_or_assign(
   );
 
   return
-    insert_or_assign(
+    _insert_or_assign(
       source, 
       target, 
       length, 
@@ -42,14 +42,14 @@ simple_graph<_Ip, _Lp, _Tag>::insert_or_assign(
 template<
   typename _Ip,
   typename _Lp,
-  typename _Tag
+  typename _DirTag
 >
 std::pair<
-  typename simple_graph<_Ip, _Lp, _Tag>
+  typename simple_graph<_Ip, _Lp, _DirTag>
   ::const_iterator, 
   bool
 >
-simple_graph<_Ip, _Lp, _Tag>::insert_or_assign(
+simple_graph<_Ip, _Lp, _DirTag>::_insert_or_assign(
     index_type const &source,
     index_type const &target,
     length_type const &length,

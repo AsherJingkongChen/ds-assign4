@@ -2,7 +2,7 @@
 # run this shell script with the command: ./script/test.sh
 
 CXX_TEST="g++-12";
-CXXFLAGS_TEST="-Wall -O0";
+CXXFLAGS_TEST="-Wall -O0 -std=c++11";
 
 if [ $# -eq 0 ]; then
   for src in test/**/*.cpp; do

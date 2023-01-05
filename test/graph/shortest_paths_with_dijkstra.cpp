@@ -30,7 +30,8 @@ int main() {
 
   std::ofstream fout("test/graph/shortest_paths_with_dijkstra.out.log");
 
-  gh::part_edge_list r0 = al_1.sssp_lengths(0);
+  gh::part_edge_list r0 = 
+    al_1.sssp_lengths<tag::with_decrease_key>(0);
 
   for (auto &p: r0) {
     fout << p << '\n';

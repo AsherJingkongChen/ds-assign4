@@ -10,9 +10,9 @@ namespace graph {
 template<
   typename _Ip,
   typename _Lp,
-  typename _Tag
+  typename _DirTag
 >
-class simple_graph<_Ip, _Lp, _Tag>::const_iterator {
+class simple_graph<_Ip, _Lp, _DirTag>::const_iterator {
 private:
   typedef 
     typename base_type::const_iterator
@@ -147,10 +147,10 @@ public:
 template<
   typename _Ip,
   typename _Lp,
-  typename _Tag
+  typename _DirTag
 >
-typename simple_graph<_Ip, _Lp, _Tag>::const_iterator
-simple_graph<_Ip, _Lp, _Tag>::begin() const noexcept {
+typename simple_graph<_Ip, _Lp, _DirTag>::const_iterator
+simple_graph<_Ip, _Lp, _DirTag>::begin() const noexcept {
   auto
   b(base_type::begin()),
   e(base_type::end());
@@ -164,10 +164,10 @@ simple_graph<_Ip, _Lp, _Tag>::begin() const noexcept {
 template<
   typename _Ip,
   typename _Lp,
-  typename _Tag
+  typename _DirTag
 >
-typename simple_graph<_Ip, _Lp, _Tag>::const_iterator
-simple_graph<_Ip, _Lp, _Tag>::end() const noexcept {
+typename simple_graph<_Ip, _Lp, _DirTag>::const_iterator
+simple_graph<_Ip, _Lp, _DirTag>::end() const noexcept {
   return {
     base_type::end(),
     base_type::end(),

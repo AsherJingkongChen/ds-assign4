@@ -49,8 +49,14 @@ namespace graph {
 
 namespace tag {
 
-struct undirected {};
-struct directed {};
+struct _dir_tag {};
+struct _algo_tag {};
+
+struct undirected: public _dir_tag {};
+struct directed: public _dir_tag {};
+
+struct without_decrease_key: public _algo_tag {};
+struct with_decrease_key: public _algo_tag {};
 
 } // namespace tag
 
@@ -89,7 +95,7 @@ struct directed {};
 template<
   typename _Ip,
   typename _Lp,
-  typename _Tag
+  typename _DirTag
 >
 class simple_graph:
   public 
@@ -124,11 +130,65 @@ public:
     index_type const &source, 
     index_type const &target) const;
 
+  // find single source shortest path lengths
+  //
+  // sssp_lengths< tag::without_decrease_key >: (default option)
+  //
+  // using Dijkstra's algorithm without decrease key
+  // using std::priority_queue (binary heap)
+  // initial lengths with std::numeric_limits<Lp>::max()
+  //
+  // sssp_lengths< tag::with_decrease_key >:
+  //
+  // [TODO]
+  //
+  // result type is based on std::unordered_map<Ip, std::pair<Ip, Lp>>
+  // each part_edge_type for [target index] is 
+  // a pair of predecent index and shortest path length
+  //
+  part_edge_list
+  sssp_lengths(index_type const &source) const {
+    return
+      sssp_lengths<
+        tag::without_decrease_key
+      >(source);
+  }
+
+  template<
+    typename _AlgoTag,
+    typename
+      std::enable_if<
+        std::is_same<
+          _AlgoTag, 
+          tag::without_decrease_key
+        >::value
+      >::type* = nullptr
+  >
+  part_edge_list
+  sssp_lengths(index_type const &source) const;
+
+  template<
+    typename _AlgoTag,
+    typename
+      std::enable_if<
+        std::is_same<
+          _AlgoTag, 
+          tag::with_decrease_key
+        >::value
+      >::type* = nullptr
+  >
+  part_edge_list
+  sssp_lengths(index_type const &source) const;
+
+public:
   // assigns length to an existing edge which is linked
   // from source to target or insert a new edge 
   // if it does not exist
   //
   // returns true if insertion happened or false if assigned
+  //
+  // if _DirTag is tag::undirected, 
+  // the operation in opposite direction will also take place
   //
   std::pair<const_iterator, bool> 
   insert_or_assign(
@@ -136,52 +196,22 @@ public:
       index_type const &target,
       length_type const &length) {
     
-    return insert_or_assign(source, target, length, _Tag());
+    return _insert_or_assign(source, target, length, _DirTag());
   }
-
-  // find single source shortest path lengths
-  // using Dijkstra's algorithm without decrease key
-  // using std::priority_queue (binary heap)
-  // initial lengths with std::numeric_limits<Lp>::max()
-  //
-  // result type is based on std::unordered_map<Ip, std::pair<Ip, Lp>>
-  // each part_edge_type for [target index] is 
-  // a pair of predecent index and shortest path length
-  //
-  part_edge_list
-  sssp_lengths(index_type const &source) const;
-
-  // find single source shortest paths
-  // using Dijkstra's algorithm with decrease key
-  // using __gnu_pbds::priority_queue (pairing heap)
-  //
-  //   length_list
-  //   sssp_lengths(index_type const &source) const;
-  template<
-    typename _Tp,
-    typename std::enable_if_t<not std::is_same_v<_Tp, _Tp>>* = nullptr
-  >
-  void f(){}
-
-  template<
-    typename _Tp,
-    typename std::enable_if_t<std::is_same_v<_Tp, int>>* = nullptr
-  >
-  void f(){}
 
 private:
   std::pair<const_iterator, bool> 
-  insert_or_assign(
-    index_type const &,
-    index_type const &,
-    length_type const &, 
+  _insert_or_assign(
+    index_type const &source,
+    index_type const &target,
+    length_type const &length,
     tag::undirected);
 
   std::pair<const_iterator, bool> 
-  insert_or_assign(
-    index_type const &,
-    index_type const &,
-    length_type const &, 
+  _insert_or_assign(
+    index_type const &source,
+    index_type const &target,
+    length_type const &length,
     tag::directed);
 
 public:

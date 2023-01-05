@@ -12,9 +12,9 @@ namespace graph {
 template<
   typename _Ip,
   typename _Lp,
-  typename _Tag
+  typename _DirTag
 >
-class simple_graph<_Ip, _Lp, _Tag>::edge_type:
+class simple_graph<_Ip, _Lp, _DirTag>::edge_type:
   public std::tuple<_Ip, _Ip, _Lp> {
 
 public:
@@ -51,11 +51,11 @@ public:
   //   source index and target index
   //
   bool operator==(edge_type const &other) const {
-    return equal_to(other, _Tag());
+    return equal_to(other, _DirTag());
   }
 
   bool operator!=(edge_type const &other) const {
-    return not equal_to(other, _Tag());
+    return not equal_to(other, _DirTag());
   }
 
   // comparison:
@@ -102,9 +102,9 @@ namespace graph {
 template<
   typename _Ip,
   typename _Lp,
-  typename _Tag
+  typename _DirTag
 >
-class simple_graph<_Ip, _Lp, _Tag>::part_edge_type:
+class simple_graph<_Ip, _Lp, _DirTag>::part_edge_type:
   public std::pair<_Ip, _Lp> {
 
 public:

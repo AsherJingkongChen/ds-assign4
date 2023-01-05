@@ -8,10 +8,10 @@ namespace graph {
 template<
   typename _Ip,
   typename _Lp,
-  typename _Tag
+  typename _DirTag
 >
-typename simple_graph<_Ip, _Lp, _Tag>::const_iterator
-simple_graph<_Ip, _Lp, _Tag>::find(
+typename simple_graph<_Ip, _Lp, _DirTag>::const_iterator
+simple_graph<_Ip, _Lp, _DirTag>::find(
     index_type const &source,
     index_type const &target) const {
 
