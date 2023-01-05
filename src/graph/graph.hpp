@@ -153,10 +153,21 @@ public:
 
   // find single source shortest paths
   // using Dijkstra's algorithm with decrease key
-  // using __gnu_pbds::::priority_queue (pairing heap)
+  // using __gnu_pbds::priority_queue (pairing heap)
   //
   //   length_list
   //   sssp_lengths(index_type const &source) const;
+  template<
+    typename _Tp,
+    typename std::enable_if_t<not std::is_same_v<_Tp, _Tp>>* = nullptr
+  >
+  void f(){}
+
+  template<
+    typename _Tp,
+    typename std::enable_if_t<std::is_same_v<_Tp, int>>* = nullptr
+  >
+  void f(){}
 
 private:
   std::pair<const_iterator, bool> 
