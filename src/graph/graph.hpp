@@ -49,14 +49,14 @@ namespace graph {
 
 namespace tag {
 
-struct _dir_tag {};
-struct _algo_tag {};
+struct _direction_tag {};
+struct _algorithm_tag {};
 
-struct undirected: public _dir_tag {};
-struct directed: public _dir_tag {};
+struct undirected: public _direction_tag {};
+struct directed: public _direction_tag {};
 
-struct without_decrease_key: public _algo_tag {};
-struct with_decrease_key: public _algo_tag {};
+struct without_decrease_key: public _algorithm_tag {};
+struct with_decrease_key: public _algorithm_tag {};
 
 } // namespace tag
 
@@ -228,10 +228,11 @@ public:
 
 // definition headers
 //
-#include "edge_type.hpp"
+#include "edge_types.hpp"
 #include "iterator.hpp"
 #include "find.hpp"
 #include "insert_or_assign.hpp"
 #include "sssp_lengths.hpp"
+#include "extra.hpp"
 
 #endif // GRAPH_GRAPH

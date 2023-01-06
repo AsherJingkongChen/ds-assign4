@@ -3,6 +3,7 @@
 
 using namespace graph;
 using namespace graph::tag;
+using namespace graph::extra::io;
 
 using usg_16_16 = simple_graph<uint16_t, uint16_t, undirected>;
 using dsg_16_32 = simple_graph<uint16_t, uint32_t, directed>;

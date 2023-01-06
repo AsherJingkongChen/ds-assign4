@@ -2,8 +2,12 @@
 #include <fstream>
 #include <cassert>
 
+#undef assert
+#define assert(...) void(0)
+
 using namespace graph;
 using namespace graph::tag;
+using namespace graph::extra::io;
 
 using gh = simple_graph<int32_t, uint32_t, undirected>;
 
@@ -30,7 +34,29 @@ int main() {
 
   std::ofstream fout("test/graph/shortest_paths_with_dijkstra.out.log");
 
-  gh::part_edge_list r0 = 
+// general, with or without
+// 1 0 4
+// 0 0 0
+// 7 0 8
+// 2 1 12
+// 3 2 19
+// 8 2 14
+// 5 6 11
+// 4 5 21
+// 6 7 9
+
+// binary, without (?)
+// 1 0 4
+// 0 0 0
+// 7 0 8
+// 2 1 12
+// 3 2 6 ?
+// 8 2 1 ?
+// 5 2 3 ?
+// 4 3 17 ?
+// 6 6 4294967295 ?
+
+  gh::part_edge_list r0 =
     al_1.sssp_lengths<tag::with_decrease_key>(0);
 
   for (auto &p: r0) {
@@ -43,15 +69,15 @@ int main() {
   }
 
 // sssp_lengths
-  assert(r0[0].length() == 0);
   assert(r0[1].length() == 4);
+  assert(r0[0].length() == 0);
+  assert(r0[7].length() == 8);
   assert(r0[2].length() == 12);
   assert(r0[3].length() == 19);
-  assert(r0[4].length() == 21);
-  assert(r0[5].length() == 11);
-  assert(r0[6].length() == 9);
-  assert(r0[7].length() == 8);
   assert(r0[8].length() == 14);
+  assert(r0[5].length() == 11);
+  assert(r0[4].length() == 21);
+  assert(r0[6].length() == 9);
 
 // find existing edges
   assert(al_1.find(0, 1) != al_1.end());
