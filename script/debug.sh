@@ -1,13 +1,18 @@
 #! /usr/bin/env bash
 # run this shell script with the command: ./script/debug.sh
 
-CXX_TEST="g++-12";
-CXXFLAGS_TEST="-Wall -std=c++11 -O0 -g";
+CXX_DEBUG="g++-12";
+CXXFLAGS_DEBUG="-Wall -std=c++17 -O0 -g";
+
+# include paths for debug/graph/pair_test_with_cxxgraph.cpp
+#
+CXXFLAGS_DEBUG+=" -I./third-party/CXXGraph/include";
+CXXFLAGS_DEBUG+=" -I/usr/local/Cellar/openssl@3/3.0.7/include";
 
 if [ $# -eq 0 ]; then
   for src in debug/**/*.cpp; do
-    echo "$CXX_TEST $CXXFLAGS_TEST $src -o $src.out";
-    $CXX_TEST $CXXFLAGS_TEST $src -o $src.out;
+    echo "$CXX_DEBUG $CXXFLAGS_DEBUG $src -o $src.out";
+    $CXX_DEBUG $CXXFLAGS_DEBUG $src -o $src.out;
 
     if [ $? -ne 0 ]; then
       echo "compilation for $src fails";
@@ -27,8 +32,8 @@ if [ $# -eq 0 ]; then
 
 else
   for src in $@; do
-    echo "$CXX_TEST $CXXFLAGS_TEST $@ -o $@.out";
-    $CXX_TEST $CXXFLAGS_TEST $@ -o $@.out;
+    echo "$CXX_DEBUG $CXXFLAGS_DEBUG $@ -o $@.out";
+    $CXX_DEBUG $CXXFLAGS_DEBUG $@ -o $@.out;
 
     if [ $? -ne 0 ]; then
       echo "compilation for $src fails";
