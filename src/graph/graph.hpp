@@ -226,7 +226,24 @@ public:
       index_type const &target,
       length_type const &length) {
     
-    return _insert_or_assign(source, target, length, _DirTag());
+    return 
+      _insert_or_assign(
+        source, 
+        target, 
+        length, 
+        _DirTag()
+      );
+  }
+
+  std::pair<const_iterator, bool> 
+  insert_or_assign(edge_type const &edge) {
+    return 
+      _insert_or_assign(
+        edge.source(), 
+        edge.target(), 
+        edge.length(), 
+        _DirTag()
+      );
   }
 
 private:
@@ -250,7 +267,8 @@ public:
   static_assert(
     std::is_unsigned<_Lp>::value, 
     "edge length is currently "
-    "only available as unsigned type"
+    "only available as unsigned type for the sake of "
+    "Dijkstra's SSSP algorithm"
   );
 };
 

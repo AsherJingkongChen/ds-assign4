@@ -12,27 +12,27 @@ using gh = simple_graph<int32_t, uint32_t, undirected>;
 //   [Dijkstra's algorithm on a undirected graph](https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-using-priority_queue-stl/)
 //
 int main() {
-  gh al_1;
+  gh al;
 
-  al_1.insert_or_assign(0, 1, 4);
-  al_1.insert_or_assign(0, 7, 8);
-  al_1.insert_or_assign(1, 2, 8);
-  al_1.insert_or_assign(1, 7, 11);
-  al_1.insert_or_assign(2, 3, 7);
-  al_1.insert_or_assign(2, 8, 2);
-  al_1.insert_or_assign(2, 5, 4);
-  al_1.insert_or_assign(3, 4, 9);
-  al_1.insert_or_assign(3, 5, 14);
-  al_1.insert_or_assign(4, 5, 10);
-  al_1.insert_or_assign(5, 6, 2);
-  al_1.insert_or_assign(6, 7, 1);
-  al_1.insert_or_assign(6, 8, 6);
-  al_1.insert_or_assign(7, 8, 7);
+  al.insert_or_assign(0, 1, 4);
+  al.insert_or_assign(0, 7, 8);
+  al.insert_or_assign(1, 2, 8);
+  al.insert_or_assign(1, 7, 11);
+  al.insert_or_assign(2, 3, 7);
+  al.insert_or_assign(2, 8, 2);
+  al.insert_or_assign(2, 5, 4);
+  al.insert_or_assign(3, 4, 9);
+  al.insert_or_assign(3, 5, 14);
+  al.insert_or_assign(4, 5, 10);
+  al.insert_or_assign(5, 6, 2);
+  al.insert_or_assign(6, 7, 1);
+  al.insert_or_assign(6, 8, 6);
+  al.insert_or_assign(7, 8, 7);
 
   std::ofstream fout("debug/graph/shortest_paths_with_dijkstra.out.log");
 
   gh::part_edge_list r0 =
-    al_1.sssp_lengths<
+    al.sssp_lengths<
       tag::with_decrease_key,
       __gnu_pbds::binomial_heap_tag
     >(0);
@@ -42,7 +42,7 @@ int main() {
   }
 
   fout << "edge list:\n";
-  for (auto &e: al_1) {
+  for (auto &e: al) {
     fout << e << '\n';
   }
 
@@ -58,41 +58,41 @@ int main() {
   assert(r0[6].length() == 9);
 
 // find existing edges
-  assert(al_1.find(0, 1) != al_1.end());
-  assert(al_1.find(0, 7) != al_1.end());
-  assert(al_1.find(1, 2) != al_1.end());
-  assert(al_1.find(1, 7) != al_1.end());
-  assert(al_1.find(2, 3) != al_1.end());
-  assert(al_1.find(2, 8) != al_1.end());
-  assert(al_1.find(2, 5) != al_1.end());
-  assert(al_1.find(3, 4) != al_1.end());
-  assert(al_1.find(3, 5) != al_1.end());
-  assert(al_1.find(4, 5) != al_1.end());
-  assert(al_1.find(5, 6) != al_1.end());
-  assert(al_1.find(6, 7) != al_1.end());
-  assert(al_1.find(6, 8) != al_1.end());
-  assert(al_1.find(7, 8) != al_1.end());
+  assert(al.find(0, 1) != al.end());
+  assert(al.find(0, 7) != al.end());
+  assert(al.find(1, 2) != al.end());
+  assert(al.find(1, 7) != al.end());
+  assert(al.find(2, 3) != al.end());
+  assert(al.find(2, 8) != al.end());
+  assert(al.find(2, 5) != al.end());
+  assert(al.find(3, 4) != al.end());
+  assert(al.find(3, 5) != al.end());
+  assert(al.find(4, 5) != al.end());
+  assert(al.find(5, 6) != al.end());
+  assert(al.find(6, 7) != al.end());
+  assert(al.find(6, 8) != al.end());
+  assert(al.find(7, 8) != al.end());
 
-  assert(al_1.find(1, 0) != al_1.end());
-  assert(al_1.find(7, 0) != al_1.end());
-  assert(al_1.find(2, 1) != al_1.end());
-  assert(al_1.find(7, 1) != al_1.end());
-  assert(al_1.find(3, 2) != al_1.end());
-  assert(al_1.find(8, 2) != al_1.end());
-  assert(al_1.find(5, 2) != al_1.end());
-  assert(al_1.find(4, 3) != al_1.end());
-  assert(al_1.find(5, 3) != al_1.end());
-  assert(al_1.find(5, 4) != al_1.end());
-  assert(al_1.find(6, 5) != al_1.end());
-  assert(al_1.find(7, 6) != al_1.end());
-  assert(al_1.find(8, 6) != al_1.end());
-  assert(al_1.find(8, 7) != al_1.end());
+  assert(al.find(1, 0) != al.end());
+  assert(al.find(7, 0) != al.end());
+  assert(al.find(2, 1) != al.end());
+  assert(al.find(7, 1) != al.end());
+  assert(al.find(3, 2) != al.end());
+  assert(al.find(8, 2) != al.end());
+  assert(al.find(5, 2) != al.end());
+  assert(al.find(4, 3) != al.end());
+  assert(al.find(5, 3) != al.end());
+  assert(al.find(5, 4) != al.end());
+  assert(al.find(6, 5) != al.end());
+  assert(al.find(7, 6) != al.end());
+  assert(al.find(8, 6) != al.end());
+  assert(al.find(8, 7) != al.end());
 
 // find non-existing edges
-  assert(al_1.find(9, 2) == al_1.end());
-  assert(al_1.find(7, 4) == al_1.end());
-  assert(al_1.find(2, 9) == al_1.end());
-  assert(al_1.find(3, 0) == al_1.end());
+  assert(al.find(9, 2) == al.end());
+  assert(al.find(7, 4) == al.end());
+  assert(al.find(2, 9) == al.end());
+  assert(al.find(3, 0) == al.end());
 }
 
 // general, with or without
