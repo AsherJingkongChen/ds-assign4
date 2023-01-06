@@ -1,3 +1,0 @@
-[submodule "third-party/CXXGraph"]
-	path = third-party/CXXGraph
-	url = git@github.com:ZigRazor/CXXGraph.git
