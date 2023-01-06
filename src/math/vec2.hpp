@@ -12,12 +12,15 @@ namespace math {
 
 class vec2: public std::complex<float> {
 public:
+  typedef std::complex<float> base_type;
+
+public:
   constexpr float x() const {
-    return this->real();
+    return base_type::real();
   }
 
   constexpr float y() const {
-    return this->imag();
+    return base_type::imag();
   }
 
   float &x() {
@@ -29,17 +32,17 @@ public:
   }
 
   std::string x_str() const {
-    return std::to_string(this->real());
+    return std::to_string(base_type::real());
   }
 
   std::string y_str() const {
-    return std::to_string(this->imag());
+    return std::to_string(base_type::imag());
   }
 
-  using std::complex<float>::complex;
+  using base_type::base_type;
 
-  constexpr vec2(std::complex<float> const &source):
-    std::complex<float>(source) {
+  constexpr vec2(base_type const &source):
+    base_type(source) {
   }
 };
 

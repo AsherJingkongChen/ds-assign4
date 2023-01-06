@@ -2,12 +2,7 @@
 # run this shell script with the command: ./script/debug.sh
 
 CXX_DEBUG="g++-12";
-CXXFLAGS_DEBUG="-Wall -std=c++17 -O0 -g";
-
-# include paths for debug/graph/pair_test_with_cxxgraph.cpp
-#
-CXXFLAGS_DEBUG+=" -I./third-party/CXXGraph/include";
-CXXFLAGS_DEBUG+=" -I/usr/local/Cellar/openssl@3/3.0.7/include";
+CXXFLAGS_DEBUG="-Wall -std=c++11 -O0 -g";
 
 if [ $# -eq 0 ]; then
   for src in debug/**/*.cpp; do

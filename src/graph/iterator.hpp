@@ -13,20 +13,20 @@ template<
   typename _DirTag
 >
 class simple_graph<_Ip, _Lp, _DirTag>::const_iterator {
-private:
-  typedef 
-    typename base_type::const_iterator
-    source_iterator;
-  typedef
-    typename base_type::mapped_type::const_iterator
-    target_iterator;
-
 public:
   typedef std::forward_iterator_tag   iterator_category;
   typedef std::ptrdiff_t              difference_type;
   typedef edge_type                   value_type;
   typedef edge_type const &           reference;
   typedef edge_type const *           pointer;
+
+  typedef 
+    typename base_type::const_iterator
+    source_iterator;
+
+  typedef
+    typename base_type::mapped_type::const_iterator
+    target_iterator;
 
 private:
   source_iterator s_it;

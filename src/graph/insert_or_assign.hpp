@@ -57,7 +57,7 @@ simple_graph<_Ip, _Lp, _DirTag>::_insert_or_assign(
 
   part_edge_type pe(target, length);
 
-  auto i1 = this->insert({source, {pe}});
+  auto i1 = base_type::insert({source, {pe}});
   if (i1.second) {
     return {
       {

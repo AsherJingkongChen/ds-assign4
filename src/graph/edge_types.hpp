@@ -16,7 +16,8 @@ template<
 class simple_graph<_Ip, _Lp, _DirTag>::edge_type:
   public std::tuple<_Ip, _Ip, _Lp> {
 
-public:
+public: 
+  typedef std::tuple<_Ip, _Ip, _Lp> base_type;
   typedef _Ip index_type;
   typedef _Lp length_type;
 
@@ -107,24 +108,25 @@ class simple_graph<_Ip, _Lp, _DirTag>::part_edge_type:
   public std::pair<_Ip, _Lp> {
 
 public:
+  typedef std::pair<_Ip, _Lp> base_type;
   typedef _Ip index_type;
   typedef _Lp length_type;
 
 public:
   index_type const &vertex() const noexcept {
-    return this->first;
+    return base_type::first;
   }
 
   length_type const &length() const noexcept {
-    return this->second;
+    return base_type::second;
   }
 
   index_type &vertex() noexcept {
-    return this->first;
+    return base_type::first;
   }
 
   length_type &length() noexcept {
-    return this->second;
+    return base_type::second;
   }
 
 public:

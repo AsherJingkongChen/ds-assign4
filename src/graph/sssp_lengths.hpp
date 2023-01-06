@@ -14,7 +14,6 @@ template<
   typename _Lp,
   typename _DirTag
 >
-
 #ifdef __HAS_GNU_PBDS_PRIORITY_QUEUE
 template<
   typename _AlgoTag,
@@ -37,6 +36,10 @@ simple_graph<_Ip, _Lp, _DirTag>
       std::vector<part_edge_type>,
       std::greater<part_edge_type>
     >;
+
+  if (base_type::find(source) == base_type::end()) {
+    return {};
+  }
 
   part_edge_list r;
 
@@ -81,6 +84,13 @@ template<
         _AlgoTag, 
         tag::with_decrease_key
       >::value
+    >::type*,
+  typename
+    std::enable_if<
+      not std::is_same<
+        _PqTag,
+        __gnu_pbds::binary_heap_tag
+      >::value
     >::type*
 >
 typename simple_graph<_Ip, _Lp, _DirTag>::part_edge_list
@@ -92,6 +102,10 @@ simple_graph<_Ip, _Lp, _DirTag>
       std::greater<part_edge_type>,
       _PqTag
     >;
+
+  if (base_type::find(source) == base_type::end()) {
+    return {};
+  }
 
   part_edge_list r;
   node_list<typename priority_queue::point_iterator> h;

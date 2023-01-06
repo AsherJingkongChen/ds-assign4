@@ -1,3 +1,6 @@
+// References:
+//   [Dijkstra's algorithm on a undirected graph](https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-using-priority_queue-stl/)
+//
 #include "../../src/graph/graph.hpp"
 #include <fstream>
 #include <cassert>
@@ -8,9 +11,6 @@ using namespace graph::extra::io;
 
 using gh = simple_graph<int32_t, uint32_t, undirected>;
 
-// References:
-//   [Dijkstra's algorithm on a undirected graph](https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-using-priority_queue-stl/)
-//
 int main() {
   gh al;
 

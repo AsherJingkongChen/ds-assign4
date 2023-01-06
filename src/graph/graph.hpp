@@ -57,13 +57,12 @@ namespace graph {
 namespace tag {
 
 struct _direction_tag {};
-struct _algorithm_tag {};
-
 struct undirected: public _direction_tag {};
 struct directed: public _direction_tag {};
 
 #ifdef __HAS_GNU_PBDS_PRIORITY_QUEUE
 
+struct _algorithm_tag {};
 struct without_decrease_key: public _algorithm_tag {};
 struct with_decrease_key: public _algorithm_tag {};
 
@@ -142,11 +141,12 @@ public:
     index_type const &target) const;
 
   // find single source shortest path lengths
-  // implementation of Dijkstra's algorithm
+  // with Dijkstra's SSSP algorithm
   //
   // result type is based on std::unordered_map<Ip, std::pair<Ip, Lp>>
-  // each part_edge_type for [target index] is 
-  // a pair of predecent index and shortest path length
+  // each part_edge_type of [target index]
+  // is a std::pair of the index prior to target index (for pathfinding)
+  // and the length of shortest path
   //
   // - sssp_lengths(source index),
   // - sssp_lengths< tag::without_decrease_key >(source index):
@@ -161,18 +161,22 @@ public:
   //   with the help of __gnu_pbds::priority_queue
   //
   //   PqTag:
-  //     one of five __gnu_pbds::priority_queue_tags
-  //     which specifies the underlying data structure,
+  //     one of five __gnu_pbds::priority_queue_tags,
+  //     which specifies the underlying data structure
+  //
   //     default value is __gnu_pbds::pairing_heap_tag
   //
-  // note that in this implementation,
-  // initial lengths is std::numeric_limits<Lp>::max()
+  //     __gnu_pbds::binary_heap_tag is not available
+  //     due to some performance issues
   //
-  part_edge_list
-  sssp_lengths(index_type const &source) const
+  // note that in this implementation
+  // all initial lengths is std::numeric_limits<length_type>::max()
+  // but length of [source] is always length_type()
+  //
 #ifdef __HAS_GNU_PBDS_PRIORITY_QUEUE
-  {
-    return
+  part_edge_list
+  sssp_lengths(index_type const &source) const {
+    return 
       sssp_lengths<
         tag::without_decrease_key
       >(source);
@@ -201,19 +205,28 @@ public:
           _AlgoTag, 
           tag::with_decrease_key
         >::value
+      >::type* = nullptr,
+    typename
+      std::enable_if<
+        not std::is_same<
+          _PqTag,
+          __gnu_pbds::binary_heap_tag
+        >::value
       >::type* = nullptr
   >
   part_edge_list
   sssp_lengths(index_type const &source) const;
 
 #else
-;
+  part_edge_list
+  sssp_lengths(index_type const &source) const;
+
 #endif // __HAS_GNU_PBDS_PRIORITY_QUEUE
 
 public:
   // assigns length to an existing edge which is linked
-  // from source to target or insert a new edge 
-  // if it does not exist
+  // from source to target or 
+  // insert a new edge if it does not exist
   //
   // returns true if insertion happened or false if assigned
   //
