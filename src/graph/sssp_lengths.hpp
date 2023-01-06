@@ -3,12 +3,8 @@
 #ifndef GRAPH_SSSP_LENGTHS
 #define GRAPH_SSSP_LENGTHS
 
-#ifdef __clang__
-  #warning GNU C++ Library is required due to the usage of __gnu_pbds::priority_queue
-#endif // __clang__
-
+#include <queue>
 #include <limits>
-#include <ext/pb_ds/priority_queue.hpp>
 #include <iostream>
 
 namespace graph {
@@ -18,6 +14,8 @@ template<
   typename _Lp,
   typename _DirTag
 >
+
+#ifdef __HAS_GNU_PBDS_PRIORITY_QUEUE
 template<
   typename _AlgoTag,
   typename
@@ -28,14 +26,16 @@ template<
       >::value
     >::type*
 >
+#endif // __HAS_GNU_PBDS_PRIORITY_QUEUE
+
 typename simple_graph<_Ip, _Lp, _DirTag>::part_edge_list
 simple_graph<_Ip, _Lp, _DirTag>
 ::sssp_lengths(index_type const &source) const {
-  using priority_queue = 
-    __gnu_pbds::priority_queue<
+  using priority_queue =
+    std::priority_queue<
       part_edge_type,
-      std::greater<part_edge_type>,
-      __gnu_pbds::binary_heap_tag
+      std::vector<part_edge_type>,
+      std::greater<part_edge_type>
     >;
 
   part_edge_list r;
@@ -66,6 +66,7 @@ simple_graph<_Ip, _Lp, _DirTag>
   return r;
 }
 
+#ifdef __HAS_GNU_PBDS_PRIORITY_QUEUE
 template<
   typename _Ip,
   typename _Lp,
@@ -73,6 +74,7 @@ template<
 >
 template<
   typename _AlgoTag,
+  typename _PqTag,
   typename
     std::enable_if<
       std::is_same<
@@ -88,7 +90,7 @@ simple_graph<_Ip, _Lp, _DirTag>
     __gnu_pbds::priority_queue<
       part_edge_type,
       std::greater<part_edge_type>,
-      __gnu_pbds::binomial_heap_tag
+      _PqTag
     >;
 
   part_edge_list r;
@@ -121,6 +123,7 @@ simple_graph<_Ip, _Lp, _DirTag>
   }
   return r;
 }
+#endif // __HAS_GNU_PBDS_PRIORITY_QUEUE
 
 } // namespace graph
 

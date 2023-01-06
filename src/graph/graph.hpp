@@ -45,6 +45,13 @@
 #include <type_traits>
 #include <unordered_map>
 
+#if defined __has_include
+  #if __has_include (<ext/pb_ds/priority_queue.hpp>)
+    #include <ext/pb_ds/priority_queue.hpp>
+    #define __HAS_GNU_PBDS_PRIORITY_QUEUE
+  #endif
+#endif
+
 namespace graph {
 
 namespace tag {
@@ -55,8 +62,12 @@ struct _algorithm_tag {};
 struct undirected: public _direction_tag {};
 struct directed: public _direction_tag {};
 
+#ifdef __HAS_GNU_PBDS_PRIORITY_QUEUE
+
 struct without_decrease_key: public _algorithm_tag {};
 struct with_decrease_key: public _algorithm_tag {};
+
+#endif // __HAS_GNU_PBDS_PRIORITY_QUEUE
 
 } // namespace tag
 
@@ -131,23 +142,36 @@ public:
     index_type const &target) const;
 
   // find single source shortest path lengths
-  //
-  // sssp_lengths< tag::without_decrease_key >: (default option)
-  //
-  // using Dijkstra's algorithm without decrease key
-  // using std::priority_queue (binary heap)
-  // initial lengths with std::numeric_limits<Lp>::max()
-  //
-  // sssp_lengths< tag::with_decrease_key >:
-  //
-  // [TODO]
+  // implementation of Dijkstra's algorithm
   //
   // result type is based on std::unordered_map<Ip, std::pair<Ip, Lp>>
   // each part_edge_type for [target index] is 
   // a pair of predecent index and shortest path length
   //
+  // - sssp_lengths(source index),
+  // - sssp_lengths< tag::without_decrease_key >(source index):
+  //
+  //   without decrease key operation
+  //   with the help of std::priority_queue (binary heap)
+  //
+  // - sssp_lengths< tag::with_decrease_key >(source index),
+  // - sssp_lengths< tag::with_decrease_key, PqTag >(source index):
+  //
+  //   with decrease key operation
+  //   with the help of __gnu_pbds::priority_queue
+  //
+  //   PqTag:
+  //     one of five __gnu_pbds::priority_queue_tags
+  //     which specifies the underlying data structure,
+  //     default value is __gnu_pbds::pairing_heap_tag
+  //
+  // note that in this implementation,
+  // initial lengths is std::numeric_limits<Lp>::max()
+  //
   part_edge_list
-  sssp_lengths(index_type const &source) const {
+  sssp_lengths(index_type const &source) const
+#ifdef __HAS_GNU_PBDS_PRIORITY_QUEUE
+  {
     return
       sssp_lengths<
         tag::without_decrease_key
@@ -169,6 +193,8 @@ public:
 
   template<
     typename _AlgoTag,
+    typename _PqTag =
+      __gnu_pbds::pairing_heap_tag,
     typename
       std::enable_if<
         std::is_same<
@@ -179,6 +205,10 @@ public:
   >
   part_edge_list
   sssp_lengths(index_type const &source) const;
+
+#else
+;
+#endif // __HAS_GNU_PBDS_PRIORITY_QUEUE
 
 public:
   // assigns length to an existing edge which is linked

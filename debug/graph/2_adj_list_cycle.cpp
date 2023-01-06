@@ -21,7 +21,7 @@ int main() {
     al_2.insert_or_assign(i + 1, 1 + (i + 1) % count, 100000);
   }
 
-  std::ofstream fout("test/graph/2_adj_list_cycle.cpp.out.log");
+  std::ofstream fout("debug/graph/2_adj_list_cycle.cpp.out.log");
 
   fout << "usg_16_16 al_1:\n";
 

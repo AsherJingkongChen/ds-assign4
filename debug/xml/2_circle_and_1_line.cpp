@@ -35,6 +35,6 @@ int main() {
 
   svg1->text = "hello world!\n";
 
-  std::ofstream fout("test/xml/2_circle_and_1_line.out.svg");
+  std::ofstream fout("debug/xml/2_circle_and_1_line.out.svg");
   fout << xml::declaration() << std::string(*svg1);
 }

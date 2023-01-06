@@ -1,11 +1,11 @@
 #! /usr/bin/env bash
-# run this shell script with the command: ./script/test.sh
+# run this shell script with the command: ./script/debug.sh
 
 CXX_TEST="g++-12";
 CXXFLAGS_TEST="-Wall -std=c++11 -O0 -g";
 
 if [ $# -eq 0 ]; then
-  for src in test/**/*.cpp; do
+  for src in debug/**/*.cpp; do
     echo "$CXX_TEST $CXXFLAGS_TEST $src -o $src.out";
     $CXX_TEST $CXXFLAGS_TEST $src -o $src.out;
 
@@ -16,7 +16,7 @@ if [ $# -eq 0 ]; then
     fi
   done
 
-  for bin in test/**/*.out; do
+  for bin in debug/**/*.out; do
     echo "";
 
     ./$bin && 
