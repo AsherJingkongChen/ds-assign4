@@ -17,7 +17,7 @@ int main() {
   sg_uuu{}.sssp_lengths<deck, pairing_heap_tag>({});
   sg_uuu{}.sssp_lengths<deck, binomial_heap_tag>({});
 
-  // sg_uuu{}.sssp_lengths<deck, binary_heap_tag>(0);
+  sg_uuu{}.sssp_lengths<deck, binary_heap_tag>({});
   // sg_uuu{}.sssp_lengths<nodeck, pairing_heap_tag>({});
   // sg_uuu{}.sssp_lengths<pairing_heap_tag>({});
 }

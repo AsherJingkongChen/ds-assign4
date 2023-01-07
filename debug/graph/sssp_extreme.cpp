@@ -17,24 +17,21 @@ using gh =
 gh testcase();
 
 int main() {
-  std::ofstream fout_edge("debug/graph/sssp_extreme.out.edge.log");
-  std::ofstream fout_sssp("debug/graph/sssp_extreme.out.sssp.log");
+  std::ofstream fout_max("debug/graph/sssp_extreme.out.max.log");
+  std::ofstream fout_min("debug/graph/sssp_extreme.out.min.log");
 
   // build an undirected graph
   //
   gh g(testcase());
-  for (auto &e: g) {
-    fout_edge << e << '\n';
-  }
 
-  gh::index_type s = 0, c = 500;
+  gh::index_type s = 0;
   gh::length_type w = 10;
-  for (auto &pe: g.sssp_lengths(s)) {
-    fout_sssp << pe << '\n';
+  for (auto &ppe: g.sssp_lengths(s)) {
+    fout_max << ppe << '\n';
 
-    auto t = pe.first;
-    auto p = pe.second.vertex();
-    auto l = pe.second.length();
+    auto t = ppe.first;
+    auto p = ppe.second.vertex();
+    auto l = ppe.second.length();
     auto d = t - s;
     auto d_ = 1000 - d;
 
@@ -63,8 +60,6 @@ int main() {
     }
   }
 
-  std::ofstream fout
-
   simple_graph<
     uint16_t, 
     uint32_t, 
@@ -74,11 +69,73 @@ int main() {
   dg.insert_or_assign(1, 2, 10);
   dg.insert_or_assign(2, 1, 20);
 
-  dg.sssp_lengths(0);
-  dg.sssp_lengths(1);
-  dg.sssp_lengths(2);
+  for (auto &e: dg) {
+    fout_min << e << '\n';
+  }
 
-  
+  fout_min << "----\n";
+
+  for (uint16_t s(0); s <= 3; s++) {
+    fout_min << s << ":\n";
+    for (auto &ppe: dg.sssp_lengths<tag::with_decrease_key>(s)) {
+      fout_min << ppe << '\n';
+    }
+  }
+  fout_min << '\n';
+
+// output:
+//
+// 2 1 20
+// 1 2 10
+// 0 1 10
+// ----
+// 0: 
+// 0 0 0
+// 1 0 10
+// 2 1 20
+// 1: 
+// 1 1 0
+// 2 1 10
+// 2: 
+// 1 2 20
+// 2 2 0
+// 3: 
+
+  simple_graph<
+    uint16_t, 
+    uint32_t, 
+    tag::undirected
+  > ug;
+  ug.insert_or_assign(0, 1, 5);
+  ug.insert_or_assign(0, 0, 1);
+
+  for (auto &e: ug) {
+    fout_min << e << '\n';
+  }
+
+  fout_min << "----\n";
+
+  for (uint16_t s(0); s <= 2; s++) {
+    fout_min << s << ":\n";
+    for (auto &ppe: ug.sssp_lengths<tag::without_decrease_key>(s)) {
+      fout_min << ppe << '\n';
+    }
+  }
+
+// output:
+//
+// 0 0 1
+// 0 1 5
+// 1 0 5
+// ----
+// 0: 
+// 0 0 0
+// 1 0 5
+// 1: 
+// 0 1 5
+// 1 1 0
+// 2: 
+
 }
 
 gh testcase() {

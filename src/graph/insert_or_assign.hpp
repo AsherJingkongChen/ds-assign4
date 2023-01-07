@@ -23,20 +23,17 @@ simple_graph<_Ip, _Lp, _DirTag>::_insert_or_assign(
     length_type const &length,
     tag::undirected) {
 
-  _insert_or_assign(
-    target,
-    source,
-    length,
-    tag::directed()
-  );
+  auto result = _insert_or_assign(target, source, length);
+  if (result.second) {
+    sources[target] = (targets[source] = true);
+  }
 
-  return
-    _insert_or_assign(
-      source, 
-      target, 
-      length, 
-      tag::directed()
-    );
+  result = _insert_or_assign(source, target, length);
+  if (result.second) {
+    sources[source] = (targets[target] = true);
+  }
+
+  return result;
 }
 
 template<
@@ -54,6 +51,30 @@ simple_graph<_Ip, _Lp, _DirTag>::_insert_or_assign(
     index_type const &target,
     length_type const &length,
     tag::directed) {
+  
+  auto result = _insert_or_assign(source, target, length);
+
+  if (result.second) {
+    sources[source] = (targets[target] = true);
+  }
+
+  return result;
+}
+
+template<
+  typename _Ip,
+  typename _Lp,
+  typename _DirTag
+>
+std::pair<
+  typename simple_graph<_Ip, _Lp, _DirTag>
+  ::const_iterator, 
+  bool
+>
+simple_graph<_Ip, _Lp, _DirTag>::_insert_or_assign(
+    index_type const &source,
+    index_type const &target,
+    length_type const &length) {
 
   part_edge_type pe(target, length);
 
@@ -70,17 +91,25 @@ simple_graph<_Ip, _Lp, _DirTag>::_insert_or_assign(
   }
 
   auto i2 = i1.first->second.insert(pe);
-  if (not i2.second) {
-    i2.first->second = length;
+  if (i2.second) {
+    return {
+      {
+        i1.first, 
+        base_type::end(),
+        i2.first
+      },
+      true
+    };
   }
 
+  i2.first->second = length;
   return {
     {
       i1.first, 
       base_type::end(),
       i2.first
     },
-    i2.second
+    false
   };
 }
 

@@ -92,7 +92,7 @@ private:
   }
 
 public:
-  using std::tuple<_Ip, _Ip, _Lp>::tuple;
+  using base_type::base_type;
 };
 
 } // namespace graph
@@ -169,7 +169,7 @@ public:
   }
 
 public:
-  using std::pair<_Ip, _Lp>::pair;
+  using base_type::base_type;
 };
 
 } // namespace graph

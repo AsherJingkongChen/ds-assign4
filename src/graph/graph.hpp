@@ -42,7 +42,6 @@
 #include <cstdint>
 #include <utility>
 #include <functional>
-#include <type_traits>
 #include <unordered_map>
 
 #if defined __has_include
@@ -51,6 +50,32 @@
     #define __HAS_GNU_PBDS_PRIORITY_QUEUE
   #endif
 #endif
+
+#undef enable_if_same_t
+#undef enable_if_not_same_t
+#undef enable_if_same
+#undef enable_if_not_same
+
+#include <type_traits>
+#define enable_if_same_t(_Tp, _Up) \
+  typename std::enable_if< \
+    std::is_same<_Tp, _Up>::value \
+  >::type*
+
+#define enable_if_not_same_t(_Tp, _Up) \
+  typename std::enable_if< \
+    not std::is_same<_Tp, _Up>::value \
+  >::type*
+
+#define enable_if_same(_Tp, _Up) \
+  typename std::enable_if< \
+    std::is_same<_Tp, _Up>::value \
+  >::type* = nullptr
+
+#define enable_if_not_same(_Tp, _Up) \
+  typename std::enable_if< \
+    not std::is_same<_Tp, _Up>::value \
+  >::type* = nullptr
 
 namespace graph {
 
@@ -71,14 +96,18 @@ struct with_decrease_key: public _algorithm_tag {};
 } // namespace tag
 
 // simple_graph<Ip, Lp, Tag>:
-//   Ip  - node index type
-//   Lp  - edge length type
-//   Tag - tag::undirected | tag::directed
+//   Ip     - node index type
+//   Lp     - edge length type
+//   DirTag - tag::undirected | tag::directed
 //
-// as adjacency list: 
+// has an adjacency list: 
 //   key s - source node index
 //   key t - target node index
 //   value - edge length
+//
+// has two node_lists records vertices indices:
+//   sources - node_list<bool>
+//   targets - node_list<bool>
 //
 // member types: [TODO]
 //   index_type - Ip
@@ -127,11 +156,14 @@ public:
   using part_edge_list = node_list<part_edge_type>;
   using base_type      = node_list<node_list<length_type>>;
 
+private:
+  node_list<bool> sources;
+  node_list<bool> targets;
+
 public:
   const_iterator begin() const noexcept;
   const_iterator end() const noexcept;
 
-public:
   // returns an iterator to an existing edge
   // which is linked from source to target or end()
   // if no such edge exists
@@ -153,12 +185,14 @@ public:
   //
   //   without decrease key operation
   //   with the help of std::priority_queue (binary heap)
+  //   priority queue's initial size is 1
   //
   // - sssp_lengths< tag::with_decrease_key >(source index),
   // - sssp_lengths< tag::with_decrease_key, PqTag >(source index):
   //
   //   with decrease key operation
   //   with the help of __gnu_pbds::priority_queue
+  //   priority queue's initial size is number of vertices
   //
   //   PqTag:
   //     one of five __gnu_pbds::priority_queue_tags,
@@ -170,58 +204,19 @@ public:
   //     due to some performance issues
   //
   // note that in this implementation
-  // all initial lengths is std::numeric_limits<length_type>::max()
+  // all initial lengths of [target]s is 
+  // std::numeric_limits<length_type>::max()
   // but length of [source] is always length_type()
   //
-#ifdef __HAS_GNU_PBDS_PRIORITY_QUEUE
+  // note that in a directed graph,
+  // a vertex not being the source of all the other vertex
+  // will never be pushed into the priority queue 
+  //
+public:
   part_edge_list
   sssp_lengths(index_type const &source) const {
-    return 
-      sssp_lengths<
-        tag::without_decrease_key
-      >(source);
+    return _sssp_lengths_std(source, _DirTag());
   }
-
-  template<
-    typename _AlgoTag,
-    typename
-      std::enable_if<
-        std::is_same<
-          _AlgoTag, 
-          tag::without_decrease_key
-        >::value
-      >::type* = nullptr
-  >
-  part_edge_list
-  sssp_lengths(index_type const &source) const;
-
-  template<
-    typename _AlgoTag,
-    typename _PqTag =
-      __gnu_pbds::pairing_heap_tag,
-    typename
-      std::enable_if<
-        std::is_same<
-          _AlgoTag, 
-          tag::with_decrease_key
-        >::value
-      >::type* = nullptr,
-    typename
-      std::enable_if<
-        not std::is_same<
-          _PqTag,
-          __gnu_pbds::binary_heap_tag
-        >::value
-      >::type* = nullptr
-  >
-  part_edge_list
-  sssp_lengths(index_type const &source) const;
-
-#else
-  part_edge_list
-  sssp_lengths(index_type const &source) const;
-
-#endif // __HAS_GNU_PBDS_PRIORITY_QUEUE
 
 public:
   // assigns length to an existing edge which is linked
@@ -239,18 +234,37 @@ public:
       index_type const &target,
       length_type const &length) {
     
-    return 
-      _insert_or_assign(
-        source, 
-        target, 
-        length, 
-        _DirTag()
-      );
+    return _insert_or_assign(source, target, length, _DirTag());
   }
 
+// details
+
+#ifdef __HAS_GNU_PBDS_PRIORITY_QUEUE
+public:
+  template<
+    typename _AlgoTag,
+    enable_if_same(_AlgoTag, tag::without_decrease_key)
+  >
+  part_edge_list
+  sssp_lengths(index_type const &source) const {
+    return _sssp_lengths_std(source, _DirTag());
+  }
+
+  template<
+    typename _AlgoTag,
+    typename _PqTag = __gnu_pbds::pairing_heap_tag,
+    enable_if_same(_AlgoTag, tag::with_decrease_key)
+  >
+  part_edge_list
+  sssp_lengths(index_type const &source) const {
+    return _sssp_lengths_gnu_pbds<_PqTag>(source, _DirTag());
+  }
+#endif // __HAS_GNU_PBDS_PRIORITY_QUEUE
+
+public:
   std::pair<const_iterator, bool> 
   insert_or_assign(edge_type const &edge) {
-    return 
+    return
       _insert_or_assign(
         edge.source(), 
         edge.target(), 
@@ -258,6 +272,39 @@ public:
         _DirTag()
       );
   }
+
+#ifdef __HAS_GNU_PBDS_PRIORITY_QUEUE
+private:
+  template<
+    typename _PqTag = 
+      __gnu_pbds::pairing_heap_tag
+  >
+  part_edge_list
+  _sssp_lengths_gnu_pbds(
+    index_type const &source,
+    tag::undirected) const;
+
+  template<
+    typename _PqTag = 
+      __gnu_pbds::pairing_heap_tag
+  >
+  part_edge_list
+  _sssp_lengths_gnu_pbds(
+    index_type const &source,
+    tag::directed) const;
+
+#endif // __HAS_GNU_PBDS_PRIORITY_QUEUE
+
+private:
+  part_edge_list
+  _sssp_lengths_std(
+    index_type const &source,
+    tag::undirected) const;
+
+  part_edge_list
+  _sssp_lengths_std(
+    index_type const &source,
+    tag::directed) const;
 
 private:
   std::pair<const_iterator, bool> 
@@ -274,6 +321,12 @@ private:
     length_type const &length,
     tag::directed);
 
+  std::pair<const_iterator, bool> 
+  _insert_or_assign(
+    index_type const &source,
+    index_type const &target,
+    length_type const &length);
+
 public:
   using base_type::base_type;
 
@@ -289,11 +342,16 @@ public:
 
 // definition headers
 //
+#include "extra.hpp"
 #include "edge_types.hpp"
 #include "iterator.hpp"
 #include "find.hpp"
 #include "insert_or_assign.hpp"
 #include "sssp_lengths.hpp"
-#include "extra.hpp"
+
+#undef enable_if_same_t
+#undef enable_if_not_same_t
+#undef enable_if_same
+#undef enable_if_not_same
 
 #endif // GRAPH_GRAPH

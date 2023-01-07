@@ -54,7 +54,8 @@ using common_edge_type =
 // 1. generate a cycle of 1000 nodes. Each edge has length 10.
 // 2. add x random edges. Each random edge has the same length y.
 // 3. use Boost Graph Library and Graph Header Library
-//    written in this project to get single source shortest path lengths (SSSP Lengths)
+//    written in this project to get 
+//    single source shortest path lengths from index 0
 //    with Dijkstra's algorithm, and diff the results
 //
 // 4. run `number_of_cases` times of operation 1, 2, 3
@@ -106,10 +107,12 @@ int main() {
       );
     }
 
+    // [ALGORITHMS]
+    //
     auto res = 
       a0.sssp_lengths<
         graph::tag::with_decrease_key,
-        __gnu_pbds::binomial_heap_tag
+        __gnu_pbds::pairing_heap_tag
       >(0);
 
     // boost::adjacency_list (bg) build
@@ -143,7 +146,7 @@ int main() {
 
     boost::graph_traits<bg>::vertex_iterator vi, vend;
     for (boost::tie(vi, vend) = boost::vertices(a1);
-        vi != vend; ++vi) {
+         vi != vend; ++vi) {
 
         if (d[*vi] != res[*vi].length()) {
           fout << seed << ' ' << x << ' ' << y << " | "
