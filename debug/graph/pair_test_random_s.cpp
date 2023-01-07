@@ -4,7 +4,7 @@
 //   [BGL Github](https://github.com/boostorg/graph)
 //   [Dijkstra's SSSP algorithm example](https://github.com/boostorg/graph/blob/develop/example/dijkstra-example.cpp)
 //
-#define  __IS_DIRECTED 1
+#define  __IS_DIRECTED 0
 #define __IS_DIFF_MODE 1
 #define          PQTAG graph::tag::std_priority_queue
 
@@ -72,7 +72,7 @@ using uidist =
 // 4. run `number_of_cases` times of operation 1, 2, 3
 //
 int main() {
-  int number_of_cases(200);
+  int number_of_cases(50);
   std::ofstream  fout("debug/graph/pair_test_random_s.cpp.out.log");
   auto     seed_const(std::random_device{}());
 

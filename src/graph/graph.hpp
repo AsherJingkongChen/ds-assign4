@@ -104,10 +104,12 @@ typedef __gnu_pbds::thin_heap_tag         thin_heap;
 //     source - source node index
 //     target - target node index
 //     length - edge length
+//     lexicographically comparable
 //
 //   part_edge_type - specialized std::pair<Ip, Lp>:
 //     vertex - vertex node index
 //     length - edge length
+//     lexicographically comparable
 //
 //   const_iterator, iterator - forward const_iterator
 //

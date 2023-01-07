@@ -47,9 +47,6 @@ public:
   }
 
 public:
-  // equality:
-  //   source index and target index
-  //
   bool operator==(edge_type const &other) const {
     return equal_to(other, _DirTag());
   }
@@ -58,14 +55,23 @@ public:
     return not equal_to(other, _DirTag());
   }
 
-  // comparison:
-  //   edge length
-  //
   bool operator<(edge_type const &other) const {
+    if (length() == other.length()) {
+      if (source() == other.source()) {
+        return target() < other.target();
+      }
+      return source() < other.source();
+    }
     return length() < other.length();
   }
 
   bool operator>(edge_type const &other) const {
+    if (length() == other.length()) {
+      if (source() == other.source()) {
+        return target() > other.target();
+      }
+      return source() > other.source();
+    }
     return length() > other.length();
   }
 
@@ -76,7 +82,8 @@ private:
 
     return 
       (source() == other.source() &&
-       target() == other.target())
+       target() == other.target() &&
+       length() == other.length())
       ||
       (source() == other.target() &&
        target() == other.source());
@@ -88,7 +95,8 @@ private:
 
     return 
       source() == other.source() &&
-      target() == other.target();
+      target() == other.target() &&
+      length() == other.length();
   }
 
 public:
@@ -140,9 +148,6 @@ public:
     return not (*this == other);
   }
 
-  // comparison:
-  //   edge length
-  //
   bool operator<(part_edge_type const &other) const {
     if (length() == other.length()) {
       return vertex() < other.vertex();
