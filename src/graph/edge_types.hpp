@@ -130,9 +130,6 @@ public:
   }
 
 public:
-  // equality:
-  //   vertex index and edge length
-  //
   bool operator==(part_edge_type const &other) const {
     return
       vertex() == other.vertex() &&
@@ -147,15 +144,22 @@ public:
   //   edge length
   //
   bool operator<(part_edge_type const &other) const {
+    if (length() == other.length()) {
+      return vertex() < other.vertex();
+    }
     return length() < other.length();
   }
 
   bool operator>(part_edge_type const &other) const {
+    if (length() == other.length()) {
+      return vertex() > other.vertex();
+    }
     return length() > other.length();
   }
 
-  // addition (for comparison):
+  // addition:
   //   edge length
+  //
   part_edge_type operator+(part_edge_type const &other) const {
     return {
       vertex(), 

@@ -26,7 +26,7 @@ int main() {
 
   gh::index_type s = 0;
   gh::length_type w = 10;
-  for (auto &ppe: g.sssp_lengths(s)) {
+  for (auto &ppe: g.sssp(s)) {
     fout_max << ppe << '\n';
 
     auto t = ppe.first;
@@ -77,7 +77,7 @@ int main() {
 
   for (uint16_t s(0); s <= 3; s++) {
     fout_min << s << ":\n";
-    for (auto &ppe: dg.sssp_lengths<tag::with_decrease_key>(s)) {
+    for (auto &ppe: dg.sssp(s)) {
       fout_min << ppe << '\n';
     }
   }
@@ -117,7 +117,7 @@ int main() {
 
   for (uint16_t s(0); s <= 2; s++) {
     fout_min << s << ":\n";
-    for (auto &ppe: ug.sssp_lengths<tag::without_decrease_key>(s)) {
+    for (auto &ppe: ug.sssp(s)) {
       fout_min << ppe << '\n';
     }
   }

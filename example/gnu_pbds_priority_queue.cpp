@@ -9,6 +9,7 @@ struct myless {
 };
 
 // example
+// > __EXNAME=example/gnu_pbds_priority_queue; g++ $__EXNAME.cpp -o $__EXNAME && ./$__EXNAME && rm -r $__EXNAME
 //
 // binary_heap_tag
 // binomial_heap_tag

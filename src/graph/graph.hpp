@@ -39,10 +39,13 @@
 #define GRAPH_GRAPH
 
 #include <tuple>
+#include <queue>
+#include <limits>
 #include <cstdint>
 #include <utility>
 #include <functional>
 #include <unordered_map>
+#include "enable_if.hpp"
 
 #if defined __has_include
   #if __has_include (<ext/pb_ds/priority_queue.hpp>)
@@ -51,45 +54,22 @@
   #endif
 #endif
 
-#undef enable_if_same_t
-#undef enable_if_not_same_t
-#undef enable_if_same
-#undef enable_if_not_same
-
-#include <type_traits>
-#define enable_if_same_t(_Tp, _Up) \
-  typename std::enable_if< \
-    std::is_same<_Tp, _Up>::value \
-  >::type*
-
-#define enable_if_not_same_t(_Tp, _Up) \
-  typename std::enable_if< \
-    not std::is_same<_Tp, _Up>::value \
-  >::type*
-
-#define enable_if_same(_Tp, _Up) \
-  typename std::enable_if< \
-    std::is_same<_Tp, _Up>::value \
-  >::type* = nullptr
-
-#define enable_if_not_same(_Tp, _Up) \
-  typename std::enable_if< \
-    not std::is_same<_Tp, _Up>::value \
-  >::type* = nullptr
-
 namespace graph {
 
 namespace tag {
 
-struct _direction_tag {};
-struct undirected: public _direction_tag {};
-struct directed: public _direction_tag {};
+struct undirected {};
+struct directed {};
+
+struct std_priority_queue {};
 
 #ifdef __HAS_GNU_PBDS_PRIORITY_QUEUE
 
-struct _algorithm_tag {};
-struct without_decrease_key: public _algorithm_tag {};
-struct with_decrease_key: public _algorithm_tag {};
+typedef __gnu_pbds::binary_heap_tag       binary_heap;
+typedef __gnu_pbds::binomial_heap_tag     binomial_heap;
+typedef __gnu_pbds::pairing_heap_tag      pairing_heap;
+typedef __gnu_pbds::rc_binomial_heap_tag  rc_binomial_heap;
+typedef __gnu_pbds::thin_heap_tag         thin_heap;
 
 #endif // __HAS_GNU_PBDS_PRIORITY_QUEUE
 
@@ -168,6 +148,7 @@ public:
   // which is linked from source to target or end()
   // if no such edge exists
   //
+public:
   const_iterator find(
     index_type const &source, 
     index_type const &target) const;
@@ -180,42 +161,54 @@ public:
   // is a std::pair of the index prior to target index (for pathfinding)
   // and the length of shortest path
   //
-  // - sssp_lengths(source index),
-  // - sssp_lengths< tag::without_decrease_key >(source index):
-  //
-  //   without decrease key operation
-  //   with the help of std::priority_queue (binary heap)
-  //   priority queue's initial size is 1
-  //
-  // - sssp_lengths< tag::with_decrease_key >(source index),
-  // - sssp_lengths< tag::with_decrease_key, PqTag >(source index):
-  //
-  //   with decrease key operation
-  //   with the help of __gnu_pbds::priority_queue
-  //   priority queue's initial size is number of vertices
+  // - sssp(source index),
+  // - sssp< LengthMax >(source index),
+  // - sssp< PqTag, [LengthMax] >(source index):
   //
   //   PqTag:
-  //     one of five __gnu_pbds::priority_queue_tags,
-  //     which specifies the underlying data structure
+  //     specifying the underlying data structure and algorithms
   //
-  //     default value is __gnu_pbds::pairing_heap_tag
+  //     graph::tag::std_priority_queue - using std::priority_queue
+  //     graph::tag::binary_heap        - using __gnu_pbds::priority_queue with binary_heap_tag
+  //     graph::tag::binomial_heap      - using __gnu_pbds::priority_queue with binomial_heap_tag
+  //     graph::tag::pairing_heap       - using __gnu_pbds::priority_queue with pairing_heap_tag
+  //     graph::tag::rc_binomial_heap   - using __gnu_pbds::priority_queue with rc_binomial_heap_tag
+  //     graph::tag::thin_heap          - using __gnu_pbds::priority_queue with thin_heap_tag
+  //
+  //     default value is graph::tag::std_priority_queue
   //
   //     __gnu_pbds::binary_heap_tag is not available
-  //     due to some performance issues
+  //     due to some performance issues [TODO]
   //
   // note that in this implementation
-  // all initial lengths of [target]s is 
-  // std::numeric_limits<length_type>::max()
+  // all initial lengths of [target]s is by default
+  // std::numeric_limits<length_type>::max() or custom 
   // but length of [source] is always length_type()
   //
-  // note that in a directed graph,
-  // a vertex not being the source of all the other vertex
-  // will never be pushed into the priority queue 
-  //
 public:
-  part_edge_list
-  sssp_lengths(index_type const &source) const {
-    return _sssp_lengths_std(source, _DirTag());
+  part_edge_list sssp(index_type const &source) const {
+    return
+      _sssp_sfinae<
+        tag::std_priority_queue,
+        std::numeric_limits<length_type>::max()
+      >(source);
+  }
+
+  template<_Lp _LengthMax>
+  part_edge_list sssp(index_type const &source) const {
+    return
+      _sssp_sfinae<
+        tag::std_priority_queue,
+        _LengthMax
+      >(source);
+  }
+
+  template<
+    typename _PqTag,
+    _Lp _LengthMax = std::numeric_limits<_Lp>::max()
+  >
+  part_edge_list sssp(index_type const &source) const {
+    return _sssp_sfinae<_PqTag, _LengthMax>(source);
   }
 
 public:
@@ -226,7 +219,7 @@ public:
   // returns true if insertion happened or false if assigned
   //
   // if _DirTag is tag::undirected, 
-  // the operation in opposite direction will also take place
+  // this operation in opposite direction will also take place
   //
   std::pair<const_iterator, bool> 
   insert_or_assign(
@@ -237,31 +230,6 @@ public:
     return _insert_or_assign(source, target, length, _DirTag());
   }
 
-// details
-
-#ifdef __HAS_GNU_PBDS_PRIORITY_QUEUE
-public:
-  template<
-    typename _AlgoTag,
-    enable_if_same(_AlgoTag, tag::without_decrease_key)
-  >
-  part_edge_list
-  sssp_lengths(index_type const &source) const {
-    return _sssp_lengths_std(source, _DirTag());
-  }
-
-  template<
-    typename _AlgoTag,
-    typename _PqTag = __gnu_pbds::pairing_heap_tag,
-    enable_if_same(_AlgoTag, tag::with_decrease_key)
-  >
-  part_edge_list
-  sssp_lengths(index_type const &source) const {
-    return _sssp_lengths_gnu_pbds<_PqTag>(source, _DirTag());
-  }
-#endif // __HAS_GNU_PBDS_PRIORITY_QUEUE
-
-public:
   std::pair<const_iterator, bool> 
   insert_or_assign(edge_type const &edge) {
     return
@@ -273,38 +241,60 @@ public:
       );
   }
 
+// helper methods
+//
+private:
+  template<
+    typename _PqTag,
+    _Lp _LengthMax,
+    typename =
+      enable_if_same<_PqTag, tag::std_priority_queue>
+  >
+  part_edge_list _sssp_sfinae(index_type const &source) const {
+    return
+      _sssp<
+        std::priority_queue<
+          part_edge_type,
+          std::vector<part_edge_type>,
+          std::greater<part_edge_type>
+        >,
+        _LengthMax
+      >(source);
+  }
+
 #ifdef __HAS_GNU_PBDS_PRIORITY_QUEUE
 private:
   template<
-    typename _PqTag = 
-      __gnu_pbds::pairing_heap_tag
+    typename _PqTag,
+    _Lp _LengthMax,
+    typename =
+      enable_if_not_same<_PqTag, tag::std_priority_queue>,
+    typename =
+      enable_if_convertible<
+        _PqTag,
+        __gnu_pbds::priority_queue_tag
+      >
   >
-  part_edge_list
-  _sssp_lengths_gnu_pbds(
-    index_type const &source,
-    tag::undirected) const;
-
-  template<
-    typename _PqTag = 
-      __gnu_pbds::pairing_heap_tag
-  >
-  part_edge_list
-  _sssp_lengths_gnu_pbds(
-    index_type const &source,
-    tag::directed) const;
-
+  part_edge_list _sssp_sfinae(index_type const &source) const {
+    return
+      _sssp<
+        __gnu_pbds::priority_queue<
+          part_edge_type,
+          std::greater<part_edge_type>,
+          _PqTag
+        >,
+        _LengthMax
+      >(source);
+  }
 #endif // __HAS_GNU_PBDS_PRIORITY_QUEUE
 
 private:
+  template<
+    typename _PriorityQueue,
+    _Lp _LengthMax
+  >
   part_edge_list
-  _sssp_lengths_std(
-    index_type const &source,
-    tag::undirected) const;
-
-  part_edge_list
-  _sssp_lengths_std(
-    index_type const &source,
-    tag::directed) const;
+  _sssp(index_type const &source) const;
 
 private:
   std::pair<const_iterator, bool> 
@@ -347,11 +337,6 @@ public:
 #include "iterator.hpp"
 #include "find.hpp"
 #include "insert_or_assign.hpp"
-#include "sssp_lengths.hpp"
-
-#undef enable_if_same_t
-#undef enable_if_not_same_t
-#undef enable_if_same
-#undef enable_if_not_same
+#include "sssp.hpp"
 
 #endif // GRAPH_GRAPH

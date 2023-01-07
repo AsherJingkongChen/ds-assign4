@@ -32,10 +32,7 @@ int main() {
   std::ofstream fout("debug/graph/shortest_paths_with_dijkstra.out.log");
 
   gh::part_edge_list r0 =
-    al.sssp_lengths<
-      tag::with_decrease_key,
-      __gnu_pbds::binomial_heap_tag
-    >(0);
+    al.sssp<tag::binomial_heap>(0);
 
   for (auto &p: r0) {
     fout << p << '\n';
@@ -46,7 +43,7 @@ int main() {
     fout << e << '\n';
   }
 
-// sssp_lengths
+// sssp
   assert(r0[1].length() == 4);
   assert(r0[0].length() == 0);
   assert(r0[7].length() == 8);

@@ -2,7 +2,7 @@
 #include <iostream>
 
 // example
-// > __EXNAME=example/std_priority_queue; g++ -std=c++17 $__EXNAME.cpp -o $__EXNAME && ./$__EXNAME && rm -r $__EXNAME
+// > __EXNAME=example/std_priority_queue; g++ $__EXNAME.cpp -o $__EXNAME && ./$__EXNAME && rm -r $__EXNAME
 //
 int main() {
   std::priority_queue<

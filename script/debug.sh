@@ -27,8 +27,8 @@ if [ $# -eq 0 ]; then
 
 else
   for src in $@; do
-    echo "$CXX_DEBUG $CXXFLAGS_DEBUG $@ -o $@.out";
-    $CXX_DEBUG $CXXFLAGS_DEBUG $@ -o $@.out;
+    echo "$CXX_DEBUG $CXXFLAGS_DEBUG $src -o $src.out";
+    $CXX_DEBUG $CXXFLAGS_DEBUG $src -o $src.out;
 
     if [ $? -ne 0 ]; then
       echo "compilation for $src fails";
