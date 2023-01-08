@@ -83,6 +83,13 @@ int main() {
   }
   fout_min << '\n';
 
+  assert(dg.find(1, 2) != dg.end() && dg.find(1, 2)->length() == 10);
+  assert(dg.find(2, 1) != dg.end() && dg.find(2, 1)->length() == 20);
+  assert(dg.find(0, 1) != dg.end() && dg.find(0, 1)->length() == 10);
+  assert(dg.find(1, 0) == dg.end());
+  assert(dg.find(1, 3) == dg.end());
+  assert(dg.find(3, 1) == dg.end());
+
 // output:
 //
 // 2 1 20

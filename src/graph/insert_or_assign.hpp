@@ -76,6 +76,10 @@ simple_graph<_Ip, _Lp, _DirTag>::_insert_or_assign(
     index_type const &target,
     length_type const &length) {
 
+  if (source == target) {
+    return {this->end(), false};
+  }
+
   part_edge_type pe(target, length);
 
   auto i1 = base_type::insert({source, {pe}});

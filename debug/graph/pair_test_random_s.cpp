@@ -4,9 +4,8 @@
 //   [BGL Github](https://github.com/boostorg/graph)
 //   [Dijkstra's SSSP algorithm example](https://github.com/boostorg/graph/blob/develop/example/dijkstra-example.cpp)
 //
-#define  __IS_DIRECTED 0
-#define __IS_DIFF_MODE 1
-#define          PQTAG graph::tag::std_priority_queue
+#include "def_pair_test_random.hpp"
+#define PQTAG graph::tag::std_priority_queue
 
 #include "../../src/graph/graph.hpp"
 #include <iostream>
@@ -84,7 +83,7 @@ int main() {
     // [seed]
     //
     auto            seed(k * seed_const);
-    std::mt19937_64 rng(seed);
+    std::mt19937    rng(seed);
     sg::index_type  n(1000);
     sg::index_type  x(uidist(1, n * 2)(rng));
     sg::index_type  v(uidist(0, n - 1)(rng));

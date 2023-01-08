@@ -38,11 +38,9 @@
 #ifndef GRAPH_GRAPH
 #define GRAPH_GRAPH
 
-#include <tuple>
 #include <queue>
 #include <limits>
 #include <cstdint>
-#include <utility>
 #include <functional>
 #include <unordered_map>
 #include "enable_if.hpp"
@@ -119,7 +117,7 @@ template<
   typename _DirTag
 >
 class simple_graph:
-  public 
+  private 
     std::unordered_map<
       _Ip, std::unordered_map<_Ip, _Lp>
     > {
@@ -155,8 +153,8 @@ public:
     index_type const &source, 
     index_type const &target) const;
 
-  // find single source shortest path lengths
-  // with Dijkstra's SSSP algorithm
+  // find `Single Source Shortest Paths`
+  // with Dijkstra's algorithm
   //
   // result type is based on std::unordered_map<Ip, std::pair<Ip, Lp>>
   // each part_edge_type of [target index]
@@ -322,11 +320,10 @@ private:
 public:
   using base_type::base_type;
 
-  static_assert(
-    std::is_unsigned<_Lp>::value, 
-    "edge length is currently "
+  static_assert(std::is_unsigned<_Lp>::value,
+    "length_type (edge weight data type) is currently "
     "only available as unsigned type for the sake of "
-    "Dijkstra's SSSP algorithm"
+    "Dijkstra's single source shortest paths algorithm"
   );
 };
 

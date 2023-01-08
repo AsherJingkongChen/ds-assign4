@@ -3,6 +3,8 @@
 #ifndef GRAPH_SSSP
 #define GRAPH_SSSP
 
+#include <queue>
+
 namespace graph {
 
 template<

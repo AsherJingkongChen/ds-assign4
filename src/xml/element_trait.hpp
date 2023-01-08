@@ -11,7 +11,7 @@
 
 namespace xml {
 
-static int indent = 2;
+int indent = 2;
 
 class element_trait;
 typedef std::shared_ptr<element_trait> element_trait_ptr;
