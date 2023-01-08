@@ -20,39 +20,76 @@ using us_graph =
     graph::tag::undirected
   >;
 
-using cnt_t = std::size_t;
-using idx_t = undirected_graph::index_type;
-using len_t = undirected_graph::length_type;
+using cnt_t     = std::size_t;
+using idx_t     = us_graph::index_type;
+using len_t     = us_graph::length_type;
+using vec2      = math::vec2;
+using vec2_list = us_graph::node_list<vec2>;
 
 template<typename _IntTp>
 using dist = std::uniform_int_distribution<_IntTp>;
 
 int main(int argc, const char* argv[]) {
+  std::ofstream fout("debug/general/small_world_pseudo_test.cpp.out.log");
+
+  // parameters and structures
+  //
   const std::mt19937::result_type
-  seed (
+  SEED (
 #ifdef RNG_SEED
     RNG_SEED
 #else
     std::random_device{}()
 #endif // RNG_SEED
   );
+  std::mt19937 rng (SEED);
+  const cnt_t  N   (10);
+  const cnt_t  X   (
+    dist<cnt_t>{0, math::binom_coef(N, cnt_t(2)) - N}(rng)
+  );
+  const len_t  Y   (
+    dist<len_t>{1, N / 2 - 1}(rng)
+  );
 
-  std::mt19937 rng (seed);
-  const cnt_t  n   (1000);
-  const cnt_t  x   (dist<cnt_t>{1, math::binom_coef(n, 2) - n}(rng));
-  const len_t  y   (dist<len_t>{1, n / 2 - 1}(rng));
+  const float  R_WH(2);
+  const float  W   (N * R_WH);
+  const float  H   (N);
+  const vec2   C   (W / 2, H / 2);
+
+  // const auto stroke_width = 0.1F; [TODO]
+  // root->fill = "white";
+
   us_graph     g;
+  vec2_list    s;
 
-  // vertex index range is [0, 999]
+  // build an undirected graph
   //
-  for (auto i(n); i--;) {
+  for (auto i(N); i--;) {
+    g.insert_or_assign(i, (i + 1) % N, 1);
+    s[i] = C + math::polar();
+  }
+
+  for (auto i(X); i--;) {
     g.insert_or_assign(
-      i, (i + 1)
+      dist<idx_t>{0, N - 1}(rng),
+      dist<idx_t>{0, N - 1}(rng),
+      Y
     );
   }
+
+  // debug [TODO]
+  //
+  fout << SEED << " (SEED)\n";
+  for (auto &e: g) {
+    fout << e << '\n';
+  }
+
+  static_assert(N > 2,
+    "N should be greater than or equal to 2"
+  );
 }
 
-// [APPENDIX]
+// [SPECIFICATION]
 //
 // # Study the Properties of "Small World" and Compare Different Data Structures
 // 
@@ -75,3 +112,9 @@ int main(int argc, const char* argv[]) {
 // 
 // **You need to support your answers with experimental results.** 
 // **You also need to explain how you obtain the results.**
+//
+// [NOTE]
+// all nodes has an index in [0, 999]
+// the range of X is [0, nCk(1000, 2) - 1000]
+// the range of Y is [1, 499]
+//

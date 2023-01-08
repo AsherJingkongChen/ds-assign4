@@ -9,10 +9,6 @@ namespace math {
 
 template<typename _IntTp>
 _IntTp binom_coef(_IntTp const &n, _IntTp const &k) {
-  static_assert(std::is_integral<_IntTp>::value,
-    "_IntTp in binom_coef<_IntTp> can only be integer type"
-  );
-
   if (k == 0) {
     return 1;
   }
@@ -28,6 +24,10 @@ _IntTp binom_coef(_IntTp const &n, _IntTp const &k) {
   }
 
   return r;
+
+  static_assert(std::is_integral<_IntTp>::value,
+    "_IntTp in binom_coef<_IntTp> can only be integer type"
+  );
 }
 
 } // namespace math

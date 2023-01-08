@@ -7,9 +7,9 @@ using namespace xml::tag;
 int main() {
   auto root = xml::element<svg>::get();
   const auto count = 1000;
-  const auto sidelen_2 = 1000.0F;
-  const auto radius = sidelen_2 / count;
-  const auto stroke_width = radius / 10.0F;
+  const auto sidelen_2 = 5000.0F;
+  const auto radius_err = sidelen_2 / count;
+  const auto stroke_width = radius_err / 10.0F;
   const auto yx_ratio = 0.5F;
   const auto center = math::vec2(sidelen_2, sidelen_2 * yx_ratio);
 
@@ -29,12 +29,12 @@ int main() {
     math::vec2 a_line_p[2] = {
       center +
       math::polar(
-        sidelen_2 - radius - stroke_width,
+        sidelen_2 - radius_err - stroke_width,
         i / float(count)
       ),
       center +
       math::polar(
-        sidelen_2 - radius - stroke_width,
+        sidelen_2 - radius_err - stroke_width,
         (i + 1) / float(count)
       )
     };
@@ -63,7 +63,7 @@ int main() {
     math::vec2 a_circle_p = 
       center +
       math::polar(
-        sidelen_2 - radius - stroke_width,
+        sidelen_2 - radius_err - stroke_width,
         i / float(count)
       );
 
@@ -73,7 +73,7 @@ int main() {
 
     xml::element<circle>::get(a_circle)->cx = a_circle_p.x_str();
     xml::element<circle>::get(a_circle)->cy = a_circle_p.y_str();
-    xml::element<circle>::get(a_circle)->r = std::to_string(radius);
+    xml::element<circle>::get(a_circle)->r = std::to_string(radius_err);
 
     root->children.push_back(a_circle);
   }
@@ -86,7 +86,7 @@ int main() {
     math::vec2 a_text_p = 
       center +
       math::polar(
-        sidelen_2 - radius - stroke_width,
+        sidelen_2 - radius_err - stroke_width,
         i / float(count)
       );
 
@@ -96,7 +96,7 @@ int main() {
 
     xml::element<text>::get(a_text)->x = a_text_p.x_str();
     xml::element<text>::get(a_text)->y = a_text_p.y_str();
-    xml::element<text>::get(a_text)->font_size = std::to_string(radius / 1.6F);
+    xml::element<text>::get(a_text)->font_size = std::to_string(radius_err / 1.6F);
     xml::element<text>::get(a_text)->font_family = "monospace";
     xml::element<text>::get(a_text)->font_weight = "bold";
     xml::element<text>::get(a_text)->text_anchor = "middle";
