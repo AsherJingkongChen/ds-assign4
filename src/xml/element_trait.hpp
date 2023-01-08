@@ -33,12 +33,13 @@ public:
 
 public:
   virtual std::vector<attribute> attributes() const {
-    return {
-      fill,
-      stroke,
-      stroke_linecap,
-      stroke_width
-    };
+    return
+      {
+        fill,
+        stroke,
+        stroke_linecap,
+        stroke_width
+      };
   }
 
   operator std::string() const {

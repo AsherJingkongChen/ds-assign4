@@ -16,7 +16,7 @@ template<
 class simple_graph<_Ip, _Lp, _DirTag>::edge_type:
   public std::tuple<_Ip, _Ip, _Lp> {
 
-public: 
+public:
   typedef std::tuple<_Ip, _Ip, _Lp> base_type;
   typedef _Ip index_type;
   typedef _Lp length_type;
@@ -80,7 +80,7 @@ private:
       edge_type const &other, 
       tag::undirected) const {
 
-    return 
+    return
       (source() == other.source() &&
        target() == other.target() &&
        length() == other.length())
@@ -93,7 +93,7 @@ private:
       edge_type const &other,
       tag::directed) const {
 
-    return 
+    return
       source() == other.source() &&
       target() == other.target() &&
       length() == other.length();
@@ -166,10 +166,11 @@ public:
   //   edge length
   //
   part_edge_type operator+(part_edge_type const &other) const {
-    return {
-      vertex(), 
-      length() + other.length()
-    };
+    return
+      {
+        vertex(), 
+        length() + other.length()
+      };
   }
 
   part_edge_type &operator+=(part_edge_type const &other) {

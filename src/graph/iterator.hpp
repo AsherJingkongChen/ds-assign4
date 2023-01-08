@@ -168,11 +168,12 @@ template<
 >
 typename simple_graph<_Ip, _Lp, _DirTag>::const_iterator
 simple_graph<_Ip, _Lp, _DirTag>::end() const noexcept {
-  return {
-    base_type::end(),
-    base_type::end(),
-    {}
-  };
+  return
+    {
+      base_type::end(),
+      base_type::end(),
+      {}
+    };
 }
 
 } // namespace graph
