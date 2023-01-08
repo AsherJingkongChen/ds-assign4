@@ -51,9 +51,9 @@ int main(int argc, const char* argv[]) {
     dist<len_t>{1, N / 2 - 1}(rng)
   );
 
-  const float  R_WH(2);
-  const float  W   (N * R_WH);
-  const float  H   (N);
+  const float  W   (1920);
+  const float  H   (1080);
+  const float  R_WH(W / H);
   const vec2   C   (W / 2, H / 2);
 
   // const auto stroke_width = 0.1F; [TODO]
