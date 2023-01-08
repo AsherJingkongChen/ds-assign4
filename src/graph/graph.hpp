@@ -87,16 +87,10 @@ typedef __gnu_pbds::thin_heap_tag         thin_heap;
 //   sources - node_list<bool>
 //   targets - node_list<bool>
 //
-// member types: [TODO]
+// member types:
 //   index_type - Ip
 //
 //   length_type - Lp
-//
-//   node_list<Tp> - std::unordered_map<Ip, Tp>:
-//     key   - node index
-//     value - Tp
-//
-//   length_list - node_list<length_type>
 //
 //   edge_type - specialized std::tuple<Ip, Ip, Lp>:
 //     source - source node index
@@ -105,11 +99,19 @@ typedef __gnu_pbds::thin_heap_tag         thin_heap;
 //     lexicographically comparable
 //
 //   part_edge_type - specialized std::pair<Ip, Lp>:
-//     vertex - vertex node index
+//     vertex - index_type
 //     length - edge length
 //     lexicographically comparable
 //
 //   const_iterator, iterator - forward const_iterator
+//
+//   node_list<Tp> - std::unordered_map<Ip, Tp>:
+//     key   - node index
+//     value - Tp
+//
+//   part_edge_list = node_list<part_edge_type>:
+//     key   - index_type
+//     value - part_edge_type
 //
 template<
   typename _Ip,
@@ -123,12 +125,12 @@ class simple_graph:
     > {
 
 public:
-  typedef _Ip index_type;
-  typedef _Lp length_type;
-  class edge_type;
-  class part_edge_type;
-  class const_iterator;
-  typedef const_iterator iterator;
+  typedef _Ip             index_type;
+  typedef _Lp             length_type;
+  class                   edge_type;
+  class                   part_edge_type;
+  class                   const_iterator;
+  typedef const_iterator  iterator;
 
   template<typename _Tp>
   using node_list      = std::unordered_map<_Ip, _Tp>;
