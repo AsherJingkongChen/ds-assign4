@@ -21,7 +21,7 @@ int main() {
     al_2.insert_or_assign(i + 1, 1 + (i + 1) % count, 100000);
   }
 
-  std::ofstream fout("debug/graph/graphs_which_is_directed_and_not.cpp.out.log");
+  std::ofstream fout("debug/graph/graphs_which_is_directed_and_not.log");
 
   fout << "usg_16_16 al_1:\n";
 

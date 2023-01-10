@@ -91,85 +91,90 @@ namespace xml {
 
 template<>
 struct element<tag::circle> {
-  static element_trait_ptr get() {
+  static __detail::element_trait_ptr get() {
     return 
-      element_trait_ptr(
-        std::make_shared<element_circle>()
+      __detail::element_trait_ptr(
+        std::make_shared<__detail::element_circle>()
       );
   }
 
-  static element_circle_ptr get(element_trait_ptr const &p) {
+  static __detail::element_circle_ptr
+  get(__detail::element_trait_ptr const &p) {
     return
       std::dynamic_pointer_cast<
-        element_circle_ptr::element_type
+        __detail::element_circle_ptr::element_type
       >(p);
   }
 };
 
 template<>
 struct element<tag::line> {
-  static element_trait_ptr get() {
+  static __detail::element_trait_ptr get() {
     return 
-      element_trait_ptr(
-        std::make_shared<element_line>()
+      __detail::element_trait_ptr(
+        std::make_shared<__detail::element_line>()
       );
   }
 
-  static element_line_ptr get(element_trait_ptr const &p) {
+  static __detail::element_line_ptr
+  get(__detail::element_trait_ptr const &p) {
     return
       std::dynamic_pointer_cast<
-        element_line_ptr::element_type
+        __detail::element_line_ptr::element_type
       >(p);
   }
 };
 
 template<>
 struct element<tag::rect> {
-  static element_trait_ptr get() {
+  static __detail::element_trait_ptr get() {
     return 
-      element_trait_ptr(
-        std::make_shared<element_rect>()
+      __detail::element_trait_ptr(
+        std::make_shared<__detail::element_rect>()
       );
   }
 
-  static element_rect_ptr get(element_trait_ptr const &p) {
+  static __detail::element_rect_ptr
+  get(__detail::element_trait_ptr const &p) {
     return
       std::dynamic_pointer_cast<
-        element_rect_ptr::element_type
+        __detail::element_rect_ptr::element_type
       >(p);
   }
 };
 
 template<>
 struct element<tag::svg> {
-  static element_trait_ptr get() {
+  static __detail::element_trait_ptr get() {
     return 
-      element_trait_ptr(
-        std::make_shared<element_svg>()
+      __detail::element_trait_ptr(
+        std::make_shared<__detail::element_svg>()
       );
   }
 
-  static element_svg_ptr get(element_trait_ptr const &p) {
+  static __detail::element_svg_ptr
+  get(__detail::element_trait_ptr const &p) {
     return
       std::dynamic_pointer_cast<
-        element_svg_ptr::element_type
+        __detail::element_svg_ptr::element_type
       >(p);
   }
 };
 
 template<>
 struct element<tag::text> {
-  static element_trait_ptr get() {
+  static __detail::element_trait_ptr get() {
     return 
-      element_trait_ptr(
-        std::make_shared<element_text>()
+      __detail::element_trait_ptr(
+        std::make_shared<__detail::element_text>()
       );
   }
 
-  static element_text_ptr get(element_trait_ptr const &p) {
+  static __detail::element_text_ptr
+  get(__detail::element_trait_ptr const &p) {
     return
       std::dynamic_pointer_cast<
-        element_text_ptr::element_type
+        __detail::element_text_ptr::element_type
       >(p);
   }
 };

@@ -7,6 +7,8 @@
 
 namespace xml {
 
+namespace __detail {
+
 class element_circle;
 typedef std::shared_ptr<element_circle> element_circle_ptr;
 
@@ -67,6 +69,8 @@ public:
     return *this;
   }
 };
+
+} // namespace __detail
 
 } // namespace xml
 

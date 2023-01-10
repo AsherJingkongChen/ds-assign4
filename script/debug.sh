@@ -2,7 +2,7 @@
 # run this shell script with the command: ./script/debug.sh
 
 CXX_DEBUG="g++-12";
-CXXFLAGS_DEBUG="-Wall -std=c++11 -O0 -g";
+CXXFLAGS_DEBUG="-Wall -std=c++11 -O3 -g";
 
 if [ $# -eq 0 ]; then
   for src in debug/**/*.cpp; do
@@ -17,12 +17,8 @@ if [ $# -eq 0 ]; then
   done
 
   for bin in debug/**/*.out; do
-    echo "";
-
-    ./$bin && 
-      (time ./$bin) 2>&1 > /dev/null | \
-      grep "real" | \
-      sed "s|real	|\.\/$bin: |g";
+    echo "./$bin";
+    ./$bin;
   done
 
 else
@@ -38,12 +34,7 @@ else
   done
 
   for bin in $@; do
-    echo "";
-
-    bin="$bin.out";
-    ./$bin && 
-      (time ./$bin) 2>&1 > /dev/null | \
-      grep "real" | \
-      sed "s|real	|\.\/$bin: |g";
+    echo "./$bin";
+    ./$bin.out;
   done
 fi

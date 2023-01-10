@@ -7,6 +7,8 @@
 
 namespace xml {
 
+namespace __detail {
+
 class element_rect;
 typedef std::shared_ptr<element_rect> element_rect_ptr;
 
@@ -89,6 +91,8 @@ public:
     return *this;
   }
 };
+
+} // namespace __detail
 
 } // namespace xml
 

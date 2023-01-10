@@ -11,6 +11,7 @@
 #include <string>
 #include <random>
 
+using namespace xml::tag;
 using namespace graph::extra::io;
 
 using us_graph =
@@ -30,7 +31,13 @@ template<typename _IntTp>
 using dist = std::uniform_int_distribution<_IntTp>;
 
 int main(int argc, const char* argv[]) {
-  std::ofstream fout("debug/general/small_world_pseudo_test.cpp.out.log");
+  std::ofstream
+  fout_log(
+    "debug/general/small_world_pseudo_test.log"
+  ),
+  fout_svg(
+    "debug/general/small_world_pseudo_test.svg"
+  );
 
   // parameters and structures
   //
@@ -42,47 +49,114 @@ int main(int argc, const char* argv[]) {
     std::random_device{}()
 #endif // RNG_SEED
   );
+
   std::mt19937 rng (SEED);
-  const cnt_t  N   (10);
-  const cnt_t  X   (
-    dist<cnt_t>{0, math::binom_coef(N, cnt_t(2)) - N}(rng)
+  const cnt_t  N   (1000);
+        cnt_t  X   (
+    dist<cnt_t>(1, N)(rng)
   );
   const len_t  Y   (
-    dist<len_t>{1, N / 2 - 1}(rng)
+    dist<len_t>(1, N / 2)(rng)
   );
 
-  const float  W   (1920);
-  const float  H   (1080);
-  const float  R_WH(W / H);
+  const float  W   (3840);
+  const float  H   (2160);
+  const float  WH_R(W / H);
   const vec2   C   (W / 2, H / 2);
+  const float  C_R (H / 2.0F / N);
+  const float  L_W (C_R / 5.0F);
+  const float  R   (H / 2 - C_R - L_W - (W + H) / 200);
 
-  // const auto stroke_width = 0.1F; [TODO]
-  // root->fill = "white";
+  auto scene = xml::element<svg>::get();
+  scene->fill         = "gray";
+  scene->stroke       = "gray";
+  scene->stroke_width = std::to_string(L_W);
+  xml::element<svg>::get(scene)->width  = std::to_string(W);
+  xml::element<svg>::get(scene)->height = std::to_string(H);
 
-  us_graph     g;
-  vec2_list    s;
+  us_graph  g;
+  vec2_list s;
 
-  // build an undirected graph
+  // build g, an undirected graph
   //
   for (auto i(N); i--;) {
     g.insert_or_assign(i, (i + 1) % N, 1);
-    s[i] = C + math::polar();
+
+    // build s, a vec2 list
+    //
+    vec2 v(math::polar(R, (i + 0.75F) / N));
+    v.x() *= WH_R;
+    s[i] = C + v;
   }
 
   for (auto i(X); i--;) {
-    g.insert_or_assign(
-      dist<idx_t>{0, N - 1}(rng),
-      dist<idx_t>{0, N - 1}(rng),
-      Y
-    );
+    auto src = dist<idx_t>(0, N - 1)(rng);
+    auto tar = dist<idx_t>(0, N - 1)(rng);
+    if (src == tar) {
+      i++; continue; // [TODO], insert (fails on existing and self edges)
+    }
+
+    g.insert_or_assign(src, tar, Y);
   }
 
-  // debug [TODO]
+  // edges
   //
-  fout << SEED << " (SEED)\n";
   for (auto &e: g) {
-    fout << e << '\n';
+    auto l = xml::element<line>::get();
+    xml::element<line>::get(l)->x1 = s[e.source()].x_str();
+    xml::element<line>::get(l)->y1 = s[e.source()].y_str();
+    xml::element<line>::get(l)->x2 = s[e.target()].x_str();
+    xml::element<line>::get(l)->y2 = s[e.target()].y_str();
+
+    scene->children.push_back(l);
   }
+
+  // nodes
+  //
+  auto nodes(g.sources());
+  for (auto &p: g.targets()) {
+    nodes.insert(p);
+  }
+
+  for (auto &p: nodes) {
+    auto c = xml::element<circle>::get();
+    xml::element<circle>::get(c)->cx = s[p.first].x_str();
+    xml::element<circle>::get(c)->cy = s[p.first].y_str();
+    xml::element<circle>::get(c)->r  = std::to_string(C_R);
+
+    auto t = xml::element<text>::get();
+    xml::element<text>::get(t)->x = s[p.first].x_str();
+    xml::element<text>::get(t)->y = s[p.first].y_str();
+    xml::element<text>::get(t)->font_family = "Monaco";
+    xml::element<text>::get(t)->font_weight = "bold";
+    xml::element<text>::get(t)->text_anchor = "middle";
+    xml::element<text>::get(t)->font_size   = std::to_string(C_R / 1.25F);
+
+    c->fill         = "black";
+    c->stroke       = "black";
+
+    t->stroke_width = "0";
+    t->fill         = "white";
+    t->text         = std::to_string(p.first);
+
+    scene->children.push_back(c);
+    scene->children.push_back(t);
+  }
+
+  // output as log file
+  //
+  fout_log << "SEED=" << SEED << "\n"
+           << "X=" << X << "\n"
+           << "Y=" << Y << "\n"
+           << "EDGES="     "\n";
+
+  for (auto &e: g) {
+    fout_log << e << '\n';
+  }
+
+  // output as svg file
+  //
+  fout_svg << xml::declaration() << scene->to_string();
 
   static_assert(N > 2,
     "N should be greater than or equal to 2"
@@ -115,6 +189,6 @@ int main(int argc, const char* argv[]) {
 //
 // [NOTE]
 // all nodes has an index in [0, 999]
-// the range of X is [0, nCk(1000, 2) - 1000]
-// the range of Y is [1, 499]
+// the range of X is [1, 1000]
+// the range of Y is [1, 500]
 //

@@ -7,6 +7,8 @@
 
 namespace xml {
 
+namespace __detail {
+
 class element_text;
 typedef std::shared_ptr<element_text> element_text_ptr;
 
@@ -117,6 +119,8 @@ public:
     return *this;
   }
 };
+
+} // namespace __detail
 
 } // namespace xml
 

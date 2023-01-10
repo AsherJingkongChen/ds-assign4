@@ -84,24 +84,24 @@ typedef __gnu_pbds::thin_heap_tag         thin_heap;
 //   value - edge length
 //
 // has two node_lists records vertices indices:
-//   sources - node_list<bool>
-//   targets - node_list<bool>
+//   __sources - node_list<bool>
+//   __targets - node_list<bool>
 //
 // member types:
-//   index_type - Ip
+//   index_type - Ip, hashable, comparable
 //
-//   length_type - Lp
+//   length_type - Lp, comparable
 //
 //   edge_type - specialized std::tuple<Ip, Ip, Lp>:
 //     source - source node index
 //     target - target node index
 //     length - edge length
-//     lexicographically comparable
+//     compared in lexicographical order
 //
 //   part_edge_type - specialized std::pair<Ip, Lp>:
 //     vertex - index_type
 //     length - edge length
-//     lexicographically comparable
+//     compared in lexicographical order
 //
 //   const_iterator, iterator - forward const_iterator
 //
@@ -138,9 +138,18 @@ public:
   using part_edge_list = node_list<part_edge_type>;
   using base_type      = node_list<node_list<length_type>>;
 
+public:
+  node_list<bool> sources() const {
+    return __sources;
+  }
+
+  node_list<bool> targets() const {
+    return __targets;
+  }
+
 private:
-  node_list<bool> sources;
-  node_list<bool> targets;
+  node_list<bool> __sources;
+  node_list<bool> __targets;
 
 public:
   const_iterator begin() const noexcept;
@@ -182,10 +191,14 @@ public:
   //     __gnu_pbds::binary_heap_tag is not available
   //     due to some performance issues [TODO]
   //
-  // note that in this implementation
-  // all initial lengths of [target]s is by default
-  // std::numeric_limits<length_type>::max() or custom 
-  // but length of [source] is always length_type()
+  // note that in this implementation,
+  // all initial path lengths to [target]s
+  // is std::numeric_limits<length_type>::max() by default
+  // or user-defined value except for the path length
+  // to [the input source] is always length_type()
+  //
+  // note that there is no such path length [TODO]
+  // with initial state in the result, which is eliminated before outputing
   //
 public:
   part_edge_list sssp(index_type const &source) const {
@@ -214,9 +227,9 @@ public:
   }
 
 public:
-  // assigns length to an existing edge which is linked
-  // from source to target or 
-  // insert a new edge if it does not exist
+  // assigns length to an existing edge
+  // which is linked from source to target
+  // or insert a new edge if it does not exist
   //
   // returns true if insertion happened or false if assigned
   //

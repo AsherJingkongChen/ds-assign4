@@ -25,12 +25,12 @@ simple_graph<_Ip, _Lp, _DirTag>::_insert_or_assign(
 
   auto result = _insert_or_assign(target, source, length);
   if (result.second) {
-    sources[target] = (targets[source] = true);
+    __sources[target] = (__targets[source] = true);
   }
 
   result = _insert_or_assign(source, target, length);
   if (result.second) {
-    sources[source] = (targets[target] = true);
+    __sources[source] = (__targets[target] = true);
   }
 
   return result;
@@ -55,7 +55,7 @@ simple_graph<_Ip, _Lp, _DirTag>::_insert_or_assign(
   auto result = _insert_or_assign(source, target, length);
 
   if (result.second) {
-    sources[source] = (targets[target] = true);
+    __sources[source] = (__targets[target] = true);
   }
 
   return result;

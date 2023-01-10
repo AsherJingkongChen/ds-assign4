@@ -17,8 +17,8 @@ using gh =
 gh testcase();
 
 int main() {
-  std::ofstream fout_max("debug/graph/sssp_extreme.out.max.log");
-  std::ofstream fout_min("debug/graph/sssp_extreme.out.min.log");
+  std::ofstream fout_max("debug/graph/sssp_extreme.max.log");
+  std::ofstream fout_min("debug/graph/sssp_extreme.min.log");
 
   // build an undirected graph
   //

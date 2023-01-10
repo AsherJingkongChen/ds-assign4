@@ -13,6 +13,8 @@ namespace xml {
 
 int indent = 2;
 
+namespace __detail {
+
 class element_trait;
 typedef std::shared_ptr<element_trait> element_trait_ptr;
 
@@ -148,6 +150,8 @@ public:
     return *this;
   }
 };
+
+} // namespace __detail
 
 } // namespace xml
 

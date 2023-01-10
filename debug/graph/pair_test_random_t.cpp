@@ -61,7 +61,7 @@ using uidist =
 //    are ranged from 0 until 999, and each edge has length 10
 //
 // 2. add x random edges with random length y
-//    x is [1, 2000], y is [1, 50]
+//    x is [1, 5000], y is [1, 10]
 //
 // 3. use Boost Graph Library and Graph Header Library
 //    written in this project to get
@@ -71,8 +71,8 @@ using uidist =
 // 4. run `number_of_cases` times of operation 1, 2, 3
 //
 int main() {
-  int number_of_cases(50);
-  std::ofstream  fout("debug/graph/pair_test_random_t.cpp.out.log");
+  int number_of_cases(200);
+  std::ofstream  fout("debug/graph/pair_test_random_s.log");
   auto     seed_const(std::random_device{}());
 
   fout << "[diff logging begins]\n"
@@ -85,7 +85,7 @@ int main() {
     auto            seed(k * seed_const);
     std::mt19937    rng(seed);
     sg::index_type  n(1000);
-    sg::index_type  x(uidist(1, n * 2)(rng));
+    sg::index_type  x(uidist(1, n * 5)(rng));
     sg::index_type  v(uidist(0, n - 1)(rng));
 
     // graph::simple_graph (sg) build
@@ -100,7 +100,7 @@ int main() {
     }
 
     for (auto i(x); i--;) {
-      sg::length_type y(uidist(1, std::max(n / 20, 1))(rng));
+      sg::length_type y(uidist(1, std::max(n / 100, 1))(rng));
 
       a0.insert_or_assign(
         uidist(0, n - 1)(rng), 
@@ -163,13 +163,23 @@ int main() {
     for (boost::tie(vi, vend) = boost::vertices(a1);
          vi != vend; ++vi) {
 
-      if (res.find(*vi) != res.end() &&
-          (d[*vi] != res[*vi].length() ||
-           not __IS_DIFF_MODE)) {
+      if (res.find(*vi) == res.end()) {
+        if (not __IS_DIFF_MODE) {
+
+          fout_triggered = true;
+    
+          fout  << seed << ' ' << x << ' ' << v << " | "
+                << *vi << ' '
+                << p[*vi] << ' ' 
+                << d[*vi] << " |\n";
+        }
+
+      } else if (not __IS_DIFF_MODE ||
+                 d[*vi] != res[*vi].length()) {
 
         fout_triggered = true;
 
-        fout << seed << ' ' << x << ' ' << v << " | "
+        fout  << seed << ' ' << x << ' ' << v << " | "
               << *vi << ' '
               << p[*vi] << ' ' 
               << d[*vi] << " | "
@@ -199,5 +209,3 @@ int main() {
 
   fout << "[diff logging ends]" << std::endl;
 }
-
-

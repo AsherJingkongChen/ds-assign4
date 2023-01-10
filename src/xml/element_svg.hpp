@@ -7,6 +7,8 @@
 
 namespace xml {
 
+namespace __detail {
+
 class element_svg;
 typedef std::shared_ptr<element_svg> element_svg_ptr;
 
@@ -90,6 +92,8 @@ public:
     return *this;
   }
 };
+
+} // namespace __detail
 
 } // namespace xml
 

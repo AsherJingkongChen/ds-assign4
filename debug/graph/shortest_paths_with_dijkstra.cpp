@@ -29,7 +29,7 @@ int main() {
   al.insert_or_assign(6, 8, 6);
   al.insert_or_assign(7, 8, 7);
 
-  std::ofstream fout("debug/graph/shortest_paths_with_dijkstra.out.log");
+  std::ofstream fout("debug/graph/shortest_paths_with_dijkstra.log");
 
   gh::part_edge_list r0 =
     al.sssp<tag::binomial_heap>(0);
