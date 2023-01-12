@@ -13,6 +13,62 @@ template<
   typename _DirTag
 >
 template<
+  typename _PqTag,
+  _Lp _LengthMax,
+  enable_if_same<
+    _PqTag, tag::std_priority_queue>
+>
+typename simple_graph<_Ip, _Lp, _DirTag>::part_edge_list
+simple_graph<_Ip, _Lp, _DirTag>::_sssp_sfinae(
+    index_type const &source) const {
+
+  return
+    _sssp<
+      std::priority_queue<
+        part_edge_type,
+        std::vector<part_edge_type>,
+        std::greater<part_edge_type>
+      >,
+      _LengthMax
+    >(source);
+}
+
+#ifdef __HAS_GNU_PBDS_PRIORITY_QUEUE
+template<
+  typename _Ip,
+  typename _Lp,
+  typename _DirTag
+>
+template<
+  typename _PqTag,
+  _Lp _LengthMax,
+  enable_if_not_same<
+    _PqTag, tag::std_priority_queue>,
+  enable_if_convertible<
+    _PqTag, __gnu_pbds::priority_queue_tag>
+>
+typename simple_graph<_Ip, _Lp, _DirTag>::part_edge_list
+simple_graph<_Ip, _Lp, _DirTag>::_sssp_sfinae(
+    index_type const &source) const {
+
+  return
+    _sssp<
+      __gnu_pbds::priority_queue<
+        part_edge_type,
+        std::greater<part_edge_type>,
+        _PqTag
+      >,
+      _LengthMax
+    >(source);
+}
+#endif // __HAS_GNU_PBDS_PRIORITY_QUEUE
+
+template<
+  typename _Ip,
+  typename _Lp,
+  typename _DirTag
+>
+template<
   typename _PriorityQueue,
   _Lp _LengthMax
 >

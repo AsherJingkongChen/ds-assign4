@@ -1,7 +1,7 @@
 // [GRAPH_Header_Library]
 //
-#ifndef GRAPH_INSERT_OR_ASSIGN
-#define GRAPH_INSERT_OR_ASSIGN
+#ifndef GRAPH_INSERT
+#define GRAPH_INSERT
 
 #include <utility>
 
@@ -12,27 +12,36 @@ template<
   typename _Lp,
   typename _DirTag
 >
+template<
+  bool _Replacing,
+  typename __DirTag,
+  enable_if_same<
+    __DirTag, tag::undirected>
+>
 std::pair<
   typename simple_graph<_Ip, _Lp, _DirTag>
   ::const_iterator, 
   bool
 >
-simple_graph<_Ip, _Lp, _DirTag>::_insert_or_assign(
+simple_graph<_Ip, _Lp, _DirTag>::_insert_sfinae(
     index_type const &source,
     index_type const &target,
-    length_type const &length,
-    tag::undirected) {
+    length_type const &length) {
 
-  auto result = _insert_or_assign(target, source, length);
+  auto result = _insert(target, source, length);
   if (result.second) {
     __sources[target] = (__targets[source] = true);
   }
 
-  result = _insert_or_assign(source, target, length);
+  result = _insert(source, target, length);
   if (result.second) {
     __sources[source] = (__targets[target] = true);
   }
 
+  if (_Replacing) {
+    static_cast<base_type&>(*this)[target][source] = length;
+    static_cast<base_type&>(*this)[source][target] = length;
+  }
   return result;
 }
 
@@ -41,23 +50,32 @@ template<
   typename _Lp,
   typename _DirTag
 >
+template<
+  bool _Replacing,
+  typename __DirTag,
+  enable_if_not_same<
+    __DirTag, tag::undirected>,
+  enable_if_same<
+    __DirTag, tag::directed>
+>
 std::pair<
   typename simple_graph<_Ip, _Lp, _DirTag>
   ::const_iterator, 
   bool
 >
-simple_graph<_Ip, _Lp, _DirTag>::_insert_or_assign(
+simple_graph<_Ip, _Lp, _DirTag>::_insert_sfinae(
     index_type const &source,
     index_type const &target,
-    length_type const &length,
-    tag::directed) {
-  
-  auto result = _insert_or_assign(source, target, length);
+    length_type const &length) {
 
+  auto result = _insert(source, target, length);
   if (result.second) {
     __sources[source] = (__targets[target] = true);
   }
 
+  if (_Replacing) {
+    static_cast<base_type&>(*this)[source][target] = length;
+  }
   return result;
 }
 
@@ -71,7 +89,7 @@ std::pair<
   ::const_iterator, 
   bool
 >
-simple_graph<_Ip, _Lp, _DirTag>::_insert_or_assign(
+simple_graph<_Ip, _Lp, _DirTag>::_insert(
     index_type const &source,
     index_type const &target,
     length_type const &length) {
@@ -84,14 +102,15 @@ simple_graph<_Ip, _Lp, _DirTag>::_insert_or_assign(
 
   auto i1 = base_type::insert({source, {pe}});
   if (i1.second) {
-    return {
+    return
       {
-        i1.first, 
-        base_type::end(), 
-        i1.first->second.begin()
-      },
-      true
-    };
+        {
+          i1.first, 
+          base_type::end(), 
+          i1.first->second.begin()
+        },
+        true
+      };
   }
 
   auto i2 = i1.first->second.insert(pe);
@@ -107,17 +126,17 @@ simple_graph<_Ip, _Lp, _DirTag>::_insert_or_assign(
       };
   }
 
-  i2.first->second = length;
-  return {
+  return
     {
-      i1.first, 
-      base_type::end(),
-      i2.first
-    },
-    false
-  };
+      {
+        i1.first, 
+        base_type::end(),
+        i2.first
+      },
+      false
+    };
 }
 
 } // namespace graph
 
-#endif // GRAPH_INSERT_OR_ASSIGN
+#endif // GRAPH_INSERT

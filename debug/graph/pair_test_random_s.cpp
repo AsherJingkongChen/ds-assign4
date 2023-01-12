@@ -80,7 +80,7 @@ int main() {
        << std::endl;
 
   for (uint32_t k = number_of_cases; k--;) {
-    // [seed]
+    // [SEED]
     //
     auto            seed(k * seed_const);
     std::mt19937    rng(seed);

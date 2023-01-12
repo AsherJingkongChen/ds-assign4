@@ -72,7 +72,7 @@ using uidist =
 //
 int main() {
   int number_of_cases(200);
-  std::ofstream  fout("debug/graph/pair_test_random_s.log");
+  std::ofstream  fout("debug/graph/pair_test_random_n.log");
   auto     seed_const(std::random_device{}());
 
   fout << "[diff logging begins]\n"

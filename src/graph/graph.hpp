@@ -188,17 +188,15 @@ public:
   //
   //     default value is graph::tag::std_priority_queue
   //
-  //     __gnu_pbds::binary_heap_tag is not available
-  //     due to some performance issues [TODO]
-  //
   // note that in this implementation,
   // all initial path lengths to [target]s
   // is std::numeric_limits<length_type>::max() by default
   // or user-defined value except for the path length
   // to [the input source] is always length_type()
   //
-  // note that there is no such path length [TODO]
-  // with initial state in the result, which is eliminated before outputing
+  // note that there is no such path length
+  // with initial state in the result, 
+  // which is eliminated before outputing
   //
 public:
   part_edge_list sssp(index_type const &source) const {
@@ -227,9 +225,41 @@ public:
   }
 
 public:
-  // assigns length to an existing edge
-  // which is linked from source to target
-  // or insert a new edge if it does not exist
+  // insert a new edge linked from source to target
+  // if it does not exist
+  //
+  // returns true if insertion happened or false if assigned
+  //
+  // if _DirTag is tag::undirected, 
+  // this operation in opposite direction will also take place
+  //
+  std::pair<const_iterator, bool> 
+  insert(
+      index_type const &source, 
+      index_type const &target,
+      length_type const &length) {
+    
+    return
+      _insert_sfinae<false>(
+        source,
+        target,
+        length
+      );
+  }
+
+  std::pair<const_iterator, bool> 
+  insert(edge_type const &edge) {
+    return
+      _insert_sfinae<false>(
+        edge.source(),
+        edge.target(),
+        edge.length()
+      );
+  }
+
+public:
+  // insert a new edge linked from source to target
+  // if it does not exist or assigns the length to an existing edge
   //
   // returns true if insertion happened or false if assigned
   //
@@ -242,17 +272,21 @@ public:
       index_type const &target,
       length_type const &length) {
     
-    return _insert_or_assign(source, target, length, _DirTag());
+    return
+      _insert_sfinae<true>(
+        source,
+        target,
+        length
+      );
   }
 
   std::pair<const_iterator, bool> 
   insert_or_assign(edge_type const &edge) {
     return
-      _insert_or_assign(
-        edge.source(), 
-        edge.target(), 
-        edge.length(), 
-        _DirTag()
+      _insert_sfinae<true>(
+        edge.source(),
+        edge.target(),
+        edge.length()
       );
   }
 
@@ -262,45 +296,24 @@ private:
   template<
     typename _PqTag,
     _Lp _LengthMax,
-    typename =
-      enable_if_same<_PqTag, tag::std_priority_queue>
+    enable_if_same<
+      _PqTag, tag::std_priority_queue> = 0
   >
-  part_edge_list _sssp_sfinae(index_type const &source) const {
-    return
-      _sssp<
-        std::priority_queue<
-          part_edge_type,
-          std::vector<part_edge_type>,
-          std::greater<part_edge_type>
-        >,
-        _LengthMax
-      >(source);
-  }
+  part_edge_list _sssp_sfinae(
+    index_type const &source) const;
 
 #ifdef __HAS_GNU_PBDS_PRIORITY_QUEUE
 private:
   template<
     typename _PqTag,
     _Lp _LengthMax,
-    typename =
-      enable_if_not_same<_PqTag, tag::std_priority_queue>,
-    typename =
-      enable_if_convertible<
-        _PqTag,
-        __gnu_pbds::priority_queue_tag
-      >
+    enable_if_not_same<
+      _PqTag, tag::std_priority_queue> = 0,
+    enable_if_convertible<
+      _PqTag, __gnu_pbds::priority_queue_tag> = 0
   >
-  part_edge_list _sssp_sfinae(index_type const &source) const {
-    return
-      _sssp<
-        __gnu_pbds::priority_queue<
-          part_edge_type,
-          std::greater<part_edge_type>,
-          _PqTag
-        >,
-        _LengthMax
-      >(source);
-  }
+  part_edge_list _sssp_sfinae(
+    index_type const &source) const;
 #endif // __HAS_GNU_PBDS_PRIORITY_QUEUE
 
 private:
@@ -312,22 +325,34 @@ private:
   _sssp(index_type const &source) const;
 
 private:
+  template<
+    bool _Replacing,
+    typename __DirTag = _DirTag,
+    enable_if_same<
+      __DirTag, tag::undirected> = 0
+  >
   std::pair<const_iterator, bool> 
-  _insert_or_assign(
+  _insert_sfinae(
     index_type const &source,
     index_type const &target,
-    length_type const &length,
-    tag::undirected);
+    length_type const &length);
 
+  template<
+    bool _Replacing,
+    typename __DirTag = _DirTag,
+    enable_if_not_same<
+      __DirTag, tag::undirected> = 0,
+    enable_if_same<
+      __DirTag, tag::directed> = 0
+  >
   std::pair<const_iterator, bool> 
-  _insert_or_assign(
+  _insert_sfinae(
     index_type const &source,
     index_type const &target,
-    length_type const &length,
-    tag::directed);
+    length_type const &length);
 
-  std::pair<const_iterator, bool> 
-  _insert_or_assign(
+  std::pair<const_iterator, bool>
+  _insert(
     index_type const &source,
     index_type const &target,
     length_type const &length);
@@ -350,7 +375,7 @@ public:
 #include "edge_types.hpp"
 #include "iterator.hpp"
 #include "find.hpp"
-#include "insert_or_assign.hpp"
+#include "insert.hpp"
 #include "sssp.hpp"
 
 #endif // GRAPH_GRAPH

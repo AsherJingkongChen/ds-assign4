@@ -10,25 +10,29 @@ namespace graph {
 template<typename _Tp, typename _Up>
 using enable_if_same = 
   typename std::enable_if<
-    std::is_same<_Tp, _Up>::value
+    std::is_same<_Tp, _Up>::value,
+    int
   >::type;
 
 template<typename _Tp, typename _Up>
 using enable_if_not_same = 
   typename std::enable_if<
-    not std::is_same<_Tp, _Up>::value
+    not std::is_same<_Tp, _Up>::value,
+    int
   >::type;
 
 template<typename _Tp, typename _Up>
 using enable_if_convertible = 
   typename std::enable_if<
-    std::is_convertible<_Tp, _Up>::value
+    std::is_convertible<_Tp, _Up>::value,
+    int
   >::type;
 
 template<typename _Tp, typename _Up>
 using enable_if_not_convertible = 
   typename std::enable_if<
-    not std::is_convertible<_Tp, _Up>::value
+    not std::is_convertible<_Tp, _Up>::value,
+    int
   >::type;
 
 } // namespace graph

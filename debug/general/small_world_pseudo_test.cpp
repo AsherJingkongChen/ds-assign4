@@ -53,18 +53,20 @@ int main(int argc, const char* argv[]) {
   std::mt19937 rng (SEED);
   const cnt_t  N   (1000);
         cnt_t  X   (
-    dist<cnt_t>(1, N)(rng)
+    dist<cnt_t>(100, 100)(rng) // [TODO]
   );
   const len_t  Y   (
-    dist<len_t>(1, N / 2)(rng)
+    dist<len_t>(1, N / 2)(rng) // [TODO]
   );
 
+  // (1280 720), (1920, 1080), (3840, 2160), (7680, 4320)
+  //
   const float  W   (3840);
   const float  H   (2160);
   const float  WH_R(W / H);
   const vec2   C   (W / 2, H / 2);
   const float  C_R (H / 2.0F / N);
-  const float  L_W (C_R / 5.0F);
+  const float  L_W (C_R / 2.0F);
   const float  R   (H / 2 - C_R - L_W - (W + H) / 200);
 
   auto scene = xml::element<svg>::get();
@@ -80,7 +82,7 @@ int main(int argc, const char* argv[]) {
   // build g, an undirected graph
   //
   for (auto i(N); i--;) {
-    g.insert_or_assign(i, (i + 1) % N, 1);
+    g.insert(i, (i + 1) % N, 1);
 
     // build s, a vec2 list
     //
@@ -92,11 +94,10 @@ int main(int argc, const char* argv[]) {
   for (auto i(X); i--;) {
     auto src = dist<idx_t>(0, N - 1)(rng);
     auto tar = dist<idx_t>(0, N - 1)(rng);
-    if (src == tar) {
-      i++; continue; // [TODO], insert (fails on existing and self edges)
-    }
 
-    g.insert_or_assign(src, tar, Y);
+    if (not g.insert(src, tar, Y).second) {
+      i++; continue;
+    }
   }
 
   // edges
@@ -133,10 +134,10 @@ int main(int argc, const char* argv[]) {
     xml::element<text>::get(t)->font_size   = std::to_string(C_R / 1.25F);
 
     c->fill         = "black";
-    c->stroke       = "black";
+    c->stroke_width = "0";
 
-    t->stroke_width = "0";
     t->fill         = "white";
+    t->stroke_width = "0";
     t->text         = std::to_string(p.first);
 
     scene->children.push_back(c);
@@ -188,7 +189,6 @@ int main(int argc, const char* argv[]) {
 // **You also need to explain how you obtain the results.**
 //
 // [NOTE]
-// all nodes has an index in [0, 999]
-// the range of X is [1, 1000]
-// the range of Y is [1, 500]
+// - N = 1000
+// - all 1000 nodes has an index in [0, 999]
 //

@@ -1,0 +1,12 @@
+.vscode
+.obsidian
+.DS_Store
+
+private
+node_modules
+__pycache__ 
+
+.trash
+*.out
+*.log
+*.dSYM
