@@ -2,7 +2,7 @@
 #include "../src/tool/tool.hpp"
 #include "../src/math/math.hpp"
 
-#define RNG_SEED 12345
+#define RNG_SEED 14641
 
 #include <iostream>
 #include <fstream>
