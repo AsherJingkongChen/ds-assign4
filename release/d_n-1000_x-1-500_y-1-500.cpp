@@ -2,7 +2,7 @@
 #include "../src/tool/tool.hpp"
 #include "../src/math/math.hpp"
 
-#define RNG_SEED 14641
+#define RNG_SEED 724323
 
 #include <iostream>
 #include <fstream>
@@ -19,7 +19,6 @@ using us_graph =
     graph::tag::undirected
   >;
 
-using cnt_t     = std::size_t;
 using idx_t     = us_graph::index_type;
 using len_t     = us_graph::length_type;
 
@@ -45,12 +44,12 @@ int main(int argc, const char* argv[]) {
   );
 
   std::mt19937 rng (SEED);
-  const cnt_t  N   (1000);
-  const cnt_t  X_M (500);
-  const len_t  Y_M (500);
-  const cnt_t  X_m (1);
+  const idx_t  N   (1000);
+  const idx_t  X_M (10);
+  const len_t  Y_M (10);
+  const idx_t  X_m (1);
   const len_t  Y_m (1);
-  const cnt_t  S   (30);
+  const idx_t  S   (30);
 
   for (auto X(X_m); X <= X_M; X++) {
     for (auto Y(Y_m); Y <= Y_M; Y++) {

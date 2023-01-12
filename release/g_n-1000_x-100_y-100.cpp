@@ -21,7 +21,6 @@ using us_graph =
     graph::tag::undirected
   >;
 
-using cnt_t     = std::size_t;
 using idx_t     = us_graph::index_type;
 using len_t     = us_graph::length_type;
 using vec2      = math::vec2;
@@ -48,8 +47,8 @@ int main(int argc, const char* argv[]) {
   );
 
   std::mt19937 rng (SEED);
-  const cnt_t  N   (1000);
-  const cnt_t  X   (100);
+  const idx_t  N   (1000);
+  const idx_t  X   (100);
   const len_t  Y   (100);
 
   // (1280 720), (1920, 1080), (3840, 2160), (7680, 4320)
