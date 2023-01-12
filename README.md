@@ -1,6 +1,6 @@
 # Data Structure Course - Assign 4
 
-[### Home page link](https://AsherJingkongChen/ds-assign4)
+### [Home page link](https://AsherJingkongChen/ds-assign4)
 
 ### File hierarchy
 
