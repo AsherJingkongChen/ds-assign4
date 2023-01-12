@@ -1,9 +1,9 @@
-#include "../../src/graph/graph.hpp"
-#include "../../src/tool/tool.hpp"
-#include "../../src/math/math.hpp"
-#include "../../src/xml/xml.hpp"
+#include "../src/graph/graph.hpp"
+#include "../src/tool/tool.hpp"
+#include "../src/math/math.hpp"
+#include "../src/xml/xml.hpp"
 
-// #define RNG_SEED 12345
+#define RNG_SEED 12345
 
 #include <iostream>
 #include <fstream>
@@ -17,7 +17,7 @@ using namespace graph::extra::io;
 using us_graph =
   graph::simple_graph<
     uint16_t,
-    uint64_t,
+    uint32_t,
     graph::tag::undirected
   >;
 
@@ -32,11 +32,8 @@ using dist = std::uniform_int_distribution<_IntTp>;
 
 int main(int argc, const char* argv[]) {
   std::ofstream
-  fout_log(
-    "debug/general/small_world_pseudo_test.log"
-  ),
   fout_svg(
-    "debug/general/small_world_pseudo_test.svg.log"
+    "output/g_n-1000_x-100_y-100.svg"
   );
 
   // parameters and structures
@@ -52,12 +49,8 @@ int main(int argc, const char* argv[]) {
 
   std::mt19937 rng (SEED);
   const cnt_t  N   (1000);
-  const cnt_t  X   (
-    dist<cnt_t>(1, N / 2)(rng)
-  );
-  const len_t  Y   (
-    dist<len_t>(1, N / 2)(rng)
-  );
+  const cnt_t  X   (100);
+  const len_t  Y   (100);
 
   // (1280 720), (1920, 1080), (3840, 2160), (7680, 4320)
   //
@@ -69,22 +62,16 @@ int main(int argc, const char* argv[]) {
   const float  L_W (C_R / 2.0F);
   const float  R   (H / 2 - C_R - L_W - (W + H) / 200);
 
-  auto scene = xml::element<svg>::get();
-  scene->fill         = "gray";
-  scene->stroke       = "gray";
-  scene->stroke_width = std::to_string(L_W);
-  xml::element<svg>::get(scene)->width  = std::to_string(W);
-  xml::element<svg>::get(scene)->height = std::to_string(H);
-
   us_graph  g;
   vec2_list s;
 
   // build g, an undirected graph
+  // with 1000 vertices and 1000 + X edges
   //
   for (auto i(N); i--;) {
     g.insert(i, (i + 1) % N, 1);
 
-    // build s, a vec2 list
+    // build s, a vec2 list recording the positions of vertex
     //
     vec2 v(math::polar(R, (i + 0.75F) / N));
     v.x() *= WH_R;
@@ -99,6 +86,13 @@ int main(int argc, const char* argv[]) {
       i++; continue;
     }
   }
+
+  auto scene = xml::element<svg>::get();
+  scene->fill         = "gray";
+  scene->stroke       = "gray";
+  scene->stroke_width = std::to_string(L_W);
+  xml::element<svg>::get(scene)->width  = std::to_string(W);
+  xml::element<svg>::get(scene)->height = std::to_string(H);
 
   // edges
   //
@@ -144,17 +138,6 @@ int main(int argc, const char* argv[]) {
     scene->children.push_back(t);
   }
 
-  // output as log file
-  //
-  fout_log << "SEED=" << SEED << "\n"
-           << "X=" << X << "\n"
-           << "Y=" << Y << "\n"
-           << "EDGES="     "\n";
-
-  for (auto &e: g) {
-    fout_log << e << '\n';
-  }
-
   // output as svg file
   //
   fout_svg << xml::declaration() << scene->to_string();
@@ -164,6 +147,15 @@ int main(int argc, const char* argv[]) {
   );
 }
 
+// [NOTE]
+// - N = 1000
+// - X = 100
+// - Y = 100
+// - all 1000 nodes has an index in [0, 999]
+// - X + 1000 edges are added
+// - X edges are added randomly
+// - S edges are sampled randomly
+//
 // [SPECIFICATION]
 //
 // # Study the Properties of "Small World" and Compare Different Data Structures
@@ -187,8 +179,4 @@ int main(int argc, const char* argv[]) {
 // 
 // **You need to support your answers with experimental results.** 
 // **You also need to explain how you obtain the results.**
-//
-// [NOTE]
-// - N = 1000
-// - all 1000 nodes has an index in [0, 999]
 //
