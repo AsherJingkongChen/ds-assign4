@@ -28,7 +28,7 @@ cb.set_label('D')
 
 # output
 #
-plt.savefig('output/p_n-1000_x-1-500_y-1-500.png', dpi = 150)
+plt.savefig('output/p_n-1000_x-1-500_y-1-500.png', dpi = 100)
 
 plt.show()
 
