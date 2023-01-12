@@ -1,5 +1,7 @@
 # Data Structure Course - Assign 4
 
+[### Home page link](https://AsherJingkongChen/ds-assign4)
+
 ### File hierarchy
 
 ```
@@ -7,8 +9,10 @@
 |-- README.md
 |-- debug/
 |   |-- general/
-|   |   `-- circle_ring.cpp
+|   |   |-- circle_ring.cpp
+|   |   `-- small_world_pseudo_test.cpp
 |   |-- graph/
+|   |   |-- def_pair_test_random.hpp
 |   |   |-- graphs_which_is_directed_and_not.cpp
 |   |   |-- pair_test_random_m.cpp
 |   |   |-- pair_test_random_n.cpp
@@ -32,11 +36,18 @@
 |-- example/
 |   |-- gnu_pbds_priority_queue.cpp
 |   `-- std_priority_queue.cpp
-|-- gallery/
-|   `-- circle_ring.svg
+|-- output/
+|   |-- d_n-1000_x-1-500_y-1-500.csv
+|   |-- g_n-1000_x-100_y-100.svg
+|   `-- p_n-1000_x-1-500_y-1-500.png
+|-- release/
+|   |-- d_n-1000_x-1-500_y-1-500.cpp
+|   |-- g_n-1000_x-100_y-100.cpp
+|   `-- p_n-1000_x-1-500_y-1-500.py
 |-- script/
 |   |-- clear.sh*
-|   `-- debug.sh*
+|   |-- debug.sh*
+|   `-- release.sh*
 |-- src/
 |   |-- graph/
 |   |   |-- edge_types.hpp
@@ -44,12 +55,16 @@
 |   |   |-- extra.hpp
 |   |   |-- find.hpp
 |   |   |-- graph.hpp
-|   |   |-- insert_or_assign.hpp
+|   |   |-- insert.hpp
 |   |   |-- iterator.hpp
 |   |   `-- sssp.hpp
 |   |-- math/
+|   |   |-- binom_coef.hpp
 |   |   |-- math.hpp
 |   |   `-- vec2.hpp
+|   |-- tool/
+|   |   |-- timer.hpp
+|   |   `-- tool.hpp
 |   `-- xml/
 |       |-- attribute.hpp
 |       |-- element_circle.hpp
@@ -61,5 +76,5 @@
 |       `-- xml.hpp
 `-- third-party/
 
-14 directories, 42 files
+16 directories, 53 files
 ```
