@@ -4,6 +4,6 @@
 rm -r debug/**/*.out;
 rm -r debug/**/*.log;
 rm -r debug/**/*.dSYM;
-rm -r release/**/*.out;
-rm -r release/**/*.log;
-rm -r release/**/*.dSYM;
+rm -r test/**/*.out;
+rm -r test/**/*.log;
+rm -r test/**/*.dSYM;

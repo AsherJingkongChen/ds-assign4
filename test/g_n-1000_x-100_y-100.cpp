@@ -87,8 +87,8 @@ int main(int argc, const char* argv[]) {
   }
 
   auto scene = xml::element<svg>::get();
-  scene->fill         = "gray";
-  scene->stroke       = "gray";
+  scene->fill         = "#444";
+  scene->stroke       = "#444";
   scene->stroke_width = std::to_string(L_W);
   xml::element<svg>::get(scene)->width  = std::to_string(W);
   xml::element<svg>::get(scene)->height = std::to_string(H);

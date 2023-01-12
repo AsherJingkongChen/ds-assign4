@@ -40,14 +40,14 @@
 |   |-- d_n-1000_x-1-500_y-1-500.csv
 |   |-- g_n-1000_x-100_y-100.svg
 |   `-- p_n-1000_x-1-500_y-1-500.png
-|-- release/
+|-- test/
 |   |-- d_n-1000_x-1-500_y-1-500.cpp
 |   |-- g_n-1000_x-100_y-100.cpp
 |   `-- p_n-1000_x-1-500_y-1-500.py
 |-- script/
 |   |-- clear.sh*
 |   |-- debug.sh*
-|   `-- release.sh*
+|   `-- test.sh*
 |-- src/
 |   |-- graph/
 |   |   |-- edge_types.hpp

@@ -2,7 +2,7 @@
 #include "../src/tool/tool.hpp"
 #include "../src/math/math.hpp"
 
-#define RNG_SEED 724323
+#define RNG_SEED 14641
 
 #include <iostream>
 #include <fstream>
@@ -45,11 +45,11 @@ int main(int argc, const char* argv[]) {
 
   std::mt19937 rng (SEED);
   const idx_t  N   (1000);
-  const idx_t  X_M (10);
-  const len_t  Y_M (10);
+  const idx_t  X_M (100);
+  const len_t  Y_M (100);
   const idx_t  X_m (1);
   const len_t  Y_m (1);
-  const idx_t  S   (30);
+  const idx_t  S   (50);
 
   for (auto X(X_m); X <= X_M; X++) {
     for (auto Y(Y_m); Y <= Y_M; Y++) {

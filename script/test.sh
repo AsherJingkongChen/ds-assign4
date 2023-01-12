@@ -1,11 +1,11 @@
 #! /usr/bin/env bash
-# run this shell script with the command: ./script/release.sh
+# run this shell script with the command: ./script/test.sh
 
 CXX_RELEASE="g++-12";
-CXXFLAGS_RELEASE="-Wall -std=c++11 -O3";
+CXXFLAGS_RELEASE="-w -std=c++17 -O3";
 
 if [ $# -eq 0 ]; then
-  for src in release/*.cpp; do
+  for src in test/*.cpp; do
     echo "$CXX_RELEASE $CXXFLAGS_RELEASE $src -o $src.out";
     $CXX_RELEASE $CXXFLAGS_RELEASE $src -o $src.out;
 
@@ -16,7 +16,7 @@ if [ $# -eq 0 ]; then
     fi
   done
 
-  for bin in release/*.out; do
+  for bin in test/*.out; do
     echo "./$bin";
     ./$bin;
   done
