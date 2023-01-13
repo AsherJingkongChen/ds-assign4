@@ -17,8 +17,7 @@ x, d = arg[0], gaussian_filter1d(arg[2], sigma=10)
 # plot
 #
 fig = plt.figure(figsize=(8, 5))
-
-plt.plot(x, d, color = 'gray', linewidth = 2)
+plt.plot(x, d, color = '#C04080', linewidth = 2)
 
 # label
 #
