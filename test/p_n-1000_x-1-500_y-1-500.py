@@ -12,7 +12,7 @@ data = pd.read_csv('private/d_n-1000_x-1-500_y-1-500.csv')
 x_min, x_max = 1, 500
 y_min, y_max = 1, 500
 x_cnt, y_cnt = x_max - x_min + 1, y_max - y_min + 1
-d_cnt = 20
+d_cnt = 10
 
 x, y = np.meshgrid(
   np.linspace(x_min, x_max, x_cnt),
