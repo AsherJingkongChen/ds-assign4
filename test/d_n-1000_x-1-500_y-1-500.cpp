@@ -77,10 +77,23 @@ int main(int argc, const char* argv[]) {
       for (auto i(S); i--;) {
         auto r =
           g.sssp<graph::tag::std_priority_queue>(
-            g.sources().begin()->first
+            std::next(
+              g.sources().begin(),
+              dist<idx_t>(0, g.sources().size() - 1)(rng)
+            )
+            ->first
           );
 
-        D_S += r.begin()->second.length();
+        if (r.empty()) {
+          i++; continue;
+        }
+
+        D_S +=
+          std::next(
+            r.begin(),
+            dist<idx_t>(0, r.size() - 1)(rng)
+          )
+          ->second.length();
       }
 
       // output as csv file
