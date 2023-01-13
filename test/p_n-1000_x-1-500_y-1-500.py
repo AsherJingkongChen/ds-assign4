@@ -1,18 +1,17 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.cm as cm
-import pandas as pd
+from pandas import read_csv
+from math import ceil
 
 # input
 #
-data = pd.read_csv('private/d_n-1000_x-1-500_y-1-500.csv')
+data = read_csv('output/d_n-1000_x-1-500_y-1-500.csv')
 
 # prepare
 #
 x_min, x_max = 1, 500
 y_min, y_max = 1, 500
 x_cnt, y_cnt = x_max - x_min + 1, y_max - y_min + 1
-d_cnt = 10
 
 x, y = np.meshgrid(
   np.linspace(x_min, x_max, x_cnt),
@@ -27,7 +26,7 @@ d = np.reshape(
 # plot
 #
 fig = plt.figure(figsize=(8, 5))
-plt.contourf(x, y, d, cmap='twilight', levels = np.linspace(0, 500, d_cnt + 1))
+plt.contourf(x, y, d, cmap='CMRmap')
 
 # label
 #

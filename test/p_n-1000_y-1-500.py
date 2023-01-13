@@ -1,11 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.cm as cm
 from pandas import read_csv
 
 # input
 #
-data = read_csv('private/d_n-1000_x-1-500_y-1-500.csv')
+data = read_csv('output/d_n-1000_x-1-500_y-1-500.csv')
 
 # prepare
 #
