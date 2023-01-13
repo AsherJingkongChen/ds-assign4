@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from pandas import read_csv
+from pandas import read_csv, DataFrame
 from math import ceil
 
 # input
@@ -27,8 +27,27 @@ x, y = np.meshgrid(
 
 d = np.reshape(
   data[['D']].transpose().to_numpy(),
-  (x_bin, y_bin)
+  (
+    x_bin,
+    y_bin
+  )
 ).transpose()
+
+DataFrame(
+  d,
+  index = np.linspace(
+    data[['Y']].min()[0],
+    data[['Y']].max()[0],
+    y_bin
+  ).astype(np.int32),
+
+  columns = np.linspace(
+    data[['X']].min()[0],
+    data[['X']].max()[0],
+    x_bin
+  ).astype(np.int32)
+
+).to_csv('output/d_x_y.csv')
 
 # plot
 #
@@ -41,6 +60,7 @@ plt.xlabel('X')
 plt.ylabel('Y')
 plt.title('Mean of shortest distances, D(X, Y)')
 plt.colorbar().set_label('D')
+
 
 # output
 #
