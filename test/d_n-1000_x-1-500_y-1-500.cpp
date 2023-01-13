@@ -45,8 +45,8 @@ int main(int argc, const char* argv[]) {
 
   std::mt19937 rng (SEED);
   const idx_t  N   (1000);
-  const idx_t  X_M (100);
-  const len_t  Y_M (100);
+  const idx_t  X_M (500);
+  const len_t  Y_M (500);
   const idx_t  X_m (1);
   const len_t  Y_m (1);
   const idx_t  S   (50);
