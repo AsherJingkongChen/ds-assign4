@@ -9,18 +9,25 @@ data = read_csv('output/d_n-1000_x-1-500_y-1-500.csv')
 
 # prepare
 #
-x_min, x_max = 1, 500
-y_min, y_max = 1, 500
-x_cnt, y_cnt = x_max - x_min + 1, y_max - y_min + 1
+x_bin = data[['X']].max()[0] - data[['X']].min()[0] + 1
+y_bin = data[['Y']].max()[0] - data[['Y']].min()[0] + 1
 
 x, y = np.meshgrid(
-  np.linspace(x_min, x_max, x_cnt),
-  np.linspace(y_min, y_max, y_cnt)
+  np.linspace(
+    data[['X']].min()[0],
+    data[['X']].max()[0],
+    x_bin
+  ),
+  np.linspace(
+    data[['Y']].min()[0],
+    data[['Y']].max()[0],
+    y_bin
+  )
 )
 
 d = np.reshape(
   data[['D']].transpose().to_numpy(),
-  (x_cnt, y_cnt)
+  (x_bin, y_bin)
 ).transpose()
 
 # plot
@@ -32,7 +39,7 @@ plt.contourf(x, y, d, cmap='CMRmap')
 #
 plt.xlabel('X')
 plt.ylabel('Y')
-plt.title('Mean of shortest distances = D(X, Y)')
+plt.title('Mean of shortest distances, D(X, Y)')
 plt.colorbar().set_label('D')
 
 # output

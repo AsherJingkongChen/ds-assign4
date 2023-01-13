@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from pandas import read_csv
+from scipy.ndimage import gaussian_filter1d
 
 # input
 #
@@ -8,8 +9,10 @@ data = read_csv('output/d_n-1000_x-1-500_y-1-500.csv')
 
 # prepare
 #
-arg = data[data['X'] == 250].transpose().to_numpy()
-y, d = arg[1], arg[2]
+x = (data[['X']].max()[0] + data[['X']].min()[0]) // 2
+
+arg = data[data['X'] == x].to_numpy().transpose()
+y, d = arg[1], gaussian_filter1d(arg[2], sigma=10)
 
 # plot
 #
@@ -20,7 +23,7 @@ plt.plot(y, d, color='gray', linewidth=2)
 #
 plt.xlabel('Y')
 plt.ylabel('D')
-plt.title('Mean of shortest distances = D(X = 250, Y)')
+plt.title(f'Mean of shortest distances, D(X = {x}, Y)')
 
 # output
 #
