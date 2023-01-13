@@ -12,12 +12,13 @@ data = read_csv('output/d_n-1000_x-1-500_y-1-500.csv')
 y = (data[['Y']].max()[0] + data[['Y']].min()[0]) // 2
 
 arg = data[data['Y'] == y].to_numpy().transpose()
-x, d = arg[0], gaussian_filter1d(arg[2], sigma=10)
+x, d = arg[0], gaussian_filter1d(arg[2], sigma=2)
 
 # plot
 #
 fig = plt.figure(figsize=(8, 5))
-plt.plot(x, d, color = '#C04080', linewidth = 2)
+plt.plot(x, d, color='#00A0D0', linewidth=1)
+plt.plot(x, gaussian_filter1d(d, 20), ':', color='#0080A0', linewidth=2)
 
 # label
 #
