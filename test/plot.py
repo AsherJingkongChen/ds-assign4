@@ -101,7 +101,7 @@ def xd_yd(X, Y):
   fig.add_subplot(211)
   plt.grid(which = 'both', alpha = 0.3)
   plt.plot(x, x_d, color='#D020B0', linewidth=1)
-  plt.plot(x, gaussian_filter1d(x_d, 20), ':', color='#B02090', linewidth=2)
+  plt.plot(x, gaussian_filter1d(x_d, 20), ':', color='#A00080', linewidth=2)
   plt.xlabel('X', loc = 'left')
   plt.ylabel('D', loc = 'bottom')
   plt.title(f'Average shortest distances, D(X, Y = {Y})')
@@ -118,7 +118,7 @@ def xd_yd(X, Y):
   fig.add_subplot(212)
   plt.grid(which = 'both', alpha = 0.3)
   plt.plot(y, y_d, color='#D0B020', linewidth=1)
-  plt.plot(y, gaussian_filter1d(y_d, 20), ':', color='#B09020', linewidth=2)
+  plt.plot(y, gaussian_filter1d(y_d, 20), ':', color='#A08000', linewidth=2)
   plt.xlabel('Y', loc = 'left')
   plt.ylabel('D', loc = 'bottom')
   plt.title(f'Average shortest distances, D(X = {X}, Y)')
@@ -133,12 +133,18 @@ def xd_yd(X, Y):
   # output
   #
   plt.tight_layout()
-  plt.savefig('output/x-d_y-d.png', dpi = 150)
+  plt.savefig(f'output/x-y{Y}-d_x{X}-y-d.png', dpi = 150)
+
+def dq_norm():
+  pass
 
 def main():
   xyd()
+  xd_yd(50, 50)
   xd_yd(100, 100)
-  plt.show()
+  xd_yd(200, 200)
+  xd_yd(400, 400)
+  # plt.show()
 
 if __name__ == '__main__':
   main()
