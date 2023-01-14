@@ -15,7 +15,7 @@ using namespace graph::extra::io;
 
 using us_graph =
   graph::simple_graph<
-    uint16_t,
+    uint32_t,
     uint32_t,
     graph::tag::undirected
   >;
