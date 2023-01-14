@@ -88,26 +88,32 @@ def xd_yd(X, Y):
   #
   fig.add_subplot(211)
   plt.grid(which = 'both', alpha = 0.3)
-  plt.plot(x, x_d, color='#D020B0', linewidth=1)
-  plt.plot(x, gaussian_filter1d(x_d, 20), ':', color='#A00080', linewidth=2)
+  plt.plot(x, x_d, color='#D040B0', linewidth=1)
+  plt.plot(x, gaussian_filter1d(x_d, 20), ':', color='#A00080', linewidth=1)
   plt.xlabel('X', loc = 'left')
   plt.ylabel('D', loc = 'bottom')
   plt.title(f'Average shortest distances, D(X, Y = {Y})')
   plt.xticks(
     np.arange(0, data[['X']].max()[0] + 50, 50)
   )
+  plt.yticks(
+    np.arange(0, data[['D']].max()[0] + 50, 50)
+  )
 
   # plot y-d
   #
   fig.add_subplot(212)
   plt.grid(which = 'both', alpha = 0.3)
-  plt.plot(y, y_d, color='#D0B020', linewidth=1)
-  plt.plot(y, gaussian_filter1d(y_d, 20), ':', color='#A08000', linewidth=2)
+  plt.plot(y, y_d, color='#D0B040', linewidth=1)
+  plt.plot(y, gaussian_filter1d(y_d, 20), ':', color='#A08000', linewidth=1)
   plt.xlabel('Y', loc = 'left')
   plt.ylabel('D', loc = 'bottom')
   plt.title(f'Average shortest distances, D(X = {X}, Y)')
   plt.xticks(
     np.arange(0, data[['Y']].max()[0] + 50, 50)
+  )
+  plt.yticks(
+    np.arange(0, data[['D']].max()[0] + 50, 50)
   )
 
   # output
