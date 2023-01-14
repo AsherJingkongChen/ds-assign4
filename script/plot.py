@@ -185,7 +185,7 @@ def heap_benchmark():
   )
   plt.xlabel('X', loc = 'left')
   plt.ylabel('T (msec)', loc = 'bottom')
-  plt.title(f'SSSP algorithm, time benchmark, T(X)')
+  plt.title(f'Dijkstra\'s SSSP algorithm, time benchmark, T(X)')
   plt.legend(['std_priority_queue', 'gnu_pbds_pairing_heap'])
 
   # plot push x-t
