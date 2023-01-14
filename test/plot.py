@@ -51,38 +51,26 @@ def xyd():
 
   # plot
   #
-  fig = plt.figure(figsize=(8, 5))
+  fig = plt.figure(figsize=(8, 6))
   plt.contourf(
     x, y, d,
     cmap = 'CMRmap',
-    levels = np.arange(
-      0,
-      data[['D']].max()[0] + 50,
-      50
-    )
+    levels = np.arange(0, data[['D']].max()[0] + 50, 50)
   )
   plt.xlabel('X', loc = 'left')
   plt.ylabel('Y', loc = 'bottom')
   plt.title('Average shortest distances, D(X, Y)')
   plt.colorbar().set_label('D', loc = 'bottom')
   plt.xticks(
-    np.arange(
-      0,
-      data[['X']].max()[0] + 50,
-      50
-    )
+    np.arange(0, data[['X']].max()[0] + 50, 50)
   )
   plt.yticks(
-    np.arange(
-      0,
-      data[['Y']].max()[0] + 50,
-      50
-    )
+    np.arange(0, data[['Y']].max()[0] + 50, 50)
   )
 
   # output
   #
-  plt.savefig('output/x-y-d.png', dpi = 150)
+  plt.savefig('output/x-y-d.png', dpi = 200)
 
 def xd_yd(X, Y):
   # prepare
@@ -106,11 +94,7 @@ def xd_yd(X, Y):
   plt.ylabel('D', loc = 'bottom')
   plt.title(f'Average shortest distances, D(X, Y = {Y})')
   plt.xticks(
-    np.arange(
-      0,
-      data[['X']].max()[0] + 50,
-      50
-    )
+    np.arange(0, data[['X']].max()[0] + 50, 50)
   )
 
   # plot y-d
@@ -123,17 +107,13 @@ def xd_yd(X, Y):
   plt.ylabel('D', loc = 'bottom')
   plt.title(f'Average shortest distances, D(X = {X}, Y)')
   plt.xticks(
-    np.arange(
-      0,
-      data[['Y']].max()[0] + 50,
-      50
-    )
+    np.arange(0, data[['Y']].max()[0] + 50, 50)
   )
 
   # output
   #
   plt.tight_layout()
-  plt.savefig(f'output/x-y{Y}-d_x{X}-y-d.png', dpi = 150)
+  plt.savefig(f'output/x-y{Y}-d_x{X}-y-d.png', dpi = 200)
 
 def dq_norm():
   pass
@@ -143,6 +123,7 @@ def main():
   xd_yd(50, 50)
   xd_yd(100, 100)
   xd_yd(200, 200)
+  xd_yd(300, 300)
   xd_yd(400, 400)
   # plt.show()
 
