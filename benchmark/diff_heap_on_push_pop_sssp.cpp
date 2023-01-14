@@ -1,5 +1,10 @@
+// References:
+//   [Measuring actual memory usage](https://lemire.me/blog/2022/11/10/measuring-the-memory-usage-of-your-c-program/)
+//
+
 #include "../src/graph/graph.hpp"
-#include "../src/math/math.hpp"
+#include "../src/tool/tool.hpp"
+#include "../third-party/Code-used-on-Daniel-Lemire-s-blog/2022/11/10/nadeau.h"
 
 #define RNG_SEED 14641
 
@@ -10,10 +15,11 @@
 #include <random>
 
 using namespace graph::extra::io;
+using namespace tool::unit;
 
 using us_graph =
   graph::simple_graph<
-    uint16_t,
+    uint32_t,
     uint32_t,
     graph::tag::undirected
   >;
@@ -27,9 +33,12 @@ using dist = std::uniform_int_distribution<_IntTp>;
 int main(int argc, const char* argv[]) {
   std::ofstream
   fout_csv(
-    "output/distances.csv"
-  );
-  fout_csv << "X,Y,D\n";
+    "output/diff_heap_on_push_pop_sssp.csv"
+  ),
+  fout_trash(".trash");
+
+  fout_csv << "X,I,T,S\n";
+  bool trash;
 
   // parameters and structures
   //
@@ -44,26 +53,23 @@ int main(int argc, const char* argv[]) {
 
   std::mt19937 rng (SEED);
   const idx_t  N   (1000);
-  const idx_t  X_M (500);
-  const len_t  Y_M (500);
-  const idx_t  X_m (1);
+  const idx_t  X_M (100000);
+  const len_t  Y_M (20);
+  const idx_t  X_m (1000);
   const len_t  Y_m (1);
-  const idx_t  Z   (50);
+  const idx_t  Z   (1000);
 
-  for (auto X(X_m); X <= X_M; X++) {
-    for (auto Y(Y_m); Y <= Y_M; Y++) {
+  for (auto X(X_m); X <= X_M; X += X_m) {
+    {
       us_graph g;
 
       // build g, an undirected graph
-      // with 1000 vertices and 1000 + X edges
+      // with N vertices and X edges
       //
-      for (auto i(N); i--;) {
-        g.insert(i, (i + 1) % N, 1);
-      }
-
       for (auto i(X); i--;) {
         auto src = dist<idx_t>(0, N - 1)(rng);
         auto tar = dist<idx_t>(0, N - 1)(rng);
+        auto Y   = dist<len_t>(Y_m, Y_M)(rng);
 
         if (not g.insert(src, tar, Y).second) {
           i++; continue;
@@ -72,7 +78,7 @@ int main(int argc, const char* argv[]) {
 
       // sample Z edges randomly
       //
-      len_t D_Z(0);
+      tool::timer<msec> clock;
       for (auto i(Z); i--;) {
         auto r =
           g.sssp<graph::tag::std_priority_queue>(
@@ -87,32 +93,33 @@ int main(int argc, const char* argv[]) {
           i++; continue;
         }
 
-        D_Z +=
+        trash =
           std::next(
             r.begin(),
             dist<idx_t>(0, r.size() - 1)(rng)
           )
-          ->second.length();
+          ->second.length() == 42;
       }
-
-      // output as csv file
-      //
-      float D(D_Z / float(Z));
+      clock.pause();
 
       fout_csv << X << ','
-               << Y << ','
-               << D << '\n';
+               << "sssp_std_priority_queue" << ','
+               << clock.elapsed() << ','
+               << (getCurrentRSS() >> 10) << '\n';
     }
   }
+
+  fout_trash << trash;
 }
 
 // [NOTE]
 // - N = 1000
-// - Z = 50
-// - all 1000 nodes has an index in [0, 999]
-// - X + 1000 edges are added
-// - X edges are added randomly
+// - Z = 1000
+// - all N nodes has an index in [0, N-1]
+// - X edges are added randomly with random length Y
 // - Z edges are sampled randomly
+// - measures time spent T (msec) and space used S (KiB) at most
+//   on instruction I 
 //
 // [SPECIFICATION]
 //

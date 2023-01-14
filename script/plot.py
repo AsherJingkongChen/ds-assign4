@@ -1,3 +1,6 @@
+#! /usr/bin/env python3
+# run this shell script with the command: ./script/plot.py
+
 import numpy as np
 import matplotlib.pyplot as plt
 from pandas import read_csv, DataFrame
@@ -121,7 +124,7 @@ def xd_yd(X, Y):
   plt.tight_layout()
   plt.savefig(f'output/x-y{Y}-d_x{X}-y-d.png', dpi = 200)
 
-def f_d():
+def fd():
   fig = plt.figure(figsize=(8, 6))
   plt.grid(which = 'both', alpha = 0.3)
   plt.hist(
@@ -140,7 +143,7 @@ def f_d():
   # output
   #
   plt.tight_layout()
-  plt.savefig(f'output/f_d.png', dpi = 200)
+  plt.savefig(f'output/f-d.png', dpi = 200)
 
 def main():
   xyd()
@@ -149,7 +152,7 @@ def main():
   xd_yd(200, 200)
   xd_yd(300, 300)
   xd_yd(400, 400)
-  f_d()
+  fd()
   # plt.show()
 
 if __name__ == '__main__':

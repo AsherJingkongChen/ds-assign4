@@ -79,6 +79,8 @@ int main() {
        << "case: seed x v | bg: target parent distance | sg: t. p. d."
        << std::endl;
 
+  bool fout_triggered = false;
+
   for (uint32_t k = number_of_cases; k--;) {
     // [seed]
     //
@@ -157,8 +159,6 @@ int main() {
       )
     );
 
-    bool fout_triggered = false;
-
     boost::graph_traits<bg>::vertex_iterator vi, vend;
     for (boost::tie(vi, vend) = boost::vertices(a1);
          vi != vend; ++vi) {
@@ -208,4 +208,6 @@ int main() {
   }
 
   fout << "[diff logging ends]" << std::endl;
+
+  assert(not fout_triggered);
 }

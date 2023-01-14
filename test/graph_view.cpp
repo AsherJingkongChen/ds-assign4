@@ -1,5 +1,4 @@
 #include "../src/graph/graph.hpp"
-#include "../src/tool/tool.hpp"
 #include "../src/math/math.hpp"
 #include "../src/xml/xml.hpp"
 
@@ -153,7 +152,6 @@ int main(int argc, const char* argv[]) {
 // - all 1000 nodes has an index in [0, 999]
 // - X + 1000 edges are added
 // - X edges are added randomly
-// - S edges are sampled randomly
 //
 // [SPECIFICATION]
 //

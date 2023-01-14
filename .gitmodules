@@ -1,0 +1,3 @@
+[submodule "third-party/Code-used-on-Daniel-Lemire-s-blog"]
+	path = third-party/Code-used-on-Daniel-Lemire-s-blog
+	url = git@github.com:lemire/Code-used-on-Daniel-Lemire-s-blog.git

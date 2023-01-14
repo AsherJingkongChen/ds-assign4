@@ -58,18 +58,8 @@ class vec2;
 //
 vec2 polar(float magnitude, float rotation);
 
-// binomial coefficient
-// binom_coef(n, k) == n! / (k! * (n - k)!)
-//
-// References:
-//   https://stackoverflow.com/a/42285958
-//
-template<typename _IntTp>
-_IntTp binom_coef(_IntTp const &n, _IntTp const &k);
-
 } // namespace math
 
 #include "vec2.hpp"
-#include "binom_coef.hpp"
 
 #endif // MATH_MATH
