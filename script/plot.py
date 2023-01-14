@@ -183,7 +183,7 @@ def heap_benchmark():
     color = '#901010',
     linewidth = 1
   )
-  plt.xlabel('X', loc = 'left')
+  plt.xlabel('X (edge count)', loc = 'left')
   plt.ylabel('T (msec)', loc = 'bottom')
   plt.title(f'Dijkstra\'s SSSP algorithm, time benchmark, T(X)')
   plt.legend(['std_priority_queue', 'gnu_pbds_pairing_heap'])
@@ -204,7 +204,7 @@ def heap_benchmark():
     color = '#901010',
     linewidth = 1
   )
-  plt.xlabel('X', loc = 'left')
+  plt.xlabel('X (pairs of uint32_t)', loc = 'left')
   plt.ylabel('T (msec)', loc = 'bottom')
   plt.title(f'Heap push, time benchmark, T(X)')
   plt.legend(['std_priority_queue', 'gnu_pbds_pairing_heap'])
@@ -225,7 +225,7 @@ def heap_benchmark():
     color = '#901010',
     linewidth = 1
   )
-  plt.xlabel('X', loc = 'left')
+  plt.xlabel('X (pairs of uint32_t)', loc = 'left')
   plt.ylabel('T (msec)', loc = 'bottom')
   plt.title(f'Heap pop, time benchmark, T(X)')
   plt.legend(['std_priority_queue', 'gnu_pbds_pairing_heap'])
