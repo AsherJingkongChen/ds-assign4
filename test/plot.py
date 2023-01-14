@@ -121,8 +121,26 @@ def xd_yd(X, Y):
   plt.tight_layout()
   plt.savefig(f'output/x-y{Y}-d_x{X}-y-d.png', dpi = 200)
 
-def dq_norm():
-  pass
+def f_d():
+  fig = plt.figure(figsize=(8, 6))
+  plt.grid(which = 'both', alpha = 0.3)
+  plt.hist(
+    data[['D']].to_numpy().transpose()[0],
+    bins='auto',
+    fc='#B08030',
+    ec='#805000'
+  )
+  plt.xlabel('D', loc='left')
+  plt.ylabel('Frequency', loc='bottom')
+  plt.title(f'Average shortest distances distribution, f(D)')
+  plt.xticks(
+    np.arange(0, data[['D']].max()[0] + 50, 50)
+  )
+
+  # output
+  #
+  plt.tight_layout()
+  plt.savefig(f'output/f_d.png', dpi = 200)
 
 def main():
   xyd()
@@ -131,6 +149,7 @@ def main():
   xd_yd(200, 200)
   xd_yd(300, 300)
   xd_yd(400, 400)
+  f_d()
   # plt.show()
 
 if __name__ == '__main__':
