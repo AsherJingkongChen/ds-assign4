@@ -32,7 +32,7 @@ using dist = std::uniform_int_distribution<_IntTp>;
 int main(int argc, const char* argv[]) {
   std::ofstream
   fout_svg(
-    "output/g_n-1000_x-100_y-100.svg"
+    "output/graph_view.svg"
   );
 
   // parameters and structures

@@ -28,7 +28,7 @@ using dist = std::uniform_int_distribution<_IntTp>;
 int main(int argc, const char* argv[]) {
   std::ofstream
   fout_csv(
-    "output/d_n-1000_x-1-500_y-1-500.csv"
+    "output/distances.csv"
   );
   fout_csv << "X,Y,D\n";
 
