@@ -265,6 +265,8 @@ def main():
   xd_yd(200, 200)
   xd_yd(300, 300)
   xd_yd(400, 400)
+  xd_yd(450, 450)
+  xd_yd(495, 495)
   heap_benchmark()
   fd()
   # plt.show()
