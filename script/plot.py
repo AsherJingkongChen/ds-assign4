@@ -259,6 +259,7 @@ def fd():
 
 def main():
   xyd()
+  xd_yd(5, 5)
   xd_yd(50, 50)
   xd_yd(100, 100)
   xd_yd(200, 200)
