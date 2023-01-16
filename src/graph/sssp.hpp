@@ -99,18 +99,18 @@ simple_graph<_Ip, _Lp, _DirTag>::_sssp(
     v[s.vertex()] = true;
 
     for (part_edge_type t: base_type::at(s.vertex())) {
-      if (v[t.vertex()]) { continue; }
-
       t += s;
       if (r[t.vertex()] > t) {
         r[t.vertex()] = {s.vertex(), t.length()};
 
-        // only potential source vertices are needed to be pushed in
+        // only unvisited potential source vertices
+        // are needed to be pushed into min-priority queue
         //
         // not that if the graph is undirected,
         // a target is always a source;
         // otherwise, it is not always to be
         //
+        if (v[t.vertex()]) { continue; }
         if (std::is_same<_DirTag, tag::undirected>::value || 
             __sources.find(t.vertex()) != __sources.end()) {
 
@@ -166,13 +166,17 @@ simple_graph<_Ip, _Lp, _DirTag>::_sssp(
 //
 //   while Q != {} {
 //     s := extract p in Q with the lowest l
+//
 //     V := V | {s.v}
 //
 //     for all E in G that S(E) = s.v {
 //       l := s.l + L(E)
-//       if T(E) is not in V and R[T(E)].l > s.l + L(E) {
+//       if R[T(E)].l > l {
 //         R[T(E)] := (v: s.v, l: l)
-//         if there is such d that T(E) = S(d) for all d in G {
+//
+//         if T(E) is in V { continue }
+//
+//         if there is such E' that T(E) = S(E') for all E' in G {
 //           Q := Q | (v: T(E), l: L(E))
 //         }
 //       }

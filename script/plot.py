@@ -1,6 +1,10 @@
 #! /usr/bin/env python3
 # run this shell script with the command: ./script/plot.py
-
+# References:
+#   [NumPy](https://numpy.org/doc/stable/reference)
+#   [Matplotlib](https://matplotlib.org/stable)
+#   [Pandas](https://pandas.pydata.org/docs/reference)
+#
 import numpy as np
 import matplotlib.pyplot as plt
 from pandas import read_csv, DataFrame
@@ -260,12 +264,10 @@ def fd():
 def main():
   xyd()
   xd_yd(5, 5)
-  xd_yd(50, 50)
   xd_yd(100, 100)
   xd_yd(200, 200)
   xd_yd(300, 300)
   xd_yd(400, 400)
-  xd_yd(450, 450)
   xd_yd(495, 495)
   heap_benchmark()
   fd()

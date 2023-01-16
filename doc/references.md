@@ -1,3 +1,19 @@
 # References
 
-[TODO]
+1. [XML Format](https://developer.mozilla.org/en-US/docs/Web/XML)
+2. [SVG Format](https://developer.mozilla.org/en-US/docs/Web/SVG)
+3. [std::chrono](https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a01672.html)
+4. [std::complex](https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a01572.html)
+5. [std::unordered_map](https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a08926.html)
+6. [std::priority_queue](https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a08762.html)
+7. [GNU PBDS priority queue design](https://gcc.gnu.org/onlinedocs/libstdc++/ext/pb_ds/pq_design.html)
+8. [GNU PBDS pairing heap](https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13550.html)
+9. [__gnu_pbds::priority_queue](https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a12902.html)
+10. [Dijkstra's algorithm introduction](http://nmamano.com/blog/dijkstra/dijkstra.html)
+11. [Dijkstra's algorithm on a undirected graph](https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-using-priority_queue-stl/)
+12. [Boost Graph Library dijkstra_shortest_paths](https://www.boost.org/doc/libs/1_42_0/libs/graph/doc/dijkstra_shortest_paths.html)
+13. [BGL Github](https://github.com/boostorg/graph)
+14. [BGL Dijkstra's SSSP algorithm example](https://github.com/boostorg/graph/blob/develop/example/dijkstra-example.cpp)
+15. [NumPy](https://numpy.org/doc/stable/reference)
+16. [Matplotlib](https://matplotlib.org/stable)
+17. [Pandas](https://pandas.pydata.org/docs/reference)

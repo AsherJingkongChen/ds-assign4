@@ -32,7 +32,10 @@
 // References:
 //   [std::unordered_map](https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a08926.html)
 //   [std::priority_queue](https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a08762.html)
+//   [__gnu_pbds::priority_queue](https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a12902.html)
+//   [GNU PBDS priority queue design](https://gcc.gnu.org/onlinedocs/libstdc++/ext/pb_ds/pq_design.html)
 //   [Dijkstra's algorithm introduction](http://nmamano.com/blog/dijkstra/dijkstra.html)
+//   [Boost Graph Library dijkstra_shortest_paths](https://www.boost.org/doc/libs/1_42_0/libs/graph/doc/dijkstra_shortest_paths.html)
 //
 #ifndef GRAPH_GRAPH
 #define GRAPH_GRAPH

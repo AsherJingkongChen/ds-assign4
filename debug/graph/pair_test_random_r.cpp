@@ -2,7 +2,7 @@
 //
 // References:
 //   [BGL Github](https://github.com/boostorg/graph)
-//   [Dijkstra's SSSP algorithm example](https://github.com/boostorg/graph/blob/develop/example/dijkstra-example.cpp)
+//   [BGL Dijkstra's SSSP algorithm example](https://github.com/boostorg/graph/blob/develop/example/dijkstra-example.cpp)
 //
 #include "def_pair_test_random.hpp"
 #define PQTAG graph::tag::rc_binomial_heap
@@ -87,7 +87,7 @@ int main() {
     auto            seed(k * seed_const);
     std::mt19937    rng(seed);
     sg::index_type  n(1000);
-    sg::index_type  x(uidist(1, n * 5)(rng));
+    sg::index_type  x(uidist(1, 5000)(rng));
     sg::index_type  v(uidist(0, n - 1)(rng));
 
     // graph::simple_graph (sg) build
@@ -97,7 +97,7 @@ int main() {
       a0.insert_or_assign(
         uidist(0, n - 1)(rng),
         uidist(0, n - 1)(rng),
-        10
+        n / 100
       );
     }
 

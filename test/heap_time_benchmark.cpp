@@ -1,3 +1,7 @@
+// References:
+//   [std::priority_queue](https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a08762.html)
+//   [GNU PBDS pairing heap](https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a13550.html)
+//
 #include "../src/graph/graph.hpp"
 #include "../src/tool/tool.hpp"
 
@@ -51,12 +55,12 @@ int main(int argc, const char* argv[]) {
 
   {
     std::mt19937 rng (SEED);
-    const idx_t  N   (1000);
+    const idx_t  N   (10000);
     const idx_t  X_M (100000);
     const len_t  Y_M (20);
     const idx_t  X_m (10000);
     const len_t  Y_m (1);
-    const idx_t  Z   (1000);
+    const idx_t  Z   (500);
 
     for (auto X(X_m); X <= X_M; X += X_m) {
       us_graph g;
@@ -136,7 +140,7 @@ int main(int argc, const char* argv[]) {
 
   {
     std::mt19937 rng (SEED);
-    const std::size_t X_M (10000000);
+    const std::size_t X_M (1000000);
     const std::size_t X_m (100000);
 
     for (auto X(X_m); X <= X_M; X += X_m) {
@@ -226,8 +230,6 @@ int main(int argc, const char* argv[]) {
 //   on instruction I
 //
 // sssp:
-// - N = 1000
-// - Z = 1000
 // - all N nodes has an index in [0, N-1]
 // - X edges are added randomly with random length Y
 // - Z edges are sampled randomly

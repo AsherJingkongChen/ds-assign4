@@ -29,6 +29,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR 
 // THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
+// References:
+//   [std::chrono](https://gcc.gnu.org/onlinedocs/gcc-12.2.0/libstdc++/api/a01672.html)
+//
 #ifndef TOOL_TOOL
 #define TOOL_TOOL
 
