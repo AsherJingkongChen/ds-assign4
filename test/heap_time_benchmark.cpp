@@ -53,6 +53,8 @@ int main(int argc, const char* argv[]) {
 
   tool::timer<msec> clock;
 
+  // test for sssp
+  //
   {
     std::mt19937 rng (SEED);
     const idx_t  N   (10000);
@@ -138,6 +140,8 @@ int main(int argc, const char* argv[]) {
     }
   }
 
+  // test for push and pop
+  //
   {
     std::mt19937 rng (SEED);
     const std::size_t X_M (1000000);
