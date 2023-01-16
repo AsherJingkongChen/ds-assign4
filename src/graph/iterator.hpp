@@ -65,7 +65,7 @@ public:
       ++s_it;
 
       if (not s_it_valid()) { 
-        t_it = {};
+        t_it = value_type{};
         return *this; 
       }
       t_it = s_it->second.begin();
@@ -94,7 +94,7 @@ public:
 
 private:
   void update() {
-    edge = {s_it->first, t_it->first, t_it->second};
+    edge = value_type{s_it->first, t_it->first, t_it->second};
   }
 
 public:

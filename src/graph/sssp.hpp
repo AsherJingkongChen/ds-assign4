@@ -82,7 +82,7 @@ simple_graph<_Ip, _Lp, _DirTag>::_sssp(
 
   part_edge_list r;
   for (auto &p: __targets) {
-    r[p.first] = {p.first, _LengthMax};
+    r[p.first] = part_edge_type{p.first, _LengthMax};
   }
 
   _PriorityQueue q;
@@ -101,7 +101,7 @@ simple_graph<_Ip, _Lp, _DirTag>::_sssp(
     for (part_edge_type t: base_type::at(s.vertex())) {
       t += s;
       if (r[t.vertex()] > t) {
-        r[t.vertex()] = {s.vertex(), t.length()};
+        r[t.vertex()] = part_edge_type{s.vertex(), t.length()};
 
         // only unvisited potential source vertices
         // are needed to be pushed into min-priority queue
