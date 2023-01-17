@@ -63,7 +63,7 @@ def xyd():
   plt.contourf(
     x, y, d,
     cmap = 'CMRmap',
-    levels = np.arange(0, data_dist[['D']].max()[0] + 50, 50)
+    levels = np.arange(0, d.max() + 20, 20)
   )
   plt.xlabel('X', loc = 'left')
   plt.ylabel('Y', loc = 'bottom')
@@ -264,7 +264,11 @@ def fd():
 def main():
   xyd()
   xd_yd(5, 5)
+  xd_yd(10, 10)
+  xd_yd(25, 25)
+  xd_yd(50, 50)
   xd_yd(100, 100)
+  xd_yd(150, 150)
   xd_yd(200, 200)
   xd_yd(300, 300)
   xd_yd(400, 400)
