@@ -1,6 +1,7 @@
 # Priority Queue
 
 ```mermaid
+%%{init: {'theme': 'neutral'} }%%
 graph RL;
 subgraph concept
   heap((Heap));
