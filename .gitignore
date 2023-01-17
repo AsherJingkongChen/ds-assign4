@@ -7,6 +7,6 @@ node_modules
 __pycache__ 
 
 .trash
-*.out.*
+*.out
 *.log
 *.dSYM
